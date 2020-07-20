@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_home"
+            android:icon="@drawable/ic_home_48px"
+            android:title="Home" />
+        <item
+            android:id="@+id/nav_learn"
+            android:icon="@drawable/icon_abc_black_24"
+            android:title="Learn" />
+        <item
+            android:id="@+id/nav_drawing"
+            android:icon="@drawable/ic_palette_black_24dp"
+            android:title="Draw" />
+        <item
+            android:id="@+id/nav_slideshow"
+            android:icon="@drawable/ic_slide_24dp"
+            android:title="Guess" />
+        <item
+            android:id="@+id/nav_multi_table"
+            android:icon="@drawable/icon_number_24"
+            android:title="Number" />
+
+    </group>
+
+    <item android:title=" ">
+        <menu>
+            <item
+                android:id="@+id/nav_exit"
+                android:icon="@drawable/ic_info_black_24dp"
+                android:title="Exit" />
+        </menu>
+    </item>
+
+</menu>

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.ammar.schooldesign">
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <activity android:name=".Sknse.StartActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".KidsCorner.activity.KidsLandingPage"></activity>
+        <activity
+            android:name=".KidsCorner.activity.SplashScreen"
+            android:label="@string/app_name"
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
+        <activity
+            android:name=".KidsCorner.activity.ViewDetailsActivity"
+            android:label="@string/title_activity_view_details"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".KidsCorner.activity.PaintActivity" />
+        <activity
+            android:name=".KidsCorner.activity.MainActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+    </application>
+
+</manifest>
