@@ -130,4 +130,11 @@
     <string name="hidden_text">HiddenText</string>
     <string name="Enter_number">Enter Number</string>
     <string name="err_msg">Please Enter A Number</string>
+
+
+    <string name="level_label">Level:</string>
+    <string name="score_label">Score:</string>
+    <string name="max_number">99</string>
+    <string name="play_game">Play Game</string>
+    <string name="popping_pin">Popping Pin</string>
 </resources>

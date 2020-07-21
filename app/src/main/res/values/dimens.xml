@@ -19,4 +19,7 @@
     <dimen name="btn_size">100dp</dimen>
     <dimen name="text_size_18dp">18dp</dimen>
 
+    <dimen name="status_text_size">20sp</dimen>
+    <dimen name="pin_size">40dp</dimen>
+
 </resources>

@@ -5,7 +5,7 @@
         <shape android:shape="rectangle">
             <stroke
                 android:width="4dp"
-                android:color="#FFD9D3" />
+                android:color="@color/random_color_1" />
 
             <solid android:color="#00000000" />
 
@@ -20,7 +20,7 @@
         <shape xmlns:android="http://schemas.android.com/apk/res/android">
             <stroke
                 android:width="4dp"
-                android:color="#FFD9D3" />
+                android:color="@color/random_color_1" />
 
             <solid android:color="#00000000" />
 

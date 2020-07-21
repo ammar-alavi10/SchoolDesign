@@ -1,10 +1,6 @@
 package com.ammar.schooldesign.KidsCorner.activity;
 
-import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.core.view.GravityCompat;
-import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
@@ -12,6 +8,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
+import com.ammar.schooldesign.KidsCorner.balloonpoper.BalloonMain;
 import com.ammar.schooldesign.R;
 import com.ammar.schooldesign.KidsCorner.fragment.MultiplicationTableFragment;
 import com.ammar.schooldesign.KidsCorner.fragment.SlideFragment;
@@ -50,5 +47,9 @@ public class KidsLandingPage extends AppCompatActivity {
         ft.addToBackStack(null);
         ft.commit();
 
+    }
+
+    public void onBalloonPopperPressed(View view) {
+        startActivity(new Intent(getApplicationContext(), BalloonMain.class));
     }
 }

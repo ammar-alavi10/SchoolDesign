@@ -46,6 +46,9 @@
     <color name="transparent">#00000000</color>
     <color name="black">#000000</color>
 
+    <color name="lightGrey">#DDDDDD</color>
+    <color name="pinColor">#000000</color>
+
     <color name="footer_background">#ced4d9</color>
     <color name="tab_text">#999999</color>
     <color name="selected_contact">#AA0E2A44</color>

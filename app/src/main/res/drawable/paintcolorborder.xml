@@ -5,10 +5,10 @@
     <corners android:radius="25dp"/>
     <gradient
         android:angle="0"
-        android:centerColor="#FFD9D3"
+        android:centerColor="@color/random_color_1"
         android:centerX="35%"
-        android:endColor="#FFD9D3"
-        android:startColor="#FFD9D3"
+        android:endColor="@color/random_color_1"
+        android:startColor="@color/random_color_1"
         android:type="linear"/>
     <stroke
         android:width="5dip"

@@ -30,6 +30,7 @@
         <activity
             android:name=".KidsCorner.activity.MainActivity"
             android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".KidsCorner.balloonpoper.BalloonMain" />
     </application>
 
 </manifest>
