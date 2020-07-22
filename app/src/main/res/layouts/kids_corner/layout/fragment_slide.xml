@@ -8,7 +8,53 @@
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/view_pager"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:layout_marginBottom="80dp"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:layout_alignParentBottom="true"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:paddingBottom="5dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/slidetext1"
+            android:text=""
+            android:textSize="15sp"
+            android:layout_marginRight="20dp"
+            android:textColor="#000"
+            android:background="@drawable/wordborder"
+            android:typeface="sans"
+            android:padding="15dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/slidetext2"
+            android:text=""
+            android:textSize="15sp"
+            android:typeface="sans"
+            android:textColor="#000"
+            android:background="@drawable/wordborder"
+            android:padding="15dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/slidetext3"
+            android:text=""
+            android:typeface="sans"
+            android:textSize="15sp"
+            android:layout_marginLeft="20dp"
+            android:textColor="#000"
+            android:background="@drawable/wordborder"
+            android:padding="15dp"/>
+
+    </LinearLayout>
 
     <com.ammar.schooldesign.KidsCorner.imageslid.CirclePageIndicator
         android:id="@+id/circlePageindicator"

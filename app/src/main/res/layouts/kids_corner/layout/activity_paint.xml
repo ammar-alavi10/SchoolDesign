@@ -75,6 +75,7 @@
         android:layout_weight="1"
         android:background="@drawable/paintborder" />
 
+
     <TextView
         android:layout_width="match_parent"
         android:layout_height="60dp"
@@ -86,6 +87,7 @@
         android:textSize="40sp"
         android:textStyle="bold"
         android:onClick="onWordPressed"/>
+
 
     <!-- Color Palette -->
 

@@ -9,6 +9,10 @@ public class Alphabet {
     private int thumbnail2;
     private int thumbnail3;
     private int thumbnail4;
+    private int lettersound;
+    private int sound1;
+    private int sound2;
+    private int sound3;
 
     public Alphabet() {
     }
@@ -19,17 +23,18 @@ public class Alphabet {
 
     }
 
-    public Alphabet(String name, int thumbnail1, int thumbnail2, int thumbnail3, int thumbnail4) {
+    public Alphabet(String name, int thumbnail1, int thumbnail2, int thumbnail3, int thumbnail4, int lettersound) {
         this.name = name;
         this.thumbnail1 = thumbnail1;
         this.thumbnail2 = thumbnail2;
         this.thumbnail3 = thumbnail3;
         this.thumbnail4 = thumbnail4;
-
+        this.lettersound = lettersound;
 
     }
 
-    public Alphabet(String name, int thumbnail1, int thumbnail2, int thumbnail3, int thumbnail4, String title2, String title3, String title4) {
+    public Alphabet(String name, int thumbnail1, int thumbnail2, int thumbnail3, int thumbnail4,
+                    String title2, String title3, String title4, int lettersound, int sound1, int sound2, int sound3) {
         this.name = name;
         this.thumbnail1 = thumbnail1;
         this.thumbnail2 = thumbnail2;
@@ -38,8 +43,10 @@ public class Alphabet {
         this.title2 = title2;
         this.title3 = title3;
         this.title4 = title4;
-
-
+        this.lettersound = lettersound;
+        this.sound1 = sound1;
+        this.sound2 = sound2;
+        this.sound3 = sound3;
     }
 
     public String getName() {
@@ -104,5 +111,37 @@ public class Alphabet {
 
     public void setTitle4(String title4) {
         this.title4 = title4;
+    }
+
+    public int getLettersound() {
+        return lettersound;
+    }
+
+    public void setLettersound(int lettersound) {
+        this.lettersound = lettersound;
+    }
+
+    public int getSound1() {
+        return sound1;
+    }
+
+    public void setSound1(int sound1) {
+        this.sound1 = sound1;
+    }
+
+    public int getSound2() {
+        return sound2;
+    }
+
+    public void setSound2(int sound2) {
+        this.sound2 = sound2;
+    }
+
+    public int getSound3() {
+        return sound3;
+    }
+
+    public void setSound3(int sound3) {
+        this.sound3 = sound3;
     }
 }

@@ -60,6 +60,10 @@ public class AlphabetAdapter extends RecyclerView.Adapter<AlphabetAdapter.MyView
                 intent.putExtra("image2", alphabet.getThumbnail2());
                 intent.putExtra("image3", alphabet.getThumbnail3());
                 intent.putExtra("image4", alphabet.getThumbnail4());
+                intent.putExtra("lettersound", alphabet.getLettersound());
+                intent.putExtra("sound1", alphabet.getSound1());
+                intent.putExtra("sound2", alphabet.getSound2());
+                intent.putExtra("sound3", alphabet.getSound3());
 
                 mContext.startActivity(intent);
             }

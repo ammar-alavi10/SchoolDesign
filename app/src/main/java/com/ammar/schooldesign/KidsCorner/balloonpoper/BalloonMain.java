@@ -101,6 +101,13 @@ public class BalloonMain extends AppCompatActivity implements Balloon.BalloonLis
         mSoundHelper.prepareMusicPlayer(this);
     }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        mSoundHelper.pauseMusic();
+        gameOver(false);
+    }
+
     private void setToFullScreen() {
         ViewGroup rootLayout = (ViewGroup) findViewById(R.id.activity_main);
         rootLayout.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LOW_PROFILE
@@ -191,7 +198,10 @@ public class BalloonMain extends AppCompatActivity implements Balloon.BalloonLis
     }
 
     private void gameOver(boolean allPinsUsed) {
-        Toast.makeText(this, "Game Over!", Toast.LENGTH_SHORT).show();
+        if(allPinsUsed)
+        {
+             Toast.makeText(this, "Game Over!", Toast.LENGTH_SHORT).show();
+        }
         mSoundHelper.pauseMusic();
         for (Balloon balloon : mBalloons) {
             mContentView.removeView(balloon);

@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">SchoolDesign</string>
+    <string name="app_name">SKN School of Excellence</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
@@ -52,7 +52,7 @@
     <string name="balloon">Balloon</string>
     <string name="bear">Bear</string>
     <string name="cat">Cat</string>
-    <string name="chik">Chik</string>
+    <string name="chick">Chick</string>
     <string name="cow">Cow</string>
     <string name="dog">Dog</string>
     <string name="dolphin">Dolphin</string>
@@ -112,7 +112,7 @@
     <string name="watermelon">Watermelon</string>
     <string name="xmas">X-mas</string>
     <string name="xylophone">Xylophone</string>
-    <string name="xray">X-ray</string>
+    <string name="xerox">Xerox</string>
     <string name="yacht">Yacht</string>
     <string name="yarn">Yarn</string>
     <string name="yellow">Yellow</string>

@@ -1,9 +1,11 @@
 package com.ammar.schooldesign.KidsCorner.activity;
 
 import android.animation.ObjectAnimator;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.View;
 import android.view.animation.AccelerateDecelerateInterpolator;
@@ -28,6 +30,7 @@ public class ViewDetailsActivity extends AppCompatActivity {
     String name, title2, title3, title4;
     int image1, image2, image3, image4;
     ImageView imageView, img1, img2, img3;
+    int lettersound, sound1, sound2, sound3;
     TextView title_tv;
     Animation animation;
     TextView splashText;
@@ -37,6 +40,7 @@ public class ViewDetailsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view);
 
+        final Context context = this;
 
         Intent intent = getIntent();
         name = intent.getStringExtra("name");
@@ -47,6 +51,10 @@ public class ViewDetailsActivity extends AppCompatActivity {
         image2 = intent.getIntExtra("image2", 0);
         image3 = intent.getIntExtra("image3", 0);
         image4 = intent.getIntExtra("image4", 0);
+        lettersound = intent.getIntExtra("lettersound", 0);
+        sound1 = intent.getIntExtra("sound1", 0);
+        sound2 = intent.getIntExtra("sound2", 0);
+        sound3 = intent.getIntExtra("sound3", 0);
 
         img1 = findViewById(R.id.vda_image1);
         img2 = findViewById(R.id.vda_image2);
@@ -62,12 +70,31 @@ public class ViewDetailsActivity extends AppCompatActivity {
 
         title_tv.setVisibility(View.INVISIBLE);
 
+        final MediaPlayer mp = MediaPlayer.create(this, lettersound);
+        mp.start();
+        mp.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+            @Override
+            public void onCompletion(MediaPlayer mediaPlayer) {
+                mp.reset();
+                mp.release();
+            }
+        });
+
         img1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 imageView.setImageBitmap(image11);
                 title_tv.setVisibility(View.VISIBLE);
                 title_tv.setText(title2);
+                MediaPlayer mediaPlayer = MediaPlayer.create(context, sound1);
+                mediaPlayer.start();
+                mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                    @Override
+                    public void onCompletion(MediaPlayer mediaPlayer) {
+                        mediaPlayer.reset();
+                        mediaPlayer.release();
+                    }
+                });
                 StartAnimations();
 
                 RotateAnimation rotate = new RotateAnimation(0, 360, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
@@ -81,6 +108,15 @@ public class ViewDetailsActivity extends AppCompatActivity {
             public void onClick(View v) {
                 imageView.setImageBitmap(image22);
                 title_tv.setText(title3);
+                MediaPlayer mediaPlayer = MediaPlayer.create(context, sound2);
+                mediaPlayer.start();
+                mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                    @Override
+                    public void onCompletion(MediaPlayer mediaPlayer) {
+                        mediaPlayer.reset();
+                        mediaPlayer.release();
+                    }
+                });
                 StartAnimations();
 
                 Animation slideDown = new TranslateAnimation(
@@ -98,6 +134,15 @@ public class ViewDetailsActivity extends AppCompatActivity {
             public void onClick(View v) {
                 imageView.setImageBitmap(image33);
                 title_tv.setText(title4);
+                MediaPlayer mediaPlayer = MediaPlayer.create(context, sound3);
+                mediaPlayer.start();
+                mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                    @Override
+                    public void onCompletion(MediaPlayer mediaPlayer) {
+                        mediaPlayer.reset();
+                        mediaPlayer.release();
+                    }
+                });
                 StartAnimations();
 
                 Animation fadeOut = new AlphaAnimation(1, 0);
