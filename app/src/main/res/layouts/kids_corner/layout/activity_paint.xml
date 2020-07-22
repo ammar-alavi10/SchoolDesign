@@ -64,7 +64,7 @@
     </RelativeLayout>
     <!-- Custom View -->
 
-    <com.ammar.schooldesign.KidsCorner.helper.DrawingView
+    <com.ammar.shreeKrishnaNationalSchoolOfExcellence.KidsCorner.helper.DrawingView
         android:id="@+id/drawing"
         android:layout_width="fill_parent"
         android:layout_height="0dp"

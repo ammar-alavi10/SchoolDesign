@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/activity_main"
-    tools:context="com.ammar.schooldesign.KidsCorner.balloonpoper.BalloonMain">
+    tools:context="com.ammar.shreeKrishnaNationalSchoolOfExcellence.KidsCorner.balloonpoper.BalloonMain">
 
     <TextView
         android:layout_width="wrap_content"
