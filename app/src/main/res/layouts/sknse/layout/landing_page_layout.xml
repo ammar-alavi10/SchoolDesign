@@ -104,6 +104,7 @@
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
+                                    android:id="@+id/profile_text"
                                     android:text="LOGIN"
                                     android:textSize="16dp"
                                     android:layout_below="@+id/LoginImage"
@@ -115,6 +116,7 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
                                     android:id="@+id/LoginBtn"
+                                    android:onClick="loginPressed"
                                     android:background="@android:color/transparent"/>
 
                             </RelativeLayout>

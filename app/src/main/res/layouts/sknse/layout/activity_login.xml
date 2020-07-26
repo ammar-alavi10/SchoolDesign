@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.ammar.shreeKrishnaNationalSchoolOfExcellence.Sknse.LoginActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="100dp"
+        android:layout_alignParentBottom="true"
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_gravity="center"
+            android:src="@drawable/login_icon"/>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/text_input_layout"
+            android:layout_marginHorizontal="40dp"
+            android:layout_marginTop="80dp"
+            android:hint="Select Category"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+            app:endIconMode="dropdown_menu"
+            android:padding="5dp">
+
+            <AutoCompleteTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/dropdown_text"/>
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/username_et"
+            android:layout_marginTop="20dp"
+            android:layout_marginHorizontal="40dp"
+            android:drawableLeft="@drawable/username_icon"
+            android:drawablePadding="15dp"
+            android:hint="User Id"
+            android:padding="5dp"
+            android:background="#F5F5F5"
+            android:textSize="15sp"/>
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:padding="5dp"
+            android:id="@+id/password_et"
+            android:background="#F5F5F5"
+            android:layout_marginHorizontal="40dp"
+            android:drawableLeft="@drawable/password_icon"
+            android:drawablePadding="15dp"
+            android:hint="Password"
+            android:inputType="textPassword"
+            android:textSize="15sp"/>
+
+        <android.widget.Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:layout_marginHorizontal="40dp"
+            android:text="LOGIN"
+            android:textSize="25sp"
+            android:textColor="#fff"
+            android:background="@drawable/button_bg_gradient"
+            android:foreground="?attr/selectableItemBackground"
+            android:clickable="true"
+            android:onClick="onLoginPressed"/>
+
+    </LinearLayout>
+
+
+</RelativeLayout>

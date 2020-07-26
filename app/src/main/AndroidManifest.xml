@@ -9,6 +9,13 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".Sknse.ShowVideo"
+            android:configChanges="orientation|screenSize"/>
+        <activity android:name=".Sknse.ShowVideoList" />
+        <activity android:name=".Sknse.UploadVideoActivity" />
+        <activity android:name=".Sknse.SubjectActivity" />
+        <activity android:name=".Sknse.SelectSubjectActivity" />
+        <activity android:name=".Sknse.LoginActivity" />
         <activity android:name=".Sknse.StartActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -16,12 +23,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".KidsCorner.activity.KidsLandingPage"/>
+        <activity android:name=".KidsCorner.activity.KidsLandingPage" />
         <activity
             android:name=".KidsCorner.activity.SplashScreen"
             android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar">
-        </activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".KidsCorner.activity.ViewDetailsActivity"
             android:label="@string/title_activity_view_details"

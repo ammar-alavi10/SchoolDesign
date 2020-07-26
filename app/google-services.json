@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "675913428006",
+    "firebase_url": "https://sknse-school-b8cdf.firebaseio.com",
+    "project_id": "sknse-school-b8cdf",
+    "storage_bucket": "sknse-school-b8cdf.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:675913428006:android:a6481c9e96191a6aff8ae7",
+        "android_client_info": {
+          "package_name": "com.ammar.shreeKrishnaNationalSchoolOfExcellence"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "675913428006-sh09nivusn2gs4vaugk2jl10g2jvjda6.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.ammar.shreeKrishnaNationalSchoolOfExcellence",
+            "certificate_hash": "a2e2c69e14495ab40f32b7fe2cba310e4a318e1b"
+          }
+        },
+        {
+          "client_id": "675913428006-imdqkg13g39smfptklt38gikldb680gi.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAQZFMJdLM_Aenrzm-GgwLyjBhgQBPoRH0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "675913428006-imdqkg13g39smfptklt38gikldb680gi.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
