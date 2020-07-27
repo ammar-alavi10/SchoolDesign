@@ -57,6 +57,8 @@ dependencies {
 
     implementation 'com.squareup.picasso:picasso:2.71828'
 
+    implementation 'com.github.barteksc:android-pdf-viewer:2.8.2'
+
     implementation 'com.google.android.exoplayer:exoplayer:2.10.8'
     implementation 'com.google.android.exoplayer:exoplayer-core:2.10.8'
     implementation 'com.google.android.exoplayer:exoplayer-dash:2.10.8'

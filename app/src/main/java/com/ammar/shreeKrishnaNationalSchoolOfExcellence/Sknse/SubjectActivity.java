@@ -46,7 +46,10 @@ public class SubjectActivity extends AppCompatActivity {
                 startActivity(intent);
                 break;
             case R.id.notes_upload:
-                // goto upload notes
+                intent = new Intent(SubjectActivity.this, UploadNotes.class);
+                intent.putExtra("subject_name",subject);
+                intent.putExtra("class_name", class_name);
+                startActivity(intent);
                 break;
             case R.id.announcement:
                 // add announcement

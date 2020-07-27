@@ -1,4 +1,4 @@
-package com.ammar.shreeKrishnaNationalSchoolOfExcellence.Sknse;
+package com.ammar.shreeKrishnaNationalSchoolOfExcellence.Adapters;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -30,7 +30,7 @@ public class VideoListAdapter extends RecyclerView.Adapter {
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-        View row = inflater.inflate(R.layout.video_item, parent, false);
+        View row = inflater.inflate(R.layout.list_subject_item_, parent, false);
         return new VideoViewHolder(row);
     }
 

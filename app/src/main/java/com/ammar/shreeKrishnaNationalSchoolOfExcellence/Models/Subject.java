@@ -1,4 +1,4 @@
-package com.ammar.shreeKrishnaNationalSchoolOfExcellence.Sknse;
+package com.ammar.shreeKrishnaNationalSchoolOfExcellence.Models;
 
 public class Subject {
     String subject_name;

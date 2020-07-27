@@ -9,8 +9,14 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Sknse.ShowVideo"
+        <activity
+            android:name=".Sknse.ShowNotes"
             android:configChanges="orientation|screenSize"/>
+        <activity android:name=".Sknse.NotesList" />
+        <activity android:name=".Sknse.UploadNotes" />
+        <activity
+            android:name=".Sknse.ShowVideo"
+            android:configChanges="orientation|screenSize" />
         <activity android:name=".Sknse.ShowVideoList" />
         <activity android:name=".Sknse.UploadVideoActivity" />
         <activity android:name=".Sknse.SubjectActivity" />

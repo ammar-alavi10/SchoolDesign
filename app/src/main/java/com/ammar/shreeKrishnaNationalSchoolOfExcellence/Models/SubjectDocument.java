@@ -1,4 +1,4 @@
-package com.ammar.shreeKrishnaNationalSchoolOfExcellence.Sknse;
+package com.ammar.shreeKrishnaNationalSchoolOfExcellence.Models;
 
 import java.util.List;
 

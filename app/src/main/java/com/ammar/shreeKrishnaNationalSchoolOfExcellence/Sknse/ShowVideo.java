@@ -1,6 +1,5 @@
 package com.ammar.shreeKrishnaNationalSchoolOfExcellence.Sknse;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
 import android.app.Application;
@@ -9,12 +8,11 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.ammar.shreeKrishnaNationalSchoolOfExcellence.KidsCorner.activity.MainActivity;
+import com.ammar.shreeKrishnaNationalSchoolOfExcellence.Models.YoutubeApiKey;
 import com.ammar.shreeKrishnaNationalSchoolOfExcellence.R;
 import com.google.android.exoplayer2.ExoPlayerFactory;
 import com.google.android.exoplayer2.SimpleExoPlayer;
@@ -142,6 +140,7 @@ public class ShowVideo extends YouTubeBaseActivity {
             @Override
             public void onClick(View view) {
                 if(fullscreen[0]) {
+                    titleTv.setVisibility(View.VISIBLE);
                     fullscreenButton.setImageDrawable(ContextCompat.getDrawable(ShowVideo.this, R.drawable.ic_fullscreen_open));
                     getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_VISIBLE);
                     setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
@@ -151,6 +150,7 @@ public class ShowVideo extends YouTubeBaseActivity {
                     playerView.setLayoutParams(params);
                     fullscreen[0] = false;
                 }else{
+                    titleTv.setVisibility(View.GONE);
                     fullscreenButton.setImageDrawable(ContextCompat.getDrawable(ShowVideo.this, R.drawable.ic_fullscreen_close));
                     getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_FULLSCREEN
                             |View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY

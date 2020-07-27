@@ -18,6 +18,7 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 import android.widget.VideoView;
 
+import com.ammar.shreeKrishnaNationalSchoolOfExcellence.Models.VideoModel;
 import com.ammar.shreeKrishnaNationalSchoolOfExcellence.R;
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -119,7 +120,7 @@ public class UploadVideoActivity extends AppCompatActivity {
         if (videoUri != null || !TextUtils.isEmpty(videoName)){
 
             progressBar.setVisibility(View.VISIBLE);
-            final  StorageReference reference = storageReference.child(System.currentTimeMillis() + "." + getExt(videoUri));
+            final StorageReference reference = storageReference.child(System.currentTimeMillis() + "." + getExt(videoUri));
             uploadTask = reference.putFile(videoUri);
 
             Task<Uri> urltask = uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
@@ -173,6 +174,11 @@ public class UploadVideoActivity extends AppCompatActivity {
         final String videoName = editTextName.getText().toString();
         final String search = editTextName.getText().toString().toLowerCase();
         final String videoUrl = editTextLink.getText().toString();
+        if(videoName.equals("") || videoUrl.equals(""))
+        {
+            Toast.makeText(UploadVideoActivity.this, "Provide all details", Toast.LENGTH_LONG).show();
+            return;
+        }
         member.setName(videoName);
         member.setSearch(search);
         member.setVideourl(videoUrl);

@@ -14,10 +14,12 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
+import com.ammar.shreeKrishnaNationalSchoolOfExcellence.Adapters.SubjectAdapter;
+import com.ammar.shreeKrishnaNationalSchoolOfExcellence.Models.Subject;
+import com.ammar.shreeKrishnaNationalSchoolOfExcellence.Models.SubjectDocument;
 import com.ammar.shreeKrishnaNationalSchoolOfExcellence.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.android.material.appbar.MaterialToolbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
@@ -114,8 +116,8 @@ public class SelectSubjectActivity extends AppCompatActivity {
             @Override
             public void onClick(View v, int position) {
                 Intent intent = new Intent(getApplicationContext(), SubjectActivity.class);
-                intent.putExtra("subject_name", subjects.get(position).subject_name);
-                intent.putExtra("class_name", subjects.get(position).class_name);
+                intent.putExtra("subject_name", subjects.get(position).getSubject_name());
+                intent.putExtra("class_name", subjects.get(position).getClass_name());
                 startActivity(intent);
             }
         };
