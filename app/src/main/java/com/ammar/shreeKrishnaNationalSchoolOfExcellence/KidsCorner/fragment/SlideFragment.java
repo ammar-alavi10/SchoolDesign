@@ -1,10 +1,12 @@
 package com.ammar.shreeKrishnaNationalSchoolOfExcellence.KidsCorner.fragment;
 
-
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.pm.ActivityInfo;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,8 +15,10 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
+import androidx.core.widget.TextViewCompat;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
+import io.grpc.android.AndroidChannelBuilder;
 
 import com.ammar.shreeKrishnaNationalSchoolOfExcellence.R;
 import com.ammar.shreeKrishnaNationalSchoolOfExcellence.KidsCorner.imageslid.CirclePageIndicator;
@@ -25,6 +29,7 @@ import java.util.Random;
 
 public class SlideFragment extends Fragment {
 
+    MediaPlayer mediaPlayer;
     private static final int[] images = new int[]{
             R.drawable.apple,
             R.drawable.ant,
@@ -119,18 +124,53 @@ public class SlideFragment extends Fragment {
     }
 
     @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_slide, container, false);
+
+        mediaPlayer = MediaPlayer.create(getContext(), R.raw.bensound_buddy);
+        mediaPlayer.start();
+
         mpager = view.findViewById(R.id.view_pager);
         indicator = view.findViewById(R.id.circlePageindicator);
         word1 = view.findViewById(R.id.slidetext1);
         word2 = view.findViewById(R.id.slidetext2);
         word3 = view.findViewById(R.id.slidetext3);
+
+        if(android.os.Build.VERSION.SDK_INT < 26)
+        {
+            TextViewCompat.setAutoSizeTextTypeUniformWithConfiguration(word1, 1, 17, 1,
+                    TypedValue.COMPLEX_UNIT_DIP);
+            TextViewCompat.setAutoSizeTextTypeUniformWithConfiguration(word2, 1, 17, 1,
+                    TypedValue.COMPLEX_UNIT_DIP);
+            TextViewCompat.setAutoSizeTextTypeUniformWithConfiguration(word3, 1, 17, 1,
+                    TypedValue.COMPLEX_UNIT_DIP);
+        }
+        else
+        {
+            word1.setAutoSizeTextTypeUniformWithConfiguration(
+                    1, 17, 1, TypedValue.COMPLEX_UNIT_DIP);
+            word2.setAutoSizeTextTypeUniformWithConfiguration(
+                    1, 17, 1, TypedValue.COMPLEX_UNIT_DIP);
+            word3.setAutoSizeTextTypeUniformWithConfiguration(
+                    1, 17, 1, TypedValue.COMPLEX_UNIT_DIP);
+        }
         prepareArrays();
         init();
         return view;
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        mediaPlayer.reset();
+        mediaPlayer.release();
     }
 
     private void prepareArrays() {
@@ -217,18 +257,15 @@ public class SlideFragment extends Fragment {
     }
 
     private void init() {
-        for (int i = 0; i < images.length; i++)
-            imageArray.add(images[i]);
+        for (int image : images)
+        {
+            imageArray.add(image);
+        }
 
         mpager.setAdapter(new SlideImage_Adapter(getActivity(), imageArray));
 
 
         indicator.setViewPager(mpager);
-
-        int r = new Random().nextInt(76) + 1;
-
-        mpager.setCurrentItem(r, true);
-        currentPage = r ;
 
         final float density = getResources().getDisplayMetrics().density;
 
@@ -236,32 +273,12 @@ public class SlideFragment extends Fragment {
 
         num_page = images.length;
 
-        int rand = new Random().nextInt(3);
-        int space = new Random().nextInt(num_page) + 1;
-
-        if(rand == 0)
-        {
-            word1.setText(words[currentPage]);
-            word2.setText(words[(currentPage + space * 2 ) % num_page]);
-            word3.setText(words[(currentPage + space) % num_page]);
-        }
-        else if(rand == 1)
-        {
-            word2.setText(words[currentPage]);
-            word1.setText(words[(currentPage + space * 2) % num_page]);
-            word3.setText(words[(currentPage + space) % num_page]);
-        }
-        else {
-            word3.setText(words[currentPage]);
-            word1.setText(words[(currentPage + space * 2) % num_page]);
-            word2.setText(words[(currentPage + space) % num_page]);
-
-        }
+        currentPage = 0;
 
             word1.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    if(word1.getText().toString() == words[currentPage])
+                    if(word1.getText().toString().equals(words[currentPage]))
                     {
                         //showDialog(getActivity());
                         new AlertDialog.Builder(getActivity())
@@ -286,7 +303,7 @@ public class SlideFragment extends Fragment {
             word2.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    if(word2.getText().toString() == words[currentPage])
+                    if(word2.getText().toString().equals(words[currentPage]))
                     {
                         //showDialog(getActivity());
                         new AlertDialog.Builder(getActivity())
@@ -312,7 +329,7 @@ public class SlideFragment extends Fragment {
             word3.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    if(word3.getText().toString() == words[currentPage])
+                    if(word3.getText().toString().equals(words[currentPage]))
                     {
                         //showDialog(getActivity());
                         new AlertDialog.Builder(getActivity())
@@ -346,6 +363,7 @@ public class SlideFragment extends Fragment {
 
             @Override
             public void onPageScrolled(int pos, float arg1, int arg2) {
+
                 int rand = new Random().nextInt(3);
                 int space = new Random().nextInt(num_page) + 1;
 

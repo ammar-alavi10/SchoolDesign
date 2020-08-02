@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -26,6 +27,8 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.util.ArrayList;
+
 import java.util.List;
 
 public class SelectSubjectActivity extends AppCompatActivity {
@@ -33,35 +36,81 @@ public class SelectSubjectActivity extends AppCompatActivity {
     private RecyclerView classesView;
     private List<Subject> subjects;
     private FirebaseAuth mAuth;
-    private Toolbar toolbar;
     private FirebaseUser user;
-    private SubjectAdapter.RecyclerViewClickListener listener;
     int[] class_bg = new int[]{
             R.drawable.books_bg_1,
             R.drawable.books_bg_2,
             R.drawable.books_bg_3,
             R.drawable.books_bg_4,
     };
+    private int category;
+    private String class_name;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_select_subject);
 
-        toolbar = findViewById(R.id.select_subject_toolbar);
+        String sharedPrefFile = "com.ammar.shreeKrishnaNationalSchoolOfExcellence";
+        SharedPreferences preferences = getSharedPreferences(sharedPrefFile, MODE_PRIVATE);
+        category = preferences.getInt("category", -1);
+        Toolbar toolbar = findViewById(R.id.select_subject_toolbar);
         toolbar.setTitle("");
         setSupportActionBar(toolbar);
+
+        subjects = new ArrayList<>();
         mAuth = FirebaseAuth.getInstance();
         user = mAuth.getCurrentUser();
         classesView = findViewById(R.id.classes_recyclerView);
         classesView.setLayoutManager(new LinearLayoutManager(this));
-        InstantiateRecyclerView();
+        if(category == 1)
+        {
+            InstantiateRecyclerView();
+        }
+        else if(category == 2)
+        {
+            class_name = preferences.getString("class_name", null);
+            InstantiateRecyclerViewStudent();
+        }
+    }
 
+    private void InstantiateRecyclerViewStudent() {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        final DocumentReference documentReference = db.collection("class").document(class_name);
+        documentReference.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if(task.isSuccessful())
+                {
+                    DocumentSnapshot documentSnapshot = task.getResult();
+                    if( documentSnapshot != null && documentSnapshot.exists()) {
+                        List<String> subjectList = (List<String>) documentSnapshot.get("subjects");
+                        if (subjectList != null) {
+                            for (String s: subjectList)
+                            {
+                                Subject subject = new Subject();
+                                subject.setSubject_name(s);
+                                subject.setClass_name(class_name);
+                                subjects.add(subject);
+                            }
+                            setAdapter();
+                        }
+                    }
+                }
+            }
+        });
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.select_subject_menu, menu);
+        if(category == 1)
+        {
+            getMenuInflater().inflate(R.menu.select_subject_menu, menu);
+        }
+        else if(category == 2)
+        {
+            getMenuInflater().inflate(R.menu.select_subject_student_menu, menu);
+        }
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -70,10 +119,14 @@ public class SelectSubjectActivity extends AppCompatActivity {
         switch (item.getItemId())
         {
             case R.id.logout:
+            case R.id.logout_student:
                 LogoutUser();
                 break;
             case R.id.refresh:
                 InstantiateRecyclerView();
+                break;
+            case R.id.refresh_student:
+                InstantiateRecyclerViewStudent();
                 break;
         }
         return super.onOptionsItemSelected(item);
@@ -97,8 +150,10 @@ public class SelectSubjectActivity extends AppCompatActivity {
                     DocumentSnapshot document = task.getResult();
                     if (document != null && document.exists()) {
                         SubjectDocument subjectDocument = document.toObject(SubjectDocument.class);
-                        subjects = subjectDocument.getSubjects();
-                        setAdapter();
+                        if (subjectDocument != null) {
+                            subjects = subjectDocument.getSubjects();
+                            setAdapter();
+                        }
                     } else {
                         Toast.makeText(getApplicationContext(), "Loading Failed!! Try Again...", Toast.LENGTH_LONG).show();
                         Log.d("Category", "No such document");
@@ -112,7 +167,7 @@ public class SelectSubjectActivity extends AppCompatActivity {
     }
 
     private void setAdapter() {
-        listener = new SubjectAdapter.RecyclerViewClickListener() {
+        SubjectAdapter.RecyclerViewClickListener listener = new SubjectAdapter.RecyclerViewClickListener() {
             @Override
             public void onClick(View v, int position) {
                 Intent intent = new Intent(getApplicationContext(), SubjectActivity.class);

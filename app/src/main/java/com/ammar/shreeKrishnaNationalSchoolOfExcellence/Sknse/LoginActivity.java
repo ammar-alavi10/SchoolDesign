@@ -28,10 +28,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 public class LoginActivity extends AppCompatActivity {
 
     private TextInputLayout dropdown;
-    private AutoCompleteTextView dropdowntext;
     private SharedPreferences preferences;
-    private String sharedPrefFile =
-            "com.ammar.shreeKrishnaNationalSchoolOfExcellence";
     private EditText userIdText;
     private EditText passwordText;
     private FirebaseAuth mAuth;
@@ -51,9 +48,10 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        String sharedPrefFile = "com.ammar.shreeKrishnaNationalSchoolOfExcellence";
         preferences = getSharedPreferences(sharedPrefFile, MODE_PRIVATE);
         dropdown = findViewById(R.id.text_input_layout);
-        dropdowntext = findViewById(R.id.dropdown_text);
+        AutoCompleteTextView dropdowntext = findViewById(R.id.dropdown_text);
         userIdText = findViewById(R.id.username_et);
         passwordText = findViewById(R.id.password_et);
 
@@ -69,7 +67,7 @@ public class LoginActivity extends AppCompatActivity {
                 "Student",
         };
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(
                 LoginActivity.this,
                 R.layout.dropdown_menu,
                 categories
@@ -98,7 +96,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void updateUI(FirebaseUser currentUser) {
-        category = preferences.getInt("category", 2);
+        category = preferences.getInt("category", -1);
         String uid = currentUser.getUid();
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         DocumentReference docRef = db.collection("users").document(uid);
@@ -107,7 +105,7 @@ public class LoginActivity extends AppCompatActivity {
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                 if (task.isSuccessful()) {
                     DocumentSnapshot document = task.getResult();
-                    if (document.exists()) {
+                    if (document != null && document.exists()) {
                         if(category == ((Long) document.get("category")).intValue())
                         {
                             startActivity(new Intent(LoginActivity.this, SelectSubjectActivity.class));
@@ -135,30 +133,40 @@ public class LoginActivity extends AppCompatActivity {
                 {
                     Log.d("Login", "Successful");
                     FirebaseUser user = mAuth.getCurrentUser();
-                    String uid = user.getUid();
-                    FirebaseFirestore db = FirebaseFirestore.getInstance();
-                    DocumentReference docRef = db.collection("users").document(uid);
-                    docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                        @Override
-                        public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                            if (task.isSuccessful()) {
-                                DocumentSnapshot document = task.getResult();
-                                if (document.exists()) {
-                                    if(category == ((Long) document.get("category")).intValue())
-                                    {
-                                        startActivity(new Intent(LoginActivity.this, SelectSubjectActivity.class));
-                                        finish();
+                    String uid;
+                    if (user != null) {
+                        uid = user.getUid();
+                        FirebaseFirestore db = FirebaseFirestore.getInstance();
+                        DocumentReference docRef = db.collection("users").document(uid);
+                        docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                            @Override
+                            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                if (task.isSuccessful()) {
+                                    DocumentSnapshot document = task.getResult();
+                                    if (document != null && document.exists()) {
+                                        if(category == ((Long) document.get("category")).intValue())
+                                        {
+                                            if(category == 2)
+                                            {
+                                                String class_name = (String) document.get("class");
+                                                SharedPreferences.Editor editor = preferences.edit();
+                                                editor.putString("class_name", class_name);
+                                                editor.apply();
+                                            }
+                                            startActivity(new Intent(LoginActivity.this, SelectSubjectActivity.class));
+                                            finish();
+                                        }
+                                    } else {
+                                        Toast.makeText(getApplicationContext(), "Login Failed!! Try Again...", Toast.LENGTH_LONG).show();
+                                        Log.d("Category", "No such document");
                                     }
                                 } else {
                                     Toast.makeText(getApplicationContext(), "Login Failed!! Try Again...", Toast.LENGTH_LONG).show();
-                                    Log.d("Category", "No such document");
+                                    Log.d("Category", "get failed with ", task.getException());
                                 }
-                            } else {
-                                Toast.makeText(getApplicationContext(), "Login Failed!! Try Again...", Toast.LENGTH_LONG).show();
-                                Log.d("Category", "get failed with ", task.getException());
                             }
-                        }
-                    });
+                        });
+                    }
                 }
                 else{
                     Toast.makeText(getApplicationContext(), "Login Failed!! Try Again...", Toast.LENGTH_LONG).show();

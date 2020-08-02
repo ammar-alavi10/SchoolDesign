@@ -17,7 +17,6 @@ import java.net.URL;
 
 public class ShowNotes extends AppCompatActivity {
 
-    private String name, url;
     private PDFView pdfView;
 
     @Override
@@ -25,8 +24,7 @@ public class ShowNotes extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show_notes);
 
-        name = getIntent().getStringExtra("notestitle");
-        url = getIntent().getStringExtra("notesurl");
+        String url = getIntent().getStringExtra("notesurl");
 
         pdfView = findViewById(R.id.pdf_view);
         new RetrievePdfStream().execute(url);

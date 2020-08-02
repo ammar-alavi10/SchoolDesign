@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.view.View;
 
@@ -20,6 +21,12 @@ public class KidsLandingPage extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_kids_landing_page);
 
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED);
     }
 
     public void onLearnPressed(View view) {
@@ -51,5 +58,9 @@ public class KidsLandingPage extends AppCompatActivity {
 
     public void onBalloonPopperPressed(View view) {
         startActivity(new Intent(getApplicationContext(), BalloonMain.class));
+    }
+
+    public void onImageSlidePressed(View view) {
+        startActivity(new Intent(KidsLandingPage.this, ImageGame.class));
     }
 }

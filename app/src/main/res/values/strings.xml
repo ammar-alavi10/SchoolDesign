@@ -137,4 +137,18 @@
     <string name="max_number">99</string>
     <string name="play_game">Play Game</string>
     <string name="popping_pin">Popping Pin</string>
+
+    <string name="brain">Excel-Brain booster Programme</string>
+    <string name="doubt">Doubt clearing session</string>
+    <string name="environmentfriendly">Environmental Awareness</string>
+    <string name="testseries">Test Series for Students</string>
+    <string name="childdiscover">Let the Child Discover Itself</string>
+    <string name="childdiscover_text">Global standards of teaching developed by immense research and social experiments are core of our curriculum which is “Self-Focus” and “Self-Competitive”, we focus on each child and find out it’s inner excellence in critical thinking, creativeness, expressiveness and communication skills that are needed to be excelled at its best to survive and compete in rapidly changing world of now and future. Inculcating traditional values, seven must need skills of life that are Focus and Self-Control, Perspective-Taking, Communication, Making Connections, Critical Thinking, Taking on Challenges, Self-Directed, Engaged Learning and development of proper habits allows child to take-up and maintain a lifestyle which will help him to maintain balance in every aspect of life and obtain complete strength of body, mind and soul. Collectively they will endorse a unifying force in life and act as a pillar of strong foundation for responsible Human Being in future world.</string>
+    <string name="curriculum">We provide education with an objective to empower students to make decisions, to find creative solutions and plan effective action strategies.</string>
+    <string name="vision">To see a world full of individuals at the highest level of humanity and sprituality.</string>
+    <string name="mission">Mission to transform each individual by giving them the power, opportunities and culture to attain the highest level of humanity.</string>
+    <string name="address">Narayanpur Road Kirarod,\nPost Pragpura Tehsil Pawta,\nJaipur, Rajasthan-303107</string>
+    <string name="phoneno">+91–98284 94916</string>
+    <string name="mail">shreekrishnanationalschool@gmail.com\ndirector@sknse.com</string>
+
 </resources>

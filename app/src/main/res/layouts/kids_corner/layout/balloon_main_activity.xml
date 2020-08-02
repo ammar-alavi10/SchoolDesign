@@ -15,7 +15,8 @@
         android:layout_centerInParent="true"
         android:layout_marginLeft="5sp"
         android:text="a"
-        android:textSize="40sp"/>
+        android:textColor="#000"
+        android:textSize="80sp"/>
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -77,6 +78,7 @@
         <Button
             android:id="@+id/go_button"
             style="?android:borderlessButtonStyle"
+            android:textColor="#ff0000"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"

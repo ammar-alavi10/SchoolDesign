@@ -3,6 +3,7 @@ package com.ammar.shreeKrishnaNationalSchoolOfExcellence.Sknse;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
@@ -27,6 +28,8 @@ public class StartActivity extends AppCompatActivity {
 
         mAuth = FirebaseAuth.getInstance();
         user = mAuth.getCurrentUser();
+        String sharedPrefFile = "com.ammar.shreeKrishnaNationalSchoolOfExcellence";
+        SharedPreferences preferences = getSharedPreferences(sharedPrefFile, MODE_PRIVATE);
         if(user != null)
         {
             logintv.setText("Profile");
@@ -62,5 +65,9 @@ public class StartActivity extends AppCompatActivity {
         else {
             startActivity(new Intent(StartActivity.this, LoginActivity.class));
         }
+    }
+
+    public void AboutUsPressed(View view) {
+        startActivity(new Intent(StartActivity.this, AboutUs.class));
     }
 }

@@ -24,11 +24,12 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
+import java.util.Objects;
+
 public class UploadNotes extends AppCompatActivity {
 
     private EditText noteTitle;
     private FirebaseFirestore db;
-    private UploadTask uploadTask;
     private StorageReference storage;
     private NotesModel notesModel;
     private Uri pdfFile;
@@ -64,7 +65,7 @@ public class UploadNotes extends AppCompatActivity {
     }
 
     public void ShowNotes(View view) {
-        Intent intent = new Intent(UploadNotes.this, NotesList.class);
+        Intent intent = new Intent(UploadNotes.this, ShowNotesList.class);
         intent.putExtra("subject_name", subject);
         intent.putExtra("class_name", class_name);
         startActivity(intent);
@@ -81,12 +82,12 @@ public class UploadNotes extends AppCompatActivity {
         if(pdfFile != null && !title.equals(""))
         {
             final StorageReference reference = storage.child(System.currentTimeMillis() + "." + getExt(pdfFile));
-            uploadTask = reference.putFile(pdfFile);
-            Task<Uri> urlTask = uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
+            UploadTask uploadTask = reference.putFile(pdfFile);
+            uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
                 @Override
                 public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
                     if (!task.isSuccessful()){
-                        throw task.getException();
+                        throw Objects.requireNonNull(task.getException());
                     }
                     return reference.getDownloadUrl();
                 }

@@ -12,6 +12,7 @@
         android:id="@+id/classcard"
         android:padding="8dp"
         app:cardCornerRadius="15dp"
+        app:cardElevation="8dp"
         android:elevation="8dp"
         android:layout_marginBottom="10dp">
 
