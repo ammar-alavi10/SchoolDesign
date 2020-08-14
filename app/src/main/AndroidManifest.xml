@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.ammar.shreeKrishnaNationalSchoolOfExcellence">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
@@ -12,7 +11,20 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".KidsCorner.activity.ImageGame"></activity>
+        <activity android:name=".Sknse.TestList"></activity>
+        <activity android:name=".Sknse.TestActivity" />
+        <activity android:name=".Sknse.AddQuestion" />
+        <activity android:name=".Sknse.MakeQuizActivity" />
+        <activity android:name=".ChatApp.ChatMainActivity" />
+        <activity android:name=".Sknse.VerifyPhoneActivity" />
+        <activity android:name=".Sknse.PhoneAuth">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".KidsCorner.activity.ImageGame" />
         <activity android:name=".Sknse.AboutUs" />
         <activity android:name=".Sknse.ShowAnnouncementList" />
         <activity android:name=".Sknse.AddAnnouncement" />
@@ -29,13 +41,7 @@
         <activity android:name=".Sknse.SubjectActivity" />
         <activity android:name=".Sknse.SelectSubjectActivity" />
         <activity android:name=".Sknse.LoginActivity" />
-        <activity android:name=".Sknse.StartActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+        <activity android:name=".Sknse.StartActivity" />
         <activity android:name=".KidsCorner.activity.KidsLandingPage" />
         <activity
             android:name=".KidsCorner.activity.SplashScreen"

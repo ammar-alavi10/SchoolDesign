@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Sknse.MakeQuizActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="30dp"
+            android:inputType="text"
+            android:id="@+id/testtitle"
+            android:textAlignment="center"
+            android:textSize="25dp"
+            android:hint="Enter Test Title" />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="30dp"
+            android:inputType="number"
+            android:id="@+id/testtime"
+            android:textAlignment="center"
+            android:textSize="25dp"
+            android:hint="Enter Test time in minutes" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Add Questions"
+            android:onClick="AddQuestions"
+            android:layout_marginTop="20dp"/>
+
+    </LinearLayout>
+
+
+</RelativeLayout>

@@ -10,5 +10,9 @@
         android:id="@+id/notes_show"
         android:title="Notes"
         app:showAsAction="never"/>
+    <item
+        android:id="@+id/test_show"
+        android:title="Test"
+        app:showAsAction="never"/>
 
 </menu>

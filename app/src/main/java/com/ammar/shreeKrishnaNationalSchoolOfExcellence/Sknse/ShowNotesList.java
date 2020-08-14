@@ -1,11 +1,14 @@
 package com.ammar.shreeKrishnaNationalSchoolOfExcellence.Sknse;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -79,6 +82,57 @@ public class ShowNotesList extends AppCompatActivity {
                 intent.putExtra("notestitle", notesTitle.get(position));
                 intent.putExtra("notesurl", notesUrl.get(position));
                 startActivity(intent);
+            }
+
+            @Override
+            public void onLongClick(View v, final int position) {
+                SharedPreferences preferences = getSharedPreferences("com.ammar.shreeKrishnaNationalSchoolOfExcellence", MODE_PRIVATE);
+                int category = preferences.getInt("category", -1);
+                if(category == 1)
+                {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(ShowNotesList.this);
+                    builder.setTitle("Confirm Delete !");
+                    builder.setMessage("You are about to delete this Note. Do you really want to proceed ?");
+                    builder.setCancelable(false);
+                    builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            final FirebaseFirestore db = FirebaseFirestore.getInstance();
+                            db.collection("notes").whereEqualTo("name", notesTitle.get(position)).whereEqualTo("subject", subject + class_name).
+                                    get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                @Override
+                                public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                    if(task.isSuccessful())
+                                    {
+                                        if (task.getResult() != null) {
+                                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                                String id = document.getId();
+                                                db.collection("notes").document(id).delete().addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                    @Override
+                                                    public void onComplete(@NonNull Task<Void> task) {
+                                                        if (task.isSuccessful()) {
+                                                            InstantiateRecyclerView();
+                                                            Toast.makeText(getApplicationContext(), "Note Deleted", Toast.LENGTH_SHORT).show();
+                                                        }
+                                                    }
+                                                });
+                                            }
+                                        }
+                                    }
+                                }
+                            });
+                        }
+                    });
+
+                    builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+
+                        }
+                    });
+
+                    builder.show();
+                }
             }
         };
         recyclerView.setAdapter(new NotesListAdapter(notesTitle, notesUrl, listener));

@@ -106,6 +106,19 @@ public class SubjectActivity extends AppCompatActivity {
                 intent.putExtra("class_name", class_name);
                 startActivity(intent);
                 break;
+            case R.id.test_show:
+            case R.id.show_test:
+                intent = new Intent(SubjectActivity.this, TestList.class);
+                intent.putExtra("subject_name", subject_name);
+                intent.putExtra("class_name", class_name);
+                startActivity(intent);
+                break;
+            case R.id.add_test:
+                intent = new Intent(SubjectActivity.this, MakeQuizActivity.class);
+                intent.putExtra("subject_name", subject_name);
+                intent.putExtra("class_name", class_name);
+                startActivity(intent);
+                break;
         }
         return super.onOptionsItemSelected(item);
     }

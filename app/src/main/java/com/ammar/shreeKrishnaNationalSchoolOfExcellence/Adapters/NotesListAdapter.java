@@ -44,9 +44,10 @@ public class NotesListAdapter extends RecyclerView.Adapter {
 
     public interface RecyclerNotesViewClickListener{
         void onClick(View v, int position);
+        void onLongClick(View v, int position);
     }
 
-    private class NotesViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    private class NotesViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
 
         TextView notesTitle;
 
@@ -54,11 +55,18 @@ public class NotesListAdapter extends RecyclerView.Adapter {
             super(itemView);
             notesTitle = itemView.findViewById(R.id.video_title_tv);
             itemView.setOnClickListener(this);
+            itemView.setOnLongClickListener(this);
         }
 
         @Override
         public void onClick(View view) {
             listener.onClick(view, getAdapterPosition());
+        }
+
+        @Override
+        public boolean onLongClick(View view) {
+            listener.onLongClick(view, getAdapterPosition());
+            return true;
         }
     }
 }

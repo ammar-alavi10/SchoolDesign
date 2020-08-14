@@ -15,4 +15,14 @@
         android:title="Add Announcement"
         app:showAsAction="never"/>
 
+    <item
+        android:id="@+id/add_test"
+        android:title="Add Test"
+        app:showAsAction="never"/>
+
+    <item
+        android:id="@+id/show_test"
+        android:title="Show Tests"
+        app:showAsAction="never"/>
+
 </menu>

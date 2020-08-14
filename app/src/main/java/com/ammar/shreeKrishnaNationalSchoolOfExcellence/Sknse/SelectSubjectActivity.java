@@ -122,12 +122,6 @@ public class SelectSubjectActivity extends AppCompatActivity {
             case R.id.logout_student:
                 LogoutUser();
                 break;
-            case R.id.refresh:
-                InstantiateRecyclerView();
-                break;
-            case R.id.refresh_student:
-                InstantiateRecyclerViewStudent();
-                break;
         }
         return super.onOptionsItemSelected(item);
     }

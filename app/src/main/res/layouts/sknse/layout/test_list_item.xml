@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="5dp"
+    android:layout_margin="10dp"
+    app:cardCornerRadius="7dp"
+    android:elevation="8dp"
+    app:cardElevation="8dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#FFFDE0"
+        android:paddingLeft="5dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Test Name"
+            android:textSize="20sp"
+            android:padding="5dp"
+            android:id="@+id/test_title"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="3dp"
+            android:background="#000"
+            android:layout_below="@id/test_title"
+            android:id="@+id/view_hor"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Test Time"
+            android:layout_below="@id/view_hor"
+            android:textSize="17sp"
+            android:padding="5dp"
+            android:id="@+id/test_time"/>
+
+    </RelativeLayout>
+
+</androidx.cardview.widget.CardView>

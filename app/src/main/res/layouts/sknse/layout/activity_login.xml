@@ -26,6 +26,7 @@
             android:layout_marginHorizontal="40dp"
             android:layout_marginTop="80dp"
             android:hint="Select Category"
+            android:imeOptions="actionNext"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
             app:endIconMode="dropdown_menu"
             android:padding="5dp">
@@ -45,6 +46,8 @@
             android:layout_marginHorizontal="40dp"
             android:drawableLeft="@drawable/username_icon"
             android:drawablePadding="15dp"
+            android:inputType="text"
+            android:imeOptions="actionNext"
             android:hint="User Id"
             android:padding="5dp"
             android:background="#F5F5F5"

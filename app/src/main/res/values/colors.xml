@@ -104,4 +104,11 @@
 
     <color name="ftb_main_color">#4BD7BF</color>
     <color name="ftb_selected_dot_color">#5E5B95</color>
+
+    <color name="colorIndivateTab">#FFFFFF</color>
+    <color name="colorCardView">#f7f7f7</color>
+    <color name="grey_200">#EEEEEE</color>
+    <color name="grey_500">#a4a4a4</color>
+    <color name="grey_100">#F5F5F5</color>
+    <color name="grey_800">#212121</color>
 </resources>

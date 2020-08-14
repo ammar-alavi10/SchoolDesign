@@ -3,6 +3,7 @@ package com.ammar.shreeKrishnaNationalSchoolOfExcellence.KidsCorner.activity;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
@@ -29,6 +30,7 @@ public class ImageGame extends AppCompatActivity {
     private ImageView image;
     private int position;
     private Button prev, next;
+    MediaPlayer mediaPlayer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +39,8 @@ public class ImageGame extends AppCompatActivity {
         downloadurl = new ArrayList<>();
         image = findViewById(R.id.slideimage);
         position = 0;
+        mediaPlayer = MediaPlayer.create(this, R.raw.image_game_music);
+        mediaPlayer.start();
         prev = findViewById(R.id.prevbtn);
         next = findViewById(R.id.nextbtn);
         storageReference = FirebaseStorage.getInstance().getReference().child("Slideimages");
@@ -73,6 +77,13 @@ public class ImageGame extends AppCompatActivity {
                     Toast.makeText(ImageGame.this, "Problem in loading Images..", Toast.LENGTH_LONG).show();
                 }
             });
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        mediaPlayer.reset();
+        mediaPlayer.release();
     }
 
     public void NextImage(View view) {
