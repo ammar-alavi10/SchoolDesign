@@ -12,6 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="60dp"
+        tools:listitem="@layout/announcement_items"
         android:id="@+id/recycler_view_subject_announcement"/>
 
 </RelativeLayout>

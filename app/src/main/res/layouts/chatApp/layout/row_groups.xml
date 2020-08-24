@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:padding="10dp">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:id="@+id/face"
+            android:layout_marginEnd="8dp"
+            android:src="@drawable/group"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:id="@+id/group_name"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:layout_toEndOf="@id/face"
+            android:textColor="@color/black"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:id="@+id/sender_name"
+            android:textColor="#000"
+            android:layout_below="@id/group_name"
+            android:layout_toEndOf="@id/face" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:maxLines="2"
+            android:textColor="#000"
+            android:id="@+id/message_last"
+            android:layout_below="@id/sender_name"
+            android:layout_toEndOf="@id/face" />
+
+    </RelativeLayout>
+
+</androidx.cardview.widget.CardView>

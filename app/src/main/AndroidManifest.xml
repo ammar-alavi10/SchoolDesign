@@ -11,11 +11,17 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Sknse.TestList"></activity>
+        <activity android:name=".ChatApp.GroupSelectActivity"></activity>
+        <activity android:name=".ChatApp.GroupActivity" />
+        <activity android:name=".ChatApp.CreateGroupActivity" />
+        <activity android:name=".ChatApp.ChatActivity" />
+        <activity android:name=".Sknse.TestList" />
         <activity android:name=".Sknse.TestActivity" />
         <activity android:name=".Sknse.AddQuestion" />
         <activity android:name=".Sknse.MakeQuizActivity" />
-        <activity android:name=".ChatApp.ChatMainActivity" />
+        <activity
+            android:name=".ChatApp.ChatMainActivity"
+            android:theme="@style/AppTheme2" />
         <activity android:name=".Sknse.VerifyPhoneActivity" />
         <activity android:name=".Sknse.PhoneAuth">
             <intent-filter>
@@ -58,6 +64,23 @@
         <activity
             android:name=".KidsCorner.balloonpoper.BalloonMain"
             android:screenOrientation="sensorLandscape" />
+
+        <service
+            android:name=".ChatApp.Notifications.FirebaseService"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="com.google.firebase.INSTANCE_ID_SERVICE" />
+            </intent-filter>
+        </service>
+        <service
+            android:name=".ChatApp.Notifications.FirebaseMessaging"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
     </application>
 
 </manifest>

@@ -58,6 +58,7 @@ public class ShowNotesList extends AppCompatActivity {
                 if (task.isSuccessful()) {
                     if (task.getResult() != null) {
                         for (QueryDocumentSnapshot document : task.getResult()) {
+
                             Log.d("QueryResult", document.getId() + " => " + document.getData());
                             HashMap<String, String> videoModel = (HashMap) document.getData();
                             notesTitle.add(videoModel.get("name"));

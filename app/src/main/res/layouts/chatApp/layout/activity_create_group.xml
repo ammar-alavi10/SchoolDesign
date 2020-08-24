@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#eee"
+    tools:context=".ChatApp.CreateGroupActivity">
+
+    <include layout="@layout/select_toolbar"
+        android:id="@+id/tool"/>
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="20dp"
+        android:src="@drawable/create_group"
+        android:layout_below="@id/tool"
+        android:id="@+id/group_icon"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/group_icon"
+        android:layout_marginTop="10dp"
+        android:layout_marginHorizontal="20dp"
+        android:background="@color/white"
+        android:inputType="text"
+        android:padding="10dp"
+        android:id="@+id/group_title_et"
+        android:hint="Enter Group Title"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="100dp"
+        android:layout_marginHorizontal="20dp"
+        android:layout_below="@id/group_title_et"
+        android:layout_marginTop="10dp"
+        android:background="@color/white"
+        android:id="@+id/group_desc_et"
+        android:padding="10dp"
+        android:inputType="textMultiLine|textCapSentences"
+        android:hint="Enter Group Description"/>
+    
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/createGroupBtn"
+        android:layout_margin="20dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:background="#442C2E"
+        android:src="@drawable/ic_done_white"/>
+    
+</RelativeLayout>

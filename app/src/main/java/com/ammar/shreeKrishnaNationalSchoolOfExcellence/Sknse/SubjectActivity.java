@@ -15,6 +15,7 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.ammar.shreeKrishnaNationalSchoolOfExcellence.Adapters.AnnouncementListAdapter;
+import com.ammar.shreeKrishnaNationalSchoolOfExcellence.ChatApp.ChatMainActivity;
 import com.ammar.shreeKrishnaNationalSchoolOfExcellence.Models.AnnouncementModel;
 import com.ammar.shreeKrishnaNationalSchoolOfExcellence.R;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -116,6 +117,12 @@ public class SubjectActivity extends AppCompatActivity {
             case R.id.add_test:
                 intent = new Intent(SubjectActivity.this, MakeQuizActivity.class);
                 intent.putExtra("subject_name", subject_name);
+                intent.putExtra("class_name", class_name);
+                startActivity(intent);
+                break;
+            case R.id.chat_student:
+            case R.id.chat_teacher:
+                intent = new Intent(SubjectActivity.this, ChatMainActivity.class);
                 intent.putExtra("class_name", class_name);
                 startActivity(intent);
                 break;

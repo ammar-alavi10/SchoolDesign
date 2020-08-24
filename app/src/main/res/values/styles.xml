@@ -13,6 +13,10 @@
         <item name="windowNoTitle">true</item>
     </style>
 
+    <style name="Checkbox" parent="Widget.AppCompat.CompoundButton.CheckBox">
+        <item name="buttonTint">#442C2E</item>
+    </style>
+
     <style name="AlertDialog" parent="Theme.AppCompat.Light.Dialog"/>
 
     <style name="MyActionButtonOverflow" parent="android:style/Widget.Holo.Light.ActionButton.Overflow">
@@ -57,6 +61,24 @@
         <item name="colorPrimaryDark">#FFCC00</item>
         <item name="colorAccent">#4fa881</item>
         <item name="android:windowBackground">@drawable/bg</item>
+    </style>
+
+    <style name="AppTheme2" parent="Base.Theme.AppCompat">
+    </style>
+
+    <style name="NavTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
+        ...
+        <item name="bottomNavigationStyle">@style/Widget.MaterialComponents.BottomNavigationView.Colored</item>
+        <item name="colorPrimary">#FEDBD0</item>
+        <item name="colorOnPrimary">#442C2E</item>
+
+    </style>
+
+    <style name="Theme.App" parent="Theme.MaterialComponents.Light">
+        ...
+        <item name="bottomNavigationStyle">@style/Widget.MaterialComponents.BottomNavigationView.Colored</item>
+        <item name="colorPrimary">#FEDBD0</item>
+        <item name="colorOnPrimary">#442C2E</item>
     </style>
 
 </resources>

@@ -9,6 +9,7 @@
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        tools:listitem="@layout/test_list_item"
         android:id="@+id/test_list_recycler"/>
 
 </RelativeLayout>

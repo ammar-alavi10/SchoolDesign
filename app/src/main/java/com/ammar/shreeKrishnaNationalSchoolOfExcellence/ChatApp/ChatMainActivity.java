@@ -1,142 +1,132 @@
 package com.ammar.shreeKrishnaNationalSchoolOfExcellence.ChatApp;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.ActionBar;
+
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.viewpager.widget.ViewPager;
+import androidx.fragment.app.FragmentTransaction;
 
-import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.widget.EditText;
-import android.widget.Toast;
-
+import com.ammar.shreeKrishnaNationalSchoolOfExcellence.ChatApp.Notifications.Token;
 import com.ammar.shreeKrishnaNationalSchoolOfExcellence.R;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.android.material.tabs.TabLayout;
+
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
+
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.iid.FirebaseInstanceId;
 
 public class ChatMainActivity extends AppCompatActivity {
 
-    private Toolbar mToolbar;
-    private ViewPager myViewPager;
-    private TabLayout myTabLayout;
-    private TabsAccessorAdapter myTabsAccessorAdapter;
-
-    private FirebaseUser currentUser;
-    private FirebaseAuth mAuth;
-    private DatabaseReference RootRef;
-    private String currentUserID;
+    ActionBar actionBar;
+    BottomNavigationView bottomNavigationView;
+    String class_name;
+    String mUid;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat_main);
 
-        mToolbar = (Toolbar) findViewById(R.id.main_page_toolbar);
-        setSupportActionBar(mToolbar);
-        getSupportActionBar().setTitle("");
+        actionBar = getSupportActionBar();
+        actionBar.setTitle("");
 
-        mAuth = FirebaseAuth.getInstance();
-        currentUser = mAuth.getCurrentUser();
-        currentUserID = mAuth.getCurrentUser().getUid();
-        RootRef = FirebaseDatabase.getInstance().getReference();
+        bottomNavigationView = findViewById(R.id.bottom_nav);
+        bottomNavigationView.setOnNavigationItemSelectedListener(itemSelectedListener);
 
-        myViewPager = (ViewPager) findViewById(R.id.main_tabs_pager);
-        myTabsAccessorAdapter = new TabsAccessorAdapter(getSupportFragmentManager());
-        myViewPager.setAdapter(myTabsAccessorAdapter);
+        mUid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        SharedPreferences preferences = getSharedPreferences("com.ammar.shreeKrishnaNationalSchoolOfExcellence", MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString("current_uid", mUid);
+        editor.apply();
+
+        class_name = getIntent().getStringExtra("class_name");
+
+        actionBar.setTitle("Chat");
+        ChatListFragment chatListFragment = new ChatListFragment();
+        Bundle bundle = new Bundle();
+        bundle.putString("class_name", class_name);
+        chatListFragment.setArguments(bundle);
+        FragmentTransaction ft1 = getSupportFragmentManager().beginTransaction();
+        ft1.replace(R.id.frame_chat, chatListFragment, "");
+        ft1.commit();
+
+        updateToken(FirebaseInstanceId.getInstance().getToken());
 
 
-        myTabLayout = (TabLayout) findViewById(R.id.main_tabs);
-        myTabLayout.setupWithViewPager(myViewPager);
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu)
-    {
-        super.onCreateOptionsMenu(menu);
-
-        getMenuInflater().inflate(R.menu.chat_options_main, menu);
-
-        return true;
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.chat_menu_nav, menu);
+        return super.onCreateOptionsMenu(menu);
     }
-
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item)
-    {
-        super.onOptionsItemSelected(item);
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
 
-        if (item.getItemId() == R.id.main_create_group_option)
+        if (item.getItemId() == R.id.create_group)
         {
-            RequestNewGroup();
+            Intent intent = new Intent(ChatMainActivity.this, CreateGroupActivity.class);
+            intent.putExtra("class_name", class_name);
+            startActivity(intent);
         }
-        if (item.getItemId() == R.id.main_find_friends_option)
-        {
-            //SendUserToFindFriendsActivity();
-        }
-
-        return true;
+        return super.onOptionsItemSelected(item);
     }
 
-    private void RequestNewGroup()
+    public void updateToken(String token)
     {
-        AlertDialog.Builder builder = new AlertDialog.Builder(ChatMainActivity.this, R.style.AlertDialog);
-        builder.setTitle("Enter Group Name :");
-
-        final EditText groupNameField = new EditText(ChatMainActivity.this);
-        groupNameField.setHint("Group Name");
-        builder.setView(groupNameField);
-
-        builder.setPositiveButton("Create", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i)
-            {
-                String groupName = groupNameField.getText().toString();
-
-                if (TextUtils.isEmpty(groupName))
-                {
-                    Toast.makeText(ChatMainActivity.this, "Please write Group Name...", Toast.LENGTH_SHORT).show();
-                }
-                else
-                {
-                    CreateNewGroup(groupName);
-                }
-            }
-        });
-
-        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i)
-            {
-                dialogInterface.cancel();
-            }
-        });
-
-        builder.show();
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Tokens");
+        Token mToken = new Token(token);
+        databaseReference.child(mUid).setValue(mToken);
     }
 
+    private BottomNavigationView.OnNavigationItemSelectedListener itemSelectedListener =
+            new BottomNavigationView.OnNavigationItemSelectedListener() {
+                @Override
+                public boolean onNavigationItemSelected(@NonNull MenuItem item) {
 
-
-    private void CreateNewGroup(final String groupName)
-    {
-        RootRef.child("Groups").child(groupName).setValue("")
-                .addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task)
+                    switch (item.getItemId())
                     {
-                        if (task.isSuccessful())
-                        {
-                            Toast.makeText(ChatMainActivity.this, groupName + " group is Created Successfully...", Toast.LENGTH_SHORT).show();
-                        }
+                        case R.id.chat_home:
+                            actionBar.setTitle("Chat");
+                            ChatListFragment chatListFragment = new ChatListFragment();
+                            Bundle bundle = new Bundle();
+                            bundle.putString("class_name", class_name);
+                            chatListFragment.setArguments(bundle);
+                            FragmentTransaction ft1 = getSupportFragmentManager().beginTransaction();
+                            ft1.replace(R.id.frame_chat, chatListFragment, "");
+                            ft1.commit();
+                            return true;
+                        case R.id.chat_users:
+                            actionBar.setTitle("Users");
+                            UsersFragment usersFragment = new UsersFragment();
+                            Bundle bundle2 = new Bundle();
+                            bundle2.putString("class_name", class_name);
+                            usersFragment.setArguments(bundle2);
+                            FragmentTransaction ft2 = getSupportFragmentManager().beginTransaction();
+                            ft2.replace(R.id.frame_chat, usersFragment, "");
+                            ft2.commit();
+                            return true;
+                        case R.id.groups:
+                            actionBar.setTitle("Groups");
+                            GroupFragment groupFragment = new GroupFragment();
+                            Bundle bundle3 = new Bundle();
+                            bundle3.putString("class_name", class_name);
+                            groupFragment.setArguments(bundle3);
+                            FragmentTransaction ft3 = getSupportFragmentManager().beginTransaction();
+                            ft3.replace(R.id.frame_chat, groupFragment, "");
+                            ft3.commit();
+                            return true;
                     }
-                });
-    }
+                    return false;
+                }
+            };
 }

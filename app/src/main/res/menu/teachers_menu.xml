@@ -25,4 +25,10 @@
         android:title="Show Tests"
         app:showAsAction="never"/>
 
+    <item
+        android:id="@+id/chat_teacher"
+        android:title="Chat"
+        app:showAsAction="always"
+        android:icon="@drawable/ic_chat_white"/>
+
 </menu>
