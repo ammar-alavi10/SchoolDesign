@@ -58,6 +58,7 @@ public class PaintActivity extends Activity implements OnClickListener {
     private DrawingView drawView;
     //buttons
     private ImageButton currPaint, drawBtn, eraseBtn, newBtn, saveBtn, opacityBtn;
+    private TextView tv;
     //sizes
     private float smallBrush, mediumBrush, largeBrush;
 
@@ -66,7 +67,7 @@ public class PaintActivity extends Activity implements OnClickListener {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_paint);
 
-        TextView tv = findViewById(R.id.DrawWord);
+        tv = findViewById(R.id.DrawWord);
         int random = new Random().nextInt((65) + 1);
         String newWord = words[random];
         newWord = newWord.toUpperCase();
@@ -401,7 +402,6 @@ public class PaintActivity extends Activity implements OnClickListener {
         int random = new Random().nextInt((65) + 1);
         String newWord = words[random];
         newWord = newWord.toUpperCase();
-        TextView tv = view.findViewById(R.id.DrawWord);
         tv.setText(newWord);
         drawView.startNew();
     }

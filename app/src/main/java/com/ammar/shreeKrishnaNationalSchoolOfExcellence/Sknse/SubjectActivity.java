@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Toast;
 
 import com.ammar.shreeKrishnaNationalSchoolOfExcellence.Adapters.AnnouncementListAdapter;
@@ -30,10 +31,7 @@ import java.util.List;
 
 public class SubjectActivity extends AppCompatActivity {
 
-    private String subject_name, class_name;
-    private List<AnnouncementModel> announcementModels;
-    private RecyclerView recyclerView;
-    private FirebaseFirestore db;
+    private String subject_name, class_name, chapter_no;
     private int category;
 
     @Override
@@ -41,23 +39,18 @@ public class SubjectActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_subject);
 
-        announcementModels = new ArrayList<>();
-
         String sharedPrefFile = "com.ammar.shreeKrishnaNationalSchoolOfExcellence";
         SharedPreferences preferences = getSharedPreferences(sharedPrefFile, MODE_PRIVATE);
         category = preferences.getInt("category", -1);
-        db = FirebaseFirestore.getInstance();
 
         subject_name = getIntent().getStringExtra("subject_name");
         class_name = getIntent().getStringExtra("class_name");
+        chapter_no = "chapter" + getIntent().getStringExtra("chapter_no");
 
         Toolbar toolbar = findViewById(R.id.select_subject_toolbar);
-        toolbar.setTitle("");
+        toolbar.setTitle(subject_name);
         setSupportActionBar(toolbar);
 
-        recyclerView = findViewById(R.id.recycler_view_subject_announcement);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        InstantiateRecyclerView();
     }
 
     @Override
@@ -65,10 +58,6 @@ public class SubjectActivity extends AppCompatActivity {
         if(category == 1)
         {
             getMenuInflater().inflate(R.menu.teachers_menu, menu);
-        }
-        else if(category == 2)
-        {
-            getMenuInflater().inflate(R.menu.subject_student_menu, menu);
         }
         return super.onCreateOptionsMenu(menu);
     }
@@ -81,83 +70,70 @@ public class SubjectActivity extends AppCompatActivity {
                 Intent intent = new Intent(SubjectActivity.this, UploadVideoActivity.class);
                 intent.putExtra("subject_name",subject_name);
                 intent.putExtra("class_name", class_name);
+                intent.putExtra("chapter_no", chapter_no);
                 startActivity(intent);
                 break;
             case R.id.notes_upload:
                 intent = new Intent(SubjectActivity.this, UploadNotes.class);
                 intent.putExtra("subject_name",subject_name);
                 intent.putExtra("class_name", class_name);
+                intent.putExtra("chapter_no", chapter_no);
                 startActivity(intent);
                 break;
             case R.id.announcement:
                 intent = new Intent(SubjectActivity.this, AddAnnouncement.class);
                 intent.putExtra("subject_name",subject_name);
                 intent.putExtra("class_name", class_name);
-                startActivity(intent);
-                break;
-            case R.id.notes_show:
-                intent = new Intent(SubjectActivity.this, ShowNotesList.class);
-                intent.putExtra("subject_name", subject_name);
-                intent.putExtra("class_name", class_name);
-                startActivity(intent);
-                break;
-            case R.id.video_show:
-                intent = new Intent(SubjectActivity.this, ShowVideoList.class);
-                intent.putExtra("subject_name", subject_name);
-                intent.putExtra("class_name", class_name);
-                startActivity(intent);
-                break;
-            case R.id.test_show:
-            case R.id.show_test:
-                intent = new Intent(SubjectActivity.this, TestList.class);
-                intent.putExtra("subject_name", subject_name);
-                intent.putExtra("class_name", class_name);
+                intent.putExtra("chapter_no", chapter_no);
                 startActivity(intent);
                 break;
             case R.id.add_test:
                 intent = new Intent(SubjectActivity.this, MakeQuizActivity.class);
                 intent.putExtra("subject_name", subject_name);
                 intent.putExtra("class_name", class_name);
-                startActivity(intent);
-                break;
-            case R.id.chat_student:
-            case R.id.chat_teacher:
-                intent = new Intent(SubjectActivity.this, ChatMainActivity.class);
-                intent.putExtra("class_name", class_name);
+                intent.putExtra("chapter_no", chapter_no);
                 startActivity(intent);
                 break;
         }
         return super.onOptionsItemSelected(item);
     }
 
-    private void InstantiateRecyclerView() {
-        db.collection("announcements")
-                .whereEqualTo("subject", subject_name + class_name)
-                .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                if (task.isSuccessful()) {
-                    if (task.getResult() != null) {
-                        for (QueryDocumentSnapshot document : task.getResult()) {
-                            Log.d("QueryResult", document.getId() + " => " + document.getData());
-                            HashMap<String, String> model = (HashMap) document.getData();
-                            AnnouncementModel announcementModel = new AnnouncementModel();
-                            announcementModel.setTitle(model.get("title"));
-                            announcementModel.setDescription(model.get("description"));
-                            announcementModel.setDate(model.get("date"));
-                            announcementModels.add(announcementModel);
-                        }
-                        setAdapter();
-                    }
-                } else {
-                    Toast.makeText(getApplicationContext(), "Loading Failed!! Try Again...", Toast.LENGTH_LONG).show();
-                    Log.d("Category", "get failed with ", task.getException());
-                }
-            }
-        });
+    public void ChaptersClicked(View view) {
+        Intent intent = new Intent(SubjectActivity.this, TestList.class);
+        intent.putExtra("subject_name", subject_name);
+        intent.putExtra("class_name", class_name);
+        intent.putExtra("chapter_no", chapter_no);
+        startActivity(intent);
+
     }
 
-    private void setAdapter() {
-        recyclerView.setAdapter(new AnnouncementListAdapter(announcementModels));
+    public void VideosClicked(View view) {
+        Intent intent = new Intent(SubjectActivity.this, ShowVideoList.class);
+        intent.putExtra("subject_name", subject_name);
+        intent.putExtra("class_name", class_name);
+        intent.putExtra("chapter_no", chapter_no);
+        startActivity(intent);
+    }
+
+    public void NotesClicked(View view) {
+        Intent intent = new Intent(SubjectActivity.this, ShowNotesList.class);
+        intent.putExtra("subject_name", subject_name);
+        intent.putExtra("class_name", class_name);
+        intent.putExtra("chapter_no", chapter_no);
+        startActivity(intent);
+    }
+
+    public void AnnouncementClicked(View view) {
+        Intent intent = new Intent(SubjectActivity.this, ShowAnnouncementList.class);
+        intent.putExtra("subject_name",subject_name);
+        intent.putExtra("class_name", class_name);
+        intent.putExtra("chapter_no", chapter_no);
+        startActivity(intent);
+    }
+
+    public void ChatClicked(View view) {
+        Intent intent = new Intent(SubjectActivity.this, ChatMainActivity.class);
+        intent.putExtra("class_name", class_name);
+        startActivity(intent);
     }
 }

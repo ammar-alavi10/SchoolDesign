@@ -16,7 +16,6 @@ import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.Snackbar;
 import com.ammar.shreeKrishnaNationalSchoolOfExcellence.R;
 import com.ammar.shreeKrishnaNationalSchoolOfExcellence.KidsCorner.fragment.HomeFragment;
-import com.ammar.shreeKrishnaNationalSchoolOfExcellence.KidsCorner.fragment.MultiplicationTableFragment;
 import com.ammar.shreeKrishnaNationalSchoolOfExcellence.KidsCorner.fragment.SlideFragment;
 
 
@@ -69,9 +68,6 @@ public class MainActivity extends AppCompatActivity
                 break;
             case R.id.nav_slideshow:
                 fragment = new SlideFragment();
-                break;
-            case R.id.nav_multi_table:
-                fragment = new MultiplicationTableFragment();
                 break;
             case R.id.nav_exit:
                /* MainActivity.this.finish();

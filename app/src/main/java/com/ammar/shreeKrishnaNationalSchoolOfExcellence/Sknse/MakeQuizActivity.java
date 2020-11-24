@@ -12,7 +12,7 @@ import com.ammar.shreeKrishnaNationalSchoolOfExcellence.R;
 
 public class MakeQuizActivity extends AppCompatActivity {
 
-    String subject_name, class_name;
+    String subject_name, class_name, chapter_no;
     EditText testTitle, testTime;
 
     @Override
@@ -22,6 +22,7 @@ public class MakeQuizActivity extends AppCompatActivity {
 
         subject_name = getIntent().getStringExtra("subject_name");
         class_name = getIntent().getStringExtra("class_name");
+        chapter_no = getIntent().getStringExtra("chapter_no");
 
         testTime = findViewById(R.id.testtime);
         testTitle = findViewById(R.id.testtitle);
@@ -45,6 +46,7 @@ public class MakeQuizActivity extends AppCompatActivity {
         intent.putExtra("test_time", time);
         intent.putExtra("subject_name", subject_name);
         intent.putExtra("class_name", class_name);
+        intent.putExtra("chapter_no", chapter_no);
         startActivity(intent);
         finish();
     }

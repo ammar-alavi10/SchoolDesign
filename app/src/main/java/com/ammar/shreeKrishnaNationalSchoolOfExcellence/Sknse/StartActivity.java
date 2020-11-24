@@ -60,7 +60,7 @@ public class StartActivity extends AppCompatActivity {
     public void loginPressed(View view) {
         if(user != null)
         {
-            startActivity(new Intent(StartActivity.this, SelectSubjectActivity.class));
+            startActivity(new Intent(StartActivity.this, MainScreen.class));
         }
         else {
             startActivity(new Intent(StartActivity.this, LoginActivity.class));
@@ -69,5 +69,9 @@ public class StartActivity extends AppCompatActivity {
 
     public void AboutUsPressed(View view) {
         startActivity(new Intent(StartActivity.this, AboutUs.class));
+    }
+
+    public void NoticeClicked(View view) {
+        startActivity(new Intent(StartActivity.this, NoticeActivity.class));
     }
 }

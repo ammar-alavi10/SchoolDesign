@@ -11,7 +11,15 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ChatApp.GroupSelectActivity"></activity>
+        <activity android:name=".Sknse.TestScores"></activity>
+        <activity android:name=".Sknse.ChapterActivity" />
+        <activity android:name=".Sknse.AboutStudent" />
+        <activity android:name=".Sknse.PhotoActivity" />
+        <activity android:name=".Sknse.MainScreen" />
+        <activity android:name=".Sknse.AddNotice" />
+        <activity android:name=".Sknse.NoticeActivity" />
+        <activity android:name=".KidsCorner.activity.TraceActivity" />
+        <activity android:name=".ChatApp.GroupSelectActivity" />
         <activity android:name=".ChatApp.GroupActivity" />
         <activity android:name=".ChatApp.CreateGroupActivity" />
         <activity android:name=".ChatApp.ChatActivity" />

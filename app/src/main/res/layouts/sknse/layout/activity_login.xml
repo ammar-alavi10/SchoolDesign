@@ -9,8 +9,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="100dp"
-        android:layout_alignParentBottom="true"
+        android:layout_marginTop="40dp"
         android:orientation="vertical">
 
         <ImageView
@@ -24,7 +23,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/text_input_layout"
             android:layout_marginHorizontal="40dp"
-            android:layout_marginTop="80dp"
+            android:layout_marginTop="40dp"
             android:hint="Select Category"
             android:imeOptions="actionNext"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
@@ -61,7 +60,7 @@
             android:id="@+id/password_et"
             android:background="#F5F5F5"
             android:layout_marginHorizontal="40dp"
-            android:drawableLeft="@drawable/password_icon"
+            android:drawableStart="@drawable/password_icon"
             android:drawablePadding="15dp"
             android:hint="Password"
             android:inputType="textPassword"
@@ -78,7 +77,8 @@
             android:background="@drawable/button_bg_gradient"
             android:foreground="?attr/selectableItemBackground"
             android:clickable="true"
-            android:onClick="onLoginPressed"/>
+            android:onClick="onLoginPressed"
+            android:focusable="true" />
 
     </LinearLayout>
 

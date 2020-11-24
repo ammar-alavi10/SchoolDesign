@@ -33,7 +33,7 @@ public class UploadNotes extends AppCompatActivity {
     private StorageReference storage;
     private NotesModel notesModel;
     private Uri pdfFile;
-    private String subject, class_name;
+    private String subject, class_name, chapter_no;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +43,7 @@ public class UploadNotes extends AppCompatActivity {
         notesModel = new NotesModel();
         subject = getIntent().getStringExtra("subject_name");
         class_name = getIntent().getStringExtra("class_name");
+        chapter_no = getIntent().getStringExtra("chapter_no");
         noteTitle = findViewById(R.id.notes_title);
         storage = FirebaseStorage.getInstance().getReference("Notes");
         db = FirebaseFirestore.getInstance();
@@ -68,6 +69,7 @@ public class UploadNotes extends AppCompatActivity {
         Intent intent = new Intent(UploadNotes.this, ShowNotesList.class);
         intent.putExtra("subject_name", subject);
         intent.putExtra("class_name", class_name);
+        intent.putExtra("chapter_no", chapter_no);
         startActivity(intent);
     }
 
@@ -98,7 +100,7 @@ public class UploadNotes extends AppCompatActivity {
                     {
                         Uri downloadUrl = task.getResult();
                         notesModel.setNotesurl(downloadUrl != null ? downloadUrl.toString() : null);
-                        notesModel.setSubject(subject + class_name);
+                        notesModel.setSubject(subject + class_name + chapter_no);
                         notesModel.setName(title);
                         db.collection("notes").add(notesModel).addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
                             @Override

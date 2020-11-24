@@ -44,7 +44,7 @@ public class UploadVideoActivity extends AppCompatActivity {
     FirebaseFirestore db;
     VideoModel member;
     UploadTask uploadTask;
-    String subject, class_name;
+    String subject, class_name, chapter_no;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +53,7 @@ public class UploadVideoActivity extends AppCompatActivity {
 
         subject = getIntent().getStringExtra("subject_name");
         class_name = getIntent().getStringExtra("class_name");
+        chapter_no = getIntent().getStringExtra("chapter_no");
 
         member = new VideoModel();
         storageReference = FirebaseStorage.getInstance().getReference("Video");
@@ -111,6 +112,7 @@ public class UploadVideoActivity extends AppCompatActivity {
         Intent intent = new Intent(UploadVideoActivity.this, ShowVideoList.class);
         intent.putExtra("subject_name", subject);
         intent.putExtra("class_name", class_name);
+        intent.putExtra("chapter_no", chapter_no);
         startActivity(intent);
 
     }
@@ -144,7 +146,7 @@ public class UploadVideoActivity extends AppCompatActivity {
                                 member.setVideourl(downloadUrl != null ? downloadUrl.toString() : null);
                                 member.setSearch(search);
                                 member.setType("firebase");
-                                member.setSubject(subject + class_name);
+                                member.setSubject(subject + class_name + chapter_no);
                                 db.collection("videos").add(member).addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
                                     @Override
                                     public void onComplete(@NonNull Task<DocumentReference> task) {
@@ -182,7 +184,7 @@ public class UploadVideoActivity extends AppCompatActivity {
         member.setName(videoName);
         member.setSearch(search);
         member.setVideourl(videoUrl);
-        member.setSubject(subject + class_name);
+        member.setSubject(subject + class_name + chapter_no);
         member.setType("youtube");
         db.collection("videos").add(member).addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
             @Override

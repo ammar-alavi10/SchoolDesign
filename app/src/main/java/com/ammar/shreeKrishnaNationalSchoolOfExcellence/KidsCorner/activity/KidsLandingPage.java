@@ -11,7 +11,6 @@ import android.view.View;
 
 import com.ammar.shreeKrishnaNationalSchoolOfExcellence.KidsCorner.balloonpoper.BalloonMain;
 import com.ammar.shreeKrishnaNationalSchoolOfExcellence.R;
-import com.ammar.shreeKrishnaNationalSchoolOfExcellence.KidsCorner.fragment.MultiplicationTableFragment;
 import com.ammar.shreeKrishnaNationalSchoolOfExcellence.KidsCorner.fragment.SlideFragment;
 
 public class KidsLandingPage extends AppCompatActivity {
@@ -47,20 +46,15 @@ public class KidsLandingPage extends AppCompatActivity {
 
     }
 
-    public void onNumbersPressed(View view) {
-        Fragment fragment = new MultiplicationTableFragment();
-        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        ft.replace(R.id.kids_activity, fragment);
-        ft.addToBackStack(null);
-        ft.commit();
-
-    }
-
     public void onBalloonPopperPressed(View view) {
         startActivity(new Intent(getApplicationContext(), BalloonMain.class));
     }
 
     public void onImageSlidePressed(View view) {
         startActivity(new Intent(KidsLandingPage.this, ImageGame.class));
+    }
+
+    public void onTracePressed(View view) {
+        startActivity(new Intent(KidsLandingPage.this, TraceActivity.class));
     }
 }

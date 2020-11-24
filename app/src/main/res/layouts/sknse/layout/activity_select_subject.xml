@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".Sknse.SelectSubjectActivity">
 
     <include layout="@layout/select_toolbar"/>
@@ -12,6 +13,8 @@
         android:layout_height="match_parent"
         android:layout_marginTop="70dp"
         tools:listitem="@layout/subject_layout"
+        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+        app:spanCount="2"
         android:id="@+id/classes_recyclerView"/>
 
 

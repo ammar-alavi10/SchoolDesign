@@ -15,10 +15,10 @@
         android:title="Test"
         app:showAsAction="never"/>
 
-    <item
+    <!--<item
         android:id="@+id/chat_student"
         android:title="Chat"
         app:showAsAction="always"
-        android:icon="@drawable/ic_chat_white"/>
+        android:icon="@drawable/ic_chat_white"/>-->
 
 </menu>

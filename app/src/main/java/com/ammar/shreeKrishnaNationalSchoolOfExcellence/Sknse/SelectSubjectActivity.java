@@ -3,6 +3,7 @@ package com.ammar.shreeKrishnaNationalSchoolOfExcellence.Sknse;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -37,12 +38,7 @@ public class SelectSubjectActivity extends AppCompatActivity {
     private List<Subject> subjects;
     private FirebaseAuth mAuth;
     private FirebaseUser user;
-    int[] class_bg = new int[]{
-            R.drawable.books_bg_1,
-            R.drawable.books_bg_2,
-            R.drawable.books_bg_3,
-            R.drawable.books_bg_4,
-    };
+
     private int category;
     private String class_name;
 
@@ -55,14 +51,14 @@ public class SelectSubjectActivity extends AppCompatActivity {
         SharedPreferences preferences = getSharedPreferences(sharedPrefFile, MODE_PRIVATE);
         category = preferences.getInt("category", -1);
         Toolbar toolbar = findViewById(R.id.select_subject_toolbar);
-        toolbar.setTitle("");
+        toolbar.setTitle("Select Subject");
         setSupportActionBar(toolbar);
 
         subjects = new ArrayList<>();
         mAuth = FirebaseAuth.getInstance();
         user = mAuth.getCurrentUser();
         classesView = findViewById(R.id.classes_recyclerView);
-        classesView.setLayoutManager(new LinearLayoutManager(this));
+        classesView.setLayoutManager(new GridLayoutManager(this, 2));
         if(category == 1)
         {
             InstantiateRecyclerView();
@@ -101,37 +97,6 @@ public class SelectSubjectActivity extends AppCompatActivity {
         });
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        if(category == 1)
-        {
-            getMenuInflater().inflate(R.menu.select_subject_menu, menu);
-        }
-        else if(category == 2)
-        {
-            getMenuInflater().inflate(R.menu.select_subject_student_menu, menu);
-        }
-        return super.onCreateOptionsMenu(menu);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId())
-        {
-            case R.id.logout:
-            case R.id.logout_student:
-                LogoutUser();
-                break;
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
-    private void LogoutUser() {
-        mAuth.signOut();
-        Intent intent = new Intent(SelectSubjectActivity.this, StartActivity.class);
-        startActivity(intent);
-        finish();
-    }
 
     private void InstantiateRecyclerView() {
         String uid = user.getUid();
@@ -164,14 +129,14 @@ public class SelectSubjectActivity extends AppCompatActivity {
         SubjectAdapter.RecyclerViewClickListener listener = new SubjectAdapter.RecyclerViewClickListener() {
             @Override
             public void onClick(View v, int position) {
-                Intent intent = new Intent(getApplicationContext(), SubjectActivity.class);
+                Intent intent = new Intent(getApplicationContext(), ChapterActivity.class);
                 intent.putExtra("subject_name", subjects.get(position).getSubject_name());
                 intent.putExtra("class_name", subjects.get(position).getClass_name());
                 startActivity(intent);
             }
         };
 
-        classesView.setAdapter(new SubjectAdapter(subjects, class_bg, listener));
+        classesView.setAdapter(new SubjectAdapter(subjects, listener));
 
     }
 

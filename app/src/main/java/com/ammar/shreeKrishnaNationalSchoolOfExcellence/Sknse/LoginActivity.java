@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -16,6 +17,8 @@ import android.widget.Toast;
 
 import com.ammar.shreeKrishnaNationalSchoolOfExcellence.R;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.AuthResult;
@@ -24,6 +27,8 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.messaging.FirebaseMessaging;
+import com.yarolegovich.lovelydialog.LovelyProgressDialog;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -125,8 +130,23 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void onLoginPressed(View view) {
-        String username = userIdText.getText().toString();
+        final LovelyProgressDialog progressDialog = new LovelyProgressDialog(this);
+        progressDialog.setTitle("Logging in");
+        String username = userIdText.getText().toString().trim();
         String password = passwordText.getText().toString();
+        if(TextUtils.isEmpty(username))
+        {
+            userIdText.requestFocus();
+            userIdText.setError("Enter Email-Id");
+            return;
+        }
+        if(TextUtils.isEmpty(password))
+        {
+            passwordText.requestFocus();
+            passwordText.setError("Enter password");
+            return;
+        }
+        progressDialog.show();
         mAuth.signInWithEmailAndPassword(username, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
@@ -154,14 +174,30 @@ public class LoginActivity extends AppCompatActivity {
                                                 editor.putString("class_name", class_name);
                                                 editor.apply();
                                             }
-                                            startActivity(new Intent(LoginActivity.this, SelectSubjectActivity.class));
+                                            FirebaseMessaging.getInstance().subscribeToTopic("sknse").
+                                                    addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                        @Override
+                                                        public void onSuccess(Void aVoid) {
+
+                                                        }
+                                                    })
+                                                    .addOnFailureListener(new OnFailureListener() {
+                                                        @Override
+                                                        public void onFailure(@NonNull Exception e) {
+                                                            Log.d("topic", e.getStackTrace().toString());
+                                                        }
+                                                    });
+                                            progressDialog.dismiss();
+                                            startActivity(new Intent(LoginActivity.this, MainScreen.class));
                                             finish();
                                         }
                                     } else {
+                                        progressDialog.dismiss();
                                         Toast.makeText(getApplicationContext(), "Login Failed!! Try Again...", Toast.LENGTH_LONG).show();
                                         Log.d("Category", "No such document");
                                     }
                                 } else {
+                                    progressDialog.dismiss();
                                     Toast.makeText(getApplicationContext(), "Login Failed!! Try Again...", Toast.LENGTH_LONG).show();
                                     Log.d("Category", "get failed with ", task.getException());
                                 }
@@ -170,6 +206,7 @@ public class LoginActivity extends AppCompatActivity {
                     }
                 }
                 else{
+                    progressDialog.dismiss();
                     Toast.makeText(getApplicationContext(), "Login Failed!! Try Again...", Toast.LENGTH_LONG).show();
                 }
             }

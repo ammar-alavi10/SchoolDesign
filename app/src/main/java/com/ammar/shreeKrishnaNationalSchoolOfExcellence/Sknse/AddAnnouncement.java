@@ -25,7 +25,7 @@ public class AddAnnouncement extends AppCompatActivity {
 
     private AnnouncementModel announcementModel;
     String announcementTitle, announcementDesc;
-    String class_name, subject_name;
+    String class_name, subject_name, chapter_no;
     EditText title, desc;
     FirebaseFirestore db;
 
@@ -36,6 +36,7 @@ public class AddAnnouncement extends AppCompatActivity {
 
         subject_name = getIntent().getStringExtra("subject_name");
         class_name = getIntent().getStringExtra("class_name");
+        chapter_no = getIntent().getStringExtra("chapter_no");
 
         title = findViewById(R.id.announcement_title);
         desc = findViewById(R.id.announcement_text);
@@ -47,6 +48,7 @@ public class AddAnnouncement extends AppCompatActivity {
         Intent intent = new Intent(AddAnnouncement.this, ShowAnnouncementList.class);
         intent.putExtra("subject_name",subject_name);
         intent.putExtra("class_name", class_name);
+        intent.putExtra("chapter_no", chapter_no);
         startActivity(intent);
     }
 
@@ -63,7 +65,7 @@ public class AddAnnouncement extends AppCompatActivity {
             announcementModel.setDate(formattedDate);
             announcementModel.setTitle(announcementTitle);
             announcementModel.setDescription(announcementDesc);
-            announcementModel.setSubject(subject_name + class_name);
+            announcementModel.setSubject(subject_name + class_name + chapter_no);
 
             db.collection("announcements").add(announcementModel).addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
                 @Override

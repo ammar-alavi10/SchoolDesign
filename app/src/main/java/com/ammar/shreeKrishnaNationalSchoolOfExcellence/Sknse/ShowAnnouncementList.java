@@ -24,7 +24,7 @@ import java.util.List;
 
 public class ShowAnnouncementList extends AppCompatActivity {
 
-    String class_name, subject_name;
+    String class_name, subject_name, chapter_no;
     List<AnnouncementModel> announcementModels;
     RecyclerView recyclerView;
     FirebaseFirestore db;
@@ -39,6 +39,7 @@ public class ShowAnnouncementList extends AppCompatActivity {
 
         subject_name = getIntent().getStringExtra("subject_name");
         class_name = getIntent().getStringExtra("class_name");
+        chapter_no = getIntent().getStringExtra("chapter_no");
 
         recyclerView = findViewById(R.id.announcement_recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -48,7 +49,7 @@ public class ShowAnnouncementList extends AppCompatActivity {
     private void InstantiateRecyclerView() {
         db = FirebaseFirestore.getInstance();
         db.collection("announcements")
-                .whereEqualTo("subject", subject_name + class_name)
+                .whereEqualTo("subject", subject_name + class_name + chapter_no)
                 .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {

@@ -30,7 +30,7 @@ public class ShowNotesList extends AppCompatActivity {
 
     RecyclerView recyclerView;
     private List<String> notesTitle, notesUrl;
-    String subject, class_name;
+    String subject, class_name, chapter_no;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +42,7 @@ public class ShowNotesList extends AppCompatActivity {
 
         subject = getIntent().getStringExtra("subject_name");
         class_name = getIntent().getStringExtra("class_name");
+        chapter_no = getIntent().getStringExtra("chapter_no");
 
         recyclerView = findViewById(R.id.recyclerview_ShowNotesList);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -51,7 +52,7 @@ public class ShowNotesList extends AppCompatActivity {
     private void InstantiateRecyclerView() {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         db.collection("notes")
-                .whereEqualTo("subject", subject + class_name)
+                .whereEqualTo("subject", subject + class_name + chapter_no)
                 .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
@@ -99,7 +100,7 @@ public class ShowNotesList extends AppCompatActivity {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             final FirebaseFirestore db = FirebaseFirestore.getInstance();
-                            db.collection("notes").whereEqualTo("name", notesTitle.get(position)).whereEqualTo("subject", subject + class_name).
+                            db.collection("notes").whereEqualTo("name", notesTitle.get(position)).whereEqualTo("subject", subject + class_name + chapter_no).
                                     get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                                 @Override
                                 public void onComplete(@NonNull Task<QuerySnapshot> task) {

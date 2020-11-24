@@ -28,6 +28,7 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.squareup.picasso.Picasso;
+import com.yarolegovich.lovelydialog.LovelyProgressDialog;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -45,7 +46,7 @@ public class TestActivity extends AppCompatActivity {
     private int score, wrong;
     private LinearLayout test, result;
     private ProgressBar progressBar;
-    private String class_name, subject_name, test_title;
+    private String class_name, subject_name, chapter_no, test_title;
     private Button show, next;
     private String imageUrl;
     private int selectedOption, correctOption;
@@ -92,13 +93,14 @@ public class TestActivity extends AppCompatActivity {
 
         subject_name = getIntent().getStringExtra("subject_name");
         class_name = getIntent().getStringExtra("class_name");
+        chapter_no = getIntent().getStringExtra("chapter_no");
         test_title = getIntent().getStringExtra("test_title");
 
         instantiateTest();
     }
 
     private void instantiateTest() {
-        db.collection("test").document(subject_name + class_name + test_title)
+        db.collection("test").document(subject_name + class_name + chapter_no + test_title)
                 .get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
@@ -205,6 +207,9 @@ public class TestActivity extends AppCompatActivity {
     }
 
     private void prepareQues() {
+        final LovelyProgressDialog progressDialog = new LovelyProgressDialog(this);
+        progressDialog.setTitle("Loading Question");
+        progressDialog.show();
         progressBar.setProgress(questionNo + 1);
         String quesno = (questionNo + 1) + "/" + testModel.getNo_of_ques();
         question_no.setText(quesno);
@@ -242,6 +247,7 @@ public class TestActivity extends AppCompatActivity {
             option4.setVisibility(View.GONE);
         }
         correctOption = questionModel.getCorrect();
+        progressDialog.dismiss();
 
     }
 
@@ -311,18 +317,6 @@ public class TestActivity extends AppCompatActivity {
         text = "Unanswered : " + (testModel.getNo_of_ques() - (score + wrong));
         unanswered.setText(text);
 
-        questionNo = 0;
-        score = 0;
-        wrong = 0;
-        endTime = -1;
-
-        SharedPreferences.Editor editor = preferences.edit();
-        editor.putInt("test_score", 0);
-        editor.putInt("question_no", 0);
-        editor.putInt("wrong", 0);
-        editor.putLong("end_time", -1);
-        editor.apply();
-
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         String uid = "";
         if(FirebaseAuth.getInstance().getCurrentUser() != null)
@@ -331,12 +325,14 @@ public class TestActivity extends AppCompatActivity {
         }
 
         TestResultModel testResultModel = new TestResultModel();
+        testResultModel.setSubject_name(subject_name + class_name + chapter_no + uid);
         testResultModel.setCorrect(score);
         testResultModel.setWrong(wrong);
         testResultModel.setUnanswered(testModel.getNo_of_ques() - (score + wrong));
         testResultModel.setTitle(test_title);
+        testResultModel.setTotal(testModel.getNo_of_ques());
         testResultModel.setUid(uid);
-        db.collection("testscores").document(class_name + subject_name + test_title + uid)
+        db.collection("testscores").document(class_name + subject_name + chapter_no + test_title + uid)
                 .set(testResultModel).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
@@ -349,6 +345,18 @@ public class TestActivity extends AppCompatActivity {
                 }
             }
         });
+
+        questionNo = 0;
+        score = 0;
+        wrong = 0;
+        endTime = -1;
+
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putInt("test_score", 0);
+        editor.putInt("question_no", 0);
+        editor.putInt("wrong", 0);
+        editor.putLong("end_time", -1);
+        editor.apply();
 
     }
 }

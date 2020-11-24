@@ -18,12 +18,10 @@ import androidx.recyclerview.widget.RecyclerView;
 public class SubjectAdapter extends RecyclerView.Adapter {
 
     List<Subject> items;
-    int[] images;
     public RecyclerViewClickListener listener;
 
-    public SubjectAdapter(List<Subject> items, int[] images, RecyclerViewClickListener listener) {
+    public SubjectAdapter(List<Subject> items, RecyclerViewClickListener listener) {
         this.items = items;
-        this.images = images;
         this.listener = listener;
     }
 
@@ -37,10 +35,9 @@ public class SubjectAdapter extends RecyclerView.Adapter {
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-        ((SubjectViewHolder) holder).text.setText(items.get(position).getSubject_name());
+        ((SubjectViewHolder) holder).text.setText(items.get(position).getSubject_name().toUpperCase());
         String below = "Class : " + items.get(position).getClass_name();
         ((SubjectViewHolder) holder).textbottom.setText(below);
-        ((SubjectViewHolder) holder).relativeLayout.setBackgroundResource(images[position % 4]);
     }
 
     @Override
@@ -57,14 +54,12 @@ public class SubjectAdapter extends RecyclerView.Adapter {
         CardView card;
         TextView text;
         TextView textbottom;
-        RelativeLayout relativeLayout;
 
         public SubjectViewHolder(@NonNull View itemView) {
             super(itemView);
             card = itemView.findViewById(R.id.classcard);
             text = itemView.findViewById(R.id.classname);
             textbottom = itemView.findViewById(R.id.recyclertext2);
-            relativeLayout = itemView.findViewById(R.id.classbg);
             itemView.setOnClickListener(this);
         }
 

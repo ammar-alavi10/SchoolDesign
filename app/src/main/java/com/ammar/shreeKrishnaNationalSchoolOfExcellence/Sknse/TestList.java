@@ -12,6 +12,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.ammar.shreeKrishnaNationalSchoolOfExcellence.Adapters.TestListAdapter;
@@ -33,7 +34,8 @@ public class TestList extends AppCompatActivity {
 
     RecyclerView recyclerView;
     private List<TestModel> testModels ;
-    String subject, class_name;
+    String subject, class_name, chapter_no;
+    Button result_btn;
     int category;
     boolean attempted = false;
 
@@ -42,13 +44,21 @@ public class TestList extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_test_list);
 
+        result_btn = findViewById(R.id.result_btn);
+
         testModels = new ArrayList<>();
 
         subject = getIntent().getStringExtra("subject_name");
         class_name = getIntent().getStringExtra("class_name");
+        chapter_no = getIntent().getStringExtra("chapter_no");
 
         SharedPreferences preferences = getSharedPreferences("com.ammar.shreeKrishnaNationalSchoolOfExcellence", MODE_PRIVATE);
         category = preferences.getInt("category", -1);
+
+        if(category == 2)
+        {
+            result_btn.setVisibility(View.VISIBLE);
+        }
 
         recyclerView = findViewById(R.id.test_list_recycler);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -58,8 +68,9 @@ public class TestList extends AppCompatActivity {
     private void InstantiateRecyclerView() {
         testModels = new ArrayList<>();
         FirebaseFirestore db = FirebaseFirestore.getInstance();
+        Log.d("Test", subject + class_name + chapter_no);
         db.collection("test")
-                .whereEqualTo("subject_name", subject + class_name)
+                .whereEqualTo("subject_name", subject + class_name + chapter_no)
                 .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
@@ -68,32 +79,41 @@ public class TestList extends AppCompatActivity {
                         for (final QueryDocumentSnapshot document : task.getResult()) {
                             Log.d("QueryResult", document.getId() + " => " + document.getData());
 
-                            if(category == 2)
-                            {
-                                attempted = false;
-                                String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
-                                FirebaseFirestore.getInstance().collection("testscores").document(class_name + subject + document.get("testTitle") + uid)
-                                        .get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                                    @Override
-                                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                                        if(task.isSuccessful())
-                                        {
-                                            DocumentSnapshot document = task.getResult();
-                                            attempted = document != null && document.exists();
-                                        }
-                                    }
-                                });
-                            }
-                            else{
-                                attempted = true;
-                            }
-                            if(attempted)
+                            if(category == 1)
                             {
                                 Map<String, Object> test = document.getData();
                                 TestModel testModel = new TestModel();
                                 testModel.setTestTitle((String) test.get("testTitle"));
                                 testModel.setTestTime((String) test.get("testTime"));
                                 testModels.add(testModel);
+                            }
+                            else
+                            {
+                                attempted = false;
+                                String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+                                Log.d("Test", class_name + subject + chapter_no + document.get("testTitle") + uid);
+                                FirebaseFirestore.getInstance().collection("testscores").document(class_name + subject + chapter_no + document.get("testTitle") + uid)
+                                        .get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                        if(task.isSuccessful())
+                                        {
+                                            DocumentSnapshot document1 = task.getResult();
+                                            if(document1 != null)
+                                            {
+                                                attempted = true;
+                                            }
+                                            if(!attempted)
+                                            {
+                                                Map<String, Object> test = document.getData();
+                                                TestModel testModel = new TestModel();
+                                                testModel.setTestTitle((String) test.get("testTitle"));
+                                                testModel.setTestTime((String) test.get("testTime"));
+                                                testModels.add(testModel);
+                                            }
+                                        }
+                                    }
+                                });
                             }
                         }
                     }
@@ -116,6 +136,7 @@ public class TestList extends AppCompatActivity {
                 intent.putExtra("test_title", testModels.get(position).getTestTitle());
                 intent.putExtra("subject_name", subject);
                 intent.putExtra("class_name", class_name);
+                intent.putExtra("chapter_no", chapter_no);
                 startActivity(intent);
             }
 
@@ -133,7 +154,7 @@ public class TestList extends AppCompatActivity {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             FirebaseFirestore db = FirebaseFirestore.getInstance();
-                            db.collection("test").document(subject + class_name + testModels.get(position).getTestTitle())
+                            db.collection("test").document(subject + class_name + chapter_no + testModels.get(position).getTestTitle())
                                     .delete().addOnCompleteListener(new OnCompleteListener<Void>() {
                                 @Override
                                 public void onComplete(@NonNull Task<Void> task) {
@@ -159,5 +180,15 @@ public class TestList extends AppCompatActivity {
         };
         Log.d("Test", "Above");
         recyclerView.setAdapter(new TestListAdapter(testModels, listener));
+    }
+
+    public void ShowTestScores(View view) {
+
+        Intent intent = new Intent(TestList.this, TestScores.class);
+        intent.putExtra("subject_name", subject);
+        intent.putExtra("class_name", class_name);
+        intent.putExtra("chapter_no", chapter_no);
+        startActivity(intent);
+
     }
 }

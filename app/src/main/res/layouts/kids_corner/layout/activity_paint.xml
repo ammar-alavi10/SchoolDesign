@@ -1,16 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<!--
-  * Kidzz
-  * https://github.com/quintuslabs/Kidzz
-  * Created on 25-feb-2019.
-  * Created by : Santosh Kumar Dash:- http://santoshdash.epizy.com
-  -->
-
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
     android:background="@color/random_color_1"
+    tools:context=".KidsCorner.activity.PaintActivity"
     android:orientation="vertical">
 
     <!-- Top Buttons -->
@@ -62,7 +57,6 @@
                 android:src="@drawable/save" />
         </LinearLayout>
     </RelativeLayout>
-    <!-- Custom View -->
 
     <com.ammar.shreeKrishnaNationalSchoolOfExcellence.KidsCorner.helper.DrawingView
         android:id="@+id/drawing"
@@ -73,20 +67,38 @@
         android:layout_marginRight="5dp"
         android:layout_marginBottom="3dp"
         android:layout_weight="1"
-        android:background="@drawable/dog" />
+        android:background="@drawable/paintborder" />
 
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:id="@+id/DrawWord"
-        android:layout_margin="10dp"
-        android:text="Word"
-        android:textColor="#000"
-        android:gravity="center"
-        android:textSize="40sp"
-        android:textStyle="bold"
-        android:onClick="onWordPressed"/>
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:id="@+id/DrawWord"
+            android:layout_margin="10dp"
+            android:text="Word"
+            android:textColor="#000"
+            android:gravity="center"
+            android:textSize="40sp"
+            android:textStyle="bold" />
+
+        <android.widget.Button
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:background="@drawable/button_shape_round"
+            android:drawableStart="@android:drawable/ic_media_ff"
+            android:paddingStart="12.5dp"
+            android:layout_marginEnd="10dp"
+            android:onClick="onWordPressed"
+            android:textSize="30sp"/>
+
+    </RelativeLayout>
+
 
 
     <!-- Color Palette -->

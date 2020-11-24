@@ -27,7 +27,7 @@ public class ShowVideoList extends AppCompatActivity {
 
     RecyclerView recyclerView;
     private List<String> videoTitle, videoType, videoUrl;
-    String subject, class_name;
+    String subject, class_name, chapter_no;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +39,7 @@ public class ShowVideoList extends AppCompatActivity {
         videoUrl = new ArrayList<>();
         subject = getIntent().getStringExtra("subject_name");
         class_name = getIntent().getStringExtra("class_name");
+        chapter_no = getIntent().getStringExtra("chapter_no");
         recyclerView = findViewById(R.id.recyclerview_ShowVideoList);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         InstantiateRecyclerView();
@@ -47,7 +48,7 @@ public class ShowVideoList extends AppCompatActivity {
     private void InstantiateRecyclerView() {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         db.collection("videos")
-                .whereEqualTo("subject", subject + class_name)
+                .whereEqualTo("subject", subject + class_name + chapter_no)
                 .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {

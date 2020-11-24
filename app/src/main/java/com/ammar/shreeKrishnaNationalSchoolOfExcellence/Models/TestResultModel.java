@@ -1,6 +1,26 @@
 package com.ammar.shreeKrishnaNationalSchoolOfExcellence.Models;
 
 public class TestResultModel {
+    private int total;
+
+    public String getSubject_name() {
+        return subject_name;
+    }
+
+    public void setSubject_name(String subject_name) {
+        this.subject_name = subject_name;
+    }
+
+    private String subject_name;
+
+    public int getTotal() {
+        return total;
+    }
+
+    public void setTotal(int total) {
+        this.total = total;
+    }
+
     private int correct;
     private int wrong;
     private int unanswered;
