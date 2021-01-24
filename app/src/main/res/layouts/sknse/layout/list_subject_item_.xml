@@ -16,13 +16,34 @@
         android:background="#FFFDE0"
         android:paddingLeft="5dp">
 
-        <TextView
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Video Name"
-            android:textSize="20sp"
-            android:padding="5dp"
-            android:id="@+id/video_title_tv"/>
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_margin="10dp"
+                android:layout_marginStart="15dp"
+                android:src="@drawable/video_icon1"/>
+
+            <View
+                android:layout_width="3dp"
+                android:layout_height="match_parent"
+                android:layout_marginHorizontal="15dp"
+                android:background="@color/black"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Video Name"
+                android:layout_margin="10dp"
+                android:textSize="20sp"
+                android:padding="5dp"
+                android:id="@+id/video_title_tv"/>
+
+        </LinearLayout>
 
     </RelativeLayout>
 

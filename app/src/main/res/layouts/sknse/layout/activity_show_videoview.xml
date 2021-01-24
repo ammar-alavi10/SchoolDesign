@@ -13,6 +13,7 @@
         android:layout_marginTop="20dp"
         android:textSize="20sp"
         android:text="Video name"
+        android:layout_marginBottom="15dp"
         android:id="@+id/video_name_tv"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"/>
@@ -20,7 +21,6 @@
     <com.google.android.exoplayer2.ui.PlayerView
         android:layout_width="match_parent"
         android:layout_height="230dp"
-        android:layout_marginTop="15dp"
         android:layout_below="@+id/video_name_tv"
         android:id="@+id/exoplayer"
         app:resize_mode="fill"
@@ -28,13 +28,20 @@
         android:background="#000"
         android:visibility="invisible"/>
 
-    <com.google.android.youtube.player.YouTubePlayerView
+    <com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView
         android:layout_width="match_parent"
         android:layout_height="230dp"
-        android:layout_marginTop="15dp"
         android:layout_below="@+id/video_name_tv"
         android:id="@+id/youtube_player"
-        android:visibility="invisible"
-        android:background="#000"/>
+        app:useWebUi="false"
+        app:handleNetworkEvents="true"
+        app:showYouTubeButton="false"
+        app:showFullScreenButton="true"
+        app:showSeekBar="true"
+
+        app:showVideoCurrentTime="true"
+        app:showVideoDuration="true"
+        app:enableAutomaticInitialization="true"
+        android:visibility="invisible" />
 
 </RelativeLayout>

@@ -80,6 +80,18 @@
             android:onClick="onLoginPressed"
             android:focusable="true" />
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="40dp"
+            android:text="Forgot Password"
+            android:layout_gravity="center_horizontal"
+            android:textSize="20sp"
+            android:clickable="true"
+            android:focusable="true"
+            android:onClick="ForgotPassword"/>
+
+
     </LinearLayout>
 
 

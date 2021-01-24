@@ -60,7 +60,16 @@ public class StartActivity extends AppCompatActivity {
     public void loginPressed(View view) {
         if(user != null)
         {
-            startActivity(new Intent(StartActivity.this, MainScreen.class));
+            String sharedPrefFile = "com.ammar.shreeKrishnaNationalSchoolOfExcellence";
+            SharedPreferences preferences = getSharedPreferences(sharedPrefFile, MODE_PRIVATE);
+            int category = preferences.getInt("category", -1);
+            if(category == 0)
+            {
+                startActivity(new Intent(StartActivity.this, AdminPanel.class));
+            }
+            else {
+                startActivity(new Intent(StartActivity.this, MainScreen.class));
+            }
         }
         else {
             startActivity(new Intent(StartActivity.this, LoginActivity.class));
@@ -73,5 +82,12 @@ public class StartActivity extends AppCompatActivity {
 
     public void NoticeClicked(View view) {
         startActivity(new Intent(StartActivity.this, NoticeActivity.class));
+    }
+
+    public void GuestPressed(View view) {
+    }
+
+    public void ReachPressed(View view) {
+        startActivity(new Intent(StartActivity.this, HowToReach.class));
     }
 }

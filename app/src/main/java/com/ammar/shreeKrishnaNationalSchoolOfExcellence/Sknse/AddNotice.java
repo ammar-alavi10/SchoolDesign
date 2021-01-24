@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.webkit.MimeTypeMap;
 import android.widget.Button;
@@ -44,7 +45,7 @@ public class AddNotice extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_notice);
 
-        title_et = findViewById(R.id.notes_title);
+        title_et = findViewById(R.id.notice_title);
         notice_et = findViewById(R.id.notice_text);
 
         noticeModel = new NoticeModel();
@@ -76,6 +77,7 @@ public class AddNotice extends AppCompatActivity {
     }
 
     public void UploadNotice(View view) {
+        Log.d("Notice", "1");
         final String title = title_et.getText().toString();
         final String notice = notice_et.getText().toString();
         if(TextUtils.isEmpty(title))
@@ -88,8 +90,9 @@ public class AddNotice extends AppCompatActivity {
             notice_et.requestFocus();
             notice_et.setError("Notice should not be empty");
         }
-        if(noticeFile != null && !title.equals(""))
+        if(noticeFile != null)
         {
+            Log.d("Notice", "2");
             final StorageReference reference = storageReference.child(title + "." + getExt(noticeFile));
             UploadTask uploadTask = reference.putFile(noticeFile);
             uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
@@ -105,11 +108,13 @@ public class AddNotice extends AppCompatActivity {
                 public void onComplete(@NonNull Task<Uri> task) {
                     if(task.isSuccessful())
                     {
+                        Log.d("Notice", "3");
                         Uri downloadUrl = task.getResult();
                         noticeModel.setFileUrl(downloadUrl != null ? downloadUrl.toString() : null);
                         noticeModel.setNotice(notice);
                         noticeModel.setTitle(title);
                         noticeModel.setDate(new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(new Date()));
+                        Log.d("Notice", noticeModel.toString());
                         db.collection("notice").add(noticeModel).addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
                             @Override
                             public void onComplete(@NonNull Task<DocumentReference> task) {
@@ -130,7 +135,24 @@ public class AddNotice extends AppCompatActivity {
             });
         }
         else {
-            Toast.makeText(AddNotice.this, "All Fields are required", Toast.LENGTH_SHORT).show();
+            Log.d("Notice", "3");
+            noticeModel.setFileUrl(null);
+            noticeModel.setNotice(notice);
+            noticeModel.setTitle(title);
+            noticeModel.setDate(new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(new Date()));
+            Log.d("Notice", noticeModel.toString());
+            db.collection("notice").add(noticeModel).addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
+                @Override
+                public void onComplete(@NonNull Task<DocumentReference> task) {
+                    if(task.isSuccessful())
+                    {
+                        Toast.makeText(AddNotice.this, "Data saved", Toast.LENGTH_SHORT).show();
+                    }
+                    else{
+                        Toast.makeText(AddNotice.this, "Failed", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            });
         }
     }
 }

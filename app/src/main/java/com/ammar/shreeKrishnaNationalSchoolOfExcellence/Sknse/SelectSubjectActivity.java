@@ -41,11 +41,15 @@ public class SelectSubjectActivity extends AppCompatActivity {
 
     private int category;
     private String class_name;
+    private boolean isTest, isTestScore;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_select_subject);
+
+        isTestScore = getIntent().getBooleanExtra("isTestScore", false);
+        isTest = getIntent().getBooleanExtra("isTest", false);
 
         String sharedPrefFile = "com.ammar.shreeKrishnaNationalSchoolOfExcellence";
         SharedPreferences preferences = getSharedPreferences(sharedPrefFile, MODE_PRIVATE);
@@ -129,7 +133,18 @@ public class SelectSubjectActivity extends AppCompatActivity {
         SubjectAdapter.RecyclerViewClickListener listener = new SubjectAdapter.RecyclerViewClickListener() {
             @Override
             public void onClick(View v, int position) {
-                Intent intent = new Intent(getApplicationContext(), ChapterActivity.class);
+                Intent intent;
+                if(isTestScore)
+                {
+                    intent = new Intent(getApplicationContext(), TestScores.class);
+                }
+                else if(isTest)
+                {
+                    intent = new Intent(getApplicationContext(), TestSeries.class);
+                }
+                else{
+                    intent = new Intent(getApplicationContext(), ChapterActivity.class);
+                }
                 intent.putExtra("subject_name", subjects.get(position).getSubject_name());
                 intent.putExtra("class_name", subjects.get(position).getClass_name());
                 startActivity(intent);

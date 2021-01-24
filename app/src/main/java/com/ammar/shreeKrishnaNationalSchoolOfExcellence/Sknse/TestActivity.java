@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RadioButton;
@@ -40,16 +41,18 @@ import java.util.Map;
 public class TestActivity extends AppCompatActivity {
 
     private FirebaseFirestore db;
+    private EditText correct_et;
     private TextView question, timer, correct, wrongAns, unanswered, question_no;
     private RadioButton option1, option2, option3, option4;
     private RadioGroup radioGroup;
     private int score, wrong;
     private LinearLayout test, result;
     private ProgressBar progressBar;
-    private String class_name, subject_name, chapter_no, test_title;
+    private String class_name, subject_name, test_title, testType;
     private Button show, next;
     private String imageUrl;
     private int selectedOption, correctOption;
+    private String correctAns, typedAns;
     String sharedPrefFile = "com.ammar.shreeKrishnaNationalSchoolOfExcellence";
     SharedPreferences preferences;
     private TestModel testModel;
@@ -63,6 +66,7 @@ public class TestActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_test);
 
+        correct_et = findViewById(R.id.correct_ans_et);
         question_no = findViewById(R.id.question_no);
         preferences = getSharedPreferences(sharedPrefFile, MODE_PRIVATE);
         questionNo = preferences.getInt("question_no", 0);
@@ -91,16 +95,16 @@ public class TestActivity extends AppCompatActivity {
 
         db = FirebaseFirestore.getInstance();
 
+        testType = getIntent().getStringExtra("testType");
         subject_name = getIntent().getStringExtra("subject_name");
         class_name = getIntent().getStringExtra("class_name");
-        chapter_no = getIntent().getStringExtra("chapter_no");
         test_title = getIntent().getStringExtra("test_title");
 
         instantiateTest();
     }
 
     private void instantiateTest() {
-        db.collection("test").document(subject_name + class_name + chapter_no + test_title)
+        db.collection("test").document(subject_name + class_name + test_title + testType)
                 .get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
@@ -126,11 +130,17 @@ public class TestActivity extends AppCompatActivity {
                                 qs.setQuestion((String) lo.get("question"));
                                 qs.setImageurl((String) lo.get("imageurl"));
                                 qs.setImage((boolean) lo.get("image"));
-                                qs.setCorrect(((Long) lo.get("correct")).intValue());
-                                qs.setOption1((String) lo.get("option1"));
-                                qs.setOption2((String) lo.get("option2"));
-                                qs.setOption3((String) lo.get("option3"));
-                                qs.setOption4((String) lo.get("option4"));
+                                if(testType.equals("blanks"))
+                                {
+                                    qs.setCorrectAns((String) lo.get("correctAns"));
+                                }
+                                else {
+                                    qs.setCorrect(((Long) lo.get("correct")).intValue());
+                                    qs.setOption1((String) lo.get("option1"));
+                                    qs.setOption2((String) lo.get("option2"));
+                                    qs.setOption3((String) lo.get("option3"));
+                                    qs.setOption4((String) lo.get("option4"));
+                                }
                                 q.add(qs);
                             }
 
@@ -214,6 +224,7 @@ public class TestActivity extends AppCompatActivity {
         String quesno = (questionNo + 1) + "/" + testModel.getNo_of_ques();
         question_no.setText(quesno);
         selectedOption = 0;
+        typedAns = "";
         if(questionNo == testModel.getNo_of_ques() - 1)
         {
             next.setText("Finish");
@@ -230,23 +241,27 @@ public class TestActivity extends AppCompatActivity {
         }
         String ques = "Q. " + questionModel.getQuestion();
         question.setText(ques);
-        option1.setText(questionModel.getOption1());
-        option2.setText(questionModel.getOption2());
-        if(!questionModel.getOption3().equals(""))
+        if(testType.equals("blanks"))
         {
-            option3.setText(questionModel.getOption3());
+            correct_et.setVisibility(View.VISIBLE);
+            correctAns = questionModel.getCorrectAns();
         }
         else{
-            option3.setVisibility(View.GONE);
+            radioGroup.setVisibility(View.VISIBLE);
+            option1.setText(questionModel.getOption1());
+            option2.setText(questionModel.getOption2());
+            if (!questionModel.getOption3().equals("")) {
+                option3.setText(questionModel.getOption3());
+            } else {
+                option3.setVisibility(View.GONE);
+            }
+            if (!questionModel.getOption4().equals("")) {
+                option4.setText(questionModel.getOption4());
+            } else {
+                option4.setVisibility(View.GONE);
+            }
+            correctOption = questionModel.getCorrect();
         }
-        if(!questionModel.getOption4().equals(""))
-        {
-            option4.setText(questionModel.getOption4());
-        }
-        else{
-            option4.setVisibility(View.GONE);
-        }
-        correctOption = questionModel.getCorrect();
         progressDialog.dismiss();
 
     }
@@ -260,16 +275,27 @@ public class TestActivity extends AppCompatActivity {
 
     public void NextQues(View view) {
 
-        int radioButtonID = radioGroup.getCheckedRadioButtonId();
-        View radioButton = radioGroup.findViewById(radioButtonID);
-        selectedOption = radioGroup.indexOfChild(radioButton);
-
-        if(selectedOption == correctOption - 1)
+        if(testType.equals("blanks"))
         {
-            score++;
+            typedAns = correct_et.getText().toString().toLowerCase().trim();
+            if(typedAns.equals(correctAns))
+            {
+                score++;
+            }
+            else{
+                wrong++;
+            }
         }
-        else{
-            wrong++;
+        else {
+            int radioButtonID = radioGroup.getCheckedRadioButtonId();
+            View radioButton = radioGroup.findViewById(radioButtonID);
+            selectedOption = radioGroup.indexOfChild(radioButton);
+
+            if (selectedOption == correctOption - 1) {
+                score++;
+            } else {
+                wrong++;
+            }
         }
 
         if(questionNo == testModel.getNo_of_ques() - 1)
@@ -325,14 +351,14 @@ public class TestActivity extends AppCompatActivity {
         }
 
         TestResultModel testResultModel = new TestResultModel();
-        testResultModel.setSubject_name(subject_name + class_name + chapter_no + uid);
+        testResultModel.setSubject_name(subject_name + class_name + uid);
         testResultModel.setCorrect(score);
         testResultModel.setWrong(wrong);
         testResultModel.setUnanswered(testModel.getNo_of_ques() - (score + wrong));
         testResultModel.setTitle(test_title);
         testResultModel.setTotal(testModel.getNo_of_ques());
         testResultModel.setUid(uid);
-        db.collection("testscores").document(class_name + subject_name + chapter_no + test_title + uid)
+        db.collection("testscores").document(class_name + subject_name + test_title + uid)
                 .set(testResultModel).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {

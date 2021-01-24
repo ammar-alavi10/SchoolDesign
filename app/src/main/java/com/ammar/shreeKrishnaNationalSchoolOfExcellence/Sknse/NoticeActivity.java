@@ -1,12 +1,16 @@
 package com.ammar.shreeKrishnaNationalSchoolOfExcellence.Sknse;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.SimpleItemAnimator;
 import butterknife.BindView;
 
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Rect;
@@ -15,6 +19,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import com.ammar.shreeKrishnaNationalSchoolOfExcellence.Adapters.FoldingCellListAdapter;
 import com.ammar.shreeKrishnaNationalSchoolOfExcellence.Models.NoticeModel;
@@ -24,7 +29,10 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -41,6 +49,10 @@ public class NoticeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_notice);
+
+        Toolbar toolbar = findViewById(R.id.notice_toolbar);
+        toolbar.setTitle("Notice");
+        setSupportActionBar(toolbar);
 
         mRecyclerView = findViewById(R.id.notice_RecyclerView);
         items = new ArrayList<>();
@@ -84,7 +96,8 @@ public class NoticeActivity extends AppCompatActivity {
                             }
 
                         }
-                        FoldingCellListAdapter adapter = new FoldingCellListAdapter(items, NoticeActivity.this);
+
+                        FoldingCellListAdapter adapter = new FoldingCellListAdapter(items, NoticeActivity.this, "notice");
                         mRecyclerView.setAdapter(adapter);
                     }
                 });
@@ -92,13 +105,16 @@ public class NoticeActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+        Log.d("Category", " I ");
         if(FirebaseAuth.getInstance().getCurrentUser() != null)
         {
             String sharedPrefFile = "com.ammar.shreeKrishnaNationalSchoolOfExcellence";
             SharedPreferences preferences = getSharedPreferences(sharedPrefFile, MODE_PRIVATE);
             int category = preferences.getInt("category", -1);
+            Log.d("Category", category + " ");
             if(category == 0)
             {
+                Log.d("Category", "Inside");
                 getMenuInflater().inflate(R.menu.notice_menu, menu);
             }
         }

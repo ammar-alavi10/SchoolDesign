@@ -108,10 +108,21 @@
             android:visibility="gone"
             android:onClick="ShowPopUp"/>
 
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="40dp"
+            android:hint="Enter the answer"
+            android:inputType="text"
+            android:id="@+id/correct_ans_et"
+            android:visibility="gone"
+            android:layout_marginTop="40dp"/>
+
         <RadioGroup
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="5dp"
+            android:visibility="gone"
             android:layout_marginTop="40dp"
             android:id="@+id/radio_group"
             android:orientation="vertical">

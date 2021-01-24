@@ -12,7 +12,7 @@ import com.ammar.shreeKrishnaNationalSchoolOfExcellence.R;
 
 public class MakeQuizActivity extends AppCompatActivity {
 
-    String subject_name, class_name, chapter_no;
+    String subject_name, class_name, testType;
     EditText testTitle, testTime;
 
     @Override
@@ -20,9 +20,10 @@ public class MakeQuizActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_make_quiz);
 
+        testType = getIntent().getStringExtra("type");
+
         subject_name = getIntent().getStringExtra("subject_name");
         class_name = getIntent().getStringExtra("class_name");
-        chapter_no = getIntent().getStringExtra("chapter_no");
 
         testTime = findViewById(R.id.testtime);
         testTitle = findViewById(R.id.testtitle);
@@ -41,12 +42,19 @@ public class MakeQuizActivity extends AppCompatActivity {
             testTime.setError("Enter the time limit for the test");
             return;
         }
-        Intent intent = new Intent(MakeQuizActivity.this, AddQuestion.class);
+        Intent intent;
+        if(testType.equals("blanks"))
+        {
+            intent = new Intent(MakeQuizActivity.this, AddBlanksQuestion.class);
+        }
+        else{
+            intent = new Intent(MakeQuizActivity.this, AddQuestion.class);
+        }
         intent.putExtra("test_title", title);
         intent.putExtra("test_time", time);
         intent.putExtra("subject_name", subject_name);
         intent.putExtra("class_name", class_name);
-        intent.putExtra("chapter_no", chapter_no);
+        intent.putExtra("testType", testType);
         startActivity(intent);
         finish();
     }

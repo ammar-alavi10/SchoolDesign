@@ -1,7 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.ammar.shreeKrishnaNationalSchoolOfExcellence">
-
+    <!--
+         The ACCESS_COARSE/FINE_LOCATION permissions are not required to use
+         Google Maps Android API v2, but you must specify either coarse or fine
+         location permissions for the "MyLocation" functionality.
+    -->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
@@ -11,7 +16,44 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Sknse.TestScores"></activity>
+        <activity android:name=".Sknse.TimeTable" />
+        <activity android:name=".Sknse.Calendar" />
+        <activity android:name=".Sknse.Toppers" />
+        <activity android:name=".Sknse.UploadLiveClass" />
+        <activity android:name=".Sknse.LiveVideoList" />
+        <activity
+            android:name=".Sknse.LiveClass"
+            android:configChanges="orientation|screenSize" />
+        <activity android:name=".Sknse.LeaveApplication" />
+        <activity android:name=".Sknse.ForgotPassword" />
+        <activity android:name=".Sknse.AddUser" />
+        <activity android:name=".Sknse.AddUserFromExcel" />
+        <activity android:name=".Sknse.AdminPanel" />
+        <activity android:name=".Sknse.AddHeadline" />
+        <activity android:name=".Sknse.HeadlinesActivity" />
+        <activity android:name=".Sknse.AddBlanksQuestion" />
+        <activity android:name=".Sknse.TestSeries" />
+        <activity android:name=".Sknse.AddBook" />
+        <activity android:name=".Sknse.LibraryActivity" />
+        <activity android:name=".Sknse.Birthday" />
+        <activity android:name=".Sknse.AttendanceManagement" />
+        <activity android:name=".Sknse.FeeActivity" />
+        <activity android:name=".Sknse.AddClassDiary" />
+        <activity android:name=".Sknse.DiaryActivity" />
+        <!--
+             The API key for Google Maps-based APIs is defined as a string resource.
+             (See the file "res/values/google_maps_api.xml").
+             Note that the API key is linked to the encryption key used to sign the APK.
+             You need a different API key for each encryption key, including the release key that is used to
+             sign the APK for publishing.
+             You can define the keys for the debug and release targets in src/debug/ and src/release/.
+        -->
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="${mapsApiKey}" />
+
+        <activity android:name=".Sknse.HowToReach" />
+        <activity android:name=".Sknse.TestScores" />
         <activity android:name=".Sknse.ChapterActivity" />
         <activity android:name=".Sknse.AboutStudent" />
         <activity android:name=".Sknse.PhotoActivity" />

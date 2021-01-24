@@ -5,6 +5,6 @@
     <item android:id="@+id/add_notice"
         android:title="Add Notice"
         app:showAsAction="always"
-        android:icon="@android:drawable/ic_input_add"
+        android:icon="@drawable/plus_24"
         android:iconTint="@color/white"/>
 </menu>

@@ -1,8 +1,10 @@
 package com.ammar.shreeKrishnaNationalSchoolOfExcellence.Sknse;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -114,8 +116,15 @@ public class LoginActivity extends AppCompatActivity {
                     if (document != null && document.exists()) {
                         if(category == ((Long) document.get("category")).intValue())
                         {
-                            startActivity(new Intent(LoginActivity.this, SelectSubjectActivity.class));
-                            finish();
+                            if(category == 0)
+                            {
+                                startActivity(new Intent(LoginActivity.this, AdminPanel.class));
+                                finish();
+                            }
+                            else{
+                                startActivity(new Intent(LoginActivity.this, SelectSubjectActivity.class));
+                                finish();
+                            }
                         }
                     } else {
                         Toast.makeText(getApplicationContext(), "Login Failed!! Try Again...", Toast.LENGTH_LONG).show();
@@ -167,7 +176,14 @@ public class LoginActivity extends AppCompatActivity {
                                     if (document != null && document.exists()) {
                                         if(category == ((Long) document.get("category")).intValue())
                                         {
-                                            if(category == 2)
+                                            if(category == 0)
+                                            {
+                                                progressDialog.dismiss();
+                                                startActivity(new Intent(LoginActivity.this, AdminPanel.class));
+                                                finish();
+                                                return;
+                                            }
+                                            else if(category == 2)
                                             {
                                                 String class_name = (String) document.get("class");
                                                 SharedPreferences.Editor editor = preferences.edit();
@@ -191,14 +207,21 @@ public class LoginActivity extends AppCompatActivity {
                                             startActivity(new Intent(LoginActivity.this, MainScreen.class));
                                             finish();
                                         }
+                                        else{
+                                            mAuth.signOut();
+                                            progressDialog.dismiss();
+                                            ShowDialog("Login Failed!! Incorrect category...");
+                                        }
                                     } else {
                                         progressDialog.dismiss();
-                                        Toast.makeText(getApplicationContext(), "Login Failed!! Try Again...", Toast.LENGTH_LONG).show();
+                                        mAuth.signOut();
+                                        ShowDialog("Login Failed!! Try Again...");
                                         Log.d("Category", "No such document");
                                     }
                                 } else {
                                     progressDialog.dismiss();
-                                    Toast.makeText(getApplicationContext(), "Login Failed!! Try Again...", Toast.LENGTH_LONG).show();
+                                    mAuth.signOut();
+                                    ShowDialog("Login Failed!! Try Again...");
                                     Log.d("Category", "get failed with ", task.getException());
                                 }
                             }
@@ -207,9 +230,36 @@ public class LoginActivity extends AppCompatActivity {
                 }
                 else{
                     progressDialog.dismiss();
-                    Toast.makeText(getApplicationContext(), "Login Failed!! Try Again...", Toast.LENGTH_LONG).show();
+                    ShowDialog("Login Failed!! Try Again..." + "\n" + task.getException());
                 }
             }
         });
+    }
+
+    private void ShowDialog(String message)
+    {
+        final AlertDialog.Builder alertDialog1 = new AlertDialog.Builder(LoginActivity.this);
+
+        // Setting Dialog Message
+        alertDialog1.setMessage(message);
+
+        // Setting OK Button
+        alertDialog1.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                dialogInterface.cancel();
+            }
+        });
+
+        AlertDialog alertDialog = alertDialog1.create();
+
+        alertDialog.setTitle("LOGIN FAILED");
+
+        // Showing Alert Message
+        alertDialog1.show();
+    }
+
+    public void ForgotPassword(View view) {
+        startActivity(new Intent(LoginActivity.this, ForgotPassword.class));
     }
 }

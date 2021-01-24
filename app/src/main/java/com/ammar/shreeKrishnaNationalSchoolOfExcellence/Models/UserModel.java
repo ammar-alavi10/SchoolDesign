@@ -6,7 +6,7 @@ public class UserModel {
     private String name;
     private String email;
 
-    public UserModel(String class_name, String subject_name, String uid, String name, String email) {
+    public UserModel(String class_name, String uid, String name, String email) {
         this.class_name = class_name;
         this.Uid = uid;
         this.name = name;
@@ -15,7 +15,6 @@ public class UserModel {
 
     public UserModel() {
     }
-
 
     public String getClass_name() {
         return class_name;

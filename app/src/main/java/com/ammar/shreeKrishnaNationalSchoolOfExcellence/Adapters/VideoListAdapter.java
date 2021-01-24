@@ -46,9 +46,10 @@ public class VideoListAdapter extends RecyclerView.Adapter {
 
     public interface RecyclerVideoViewClickListener{
         void onClick(View v, int position);
+        void onLongClick(View v, int position);
     }
 
-    private class VideoViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+    private class VideoViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener{
 
         TextView videoTitle;
 
@@ -61,6 +62,12 @@ public class VideoListAdapter extends RecyclerView.Adapter {
         @Override
         public void onClick(View view) {
             listener.onClick(view, getAdapterPosition());
+        }
+
+        @Override
+        public boolean onLongClick(View view) {
+            listener.onLongClick(view, getAdapterPosition());
+            return true;
         }
     }
 }

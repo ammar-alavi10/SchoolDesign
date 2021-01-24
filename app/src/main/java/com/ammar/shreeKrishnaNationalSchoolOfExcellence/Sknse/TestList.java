@@ -3,6 +3,7 @@ package com.ammar.shreeKrishnaNationalSchoolOfExcellence.Sknse;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -11,6 +12,8 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
@@ -34,7 +37,7 @@ public class TestList extends AppCompatActivity {
 
     RecyclerView recyclerView;
     private List<TestModel> testModels ;
-    String subject, class_name, chapter_no;
+    String subject, class_name, testType;
     Button result_btn;
     int category;
     boolean attempted = false;
@@ -44,21 +47,17 @@ public class TestList extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_test_list);
 
-        result_btn = findViewById(R.id.result_btn);
+        Toolbar toolbar = findViewById(R.id.notice_toolbar);
+        setSupportActionBar(toolbar);
 
         testModels = new ArrayList<>();
 
+        testType = getIntent().getStringExtra("type");
         subject = getIntent().getStringExtra("subject_name");
         class_name = getIntent().getStringExtra("class_name");
-        chapter_no = getIntent().getStringExtra("chapter_no");
 
         SharedPreferences preferences = getSharedPreferences("com.ammar.shreeKrishnaNationalSchoolOfExcellence", MODE_PRIVATE);
         category = preferences.getInt("category", -1);
-
-        if(category == 2)
-        {
-            result_btn.setVisibility(View.VISIBLE);
-        }
 
         recyclerView = findViewById(R.id.test_list_recycler);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -68,9 +67,10 @@ public class TestList extends AppCompatActivity {
     private void InstantiateRecyclerView() {
         testModels = new ArrayList<>();
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-        Log.d("Test", subject + class_name + chapter_no);
+        Log.d("Test", subject + class_name);
         db.collection("test")
-                .whereEqualTo("subject_name", subject + class_name + chapter_no)
+                .whereEqualTo("subject_name", subject + class_name)
+                .whereEqualTo("testType", testType)
                 .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
@@ -91,8 +91,8 @@ public class TestList extends AppCompatActivity {
                             {
                                 attempted = false;
                                 String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
-                                Log.d("Test", class_name + subject + chapter_no + document.get("testTitle") + uid);
-                                FirebaseFirestore.getInstance().collection("testscores").document(class_name + subject + chapter_no + document.get("testTitle") + uid)
+                                Log.d("Test", class_name + subject + document.get("testTitle") + uid);
+                                FirebaseFirestore.getInstance().collection("testscores").document(class_name + subject + document.get("testTitle") + uid)
                                         .get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                                     @Override
                                     public void onComplete(@NonNull Task<DocumentSnapshot> task) {
@@ -127,6 +127,36 @@ public class TestList extends AppCompatActivity {
 
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        if(FirebaseAuth.getInstance().getCurrentUser() != null)
+        {
+            String sharedPrefFile = "com.ammar.shreeKrishnaNationalSchoolOfExcellence";
+            SharedPreferences preferences = getSharedPreferences(sharedPrefFile, MODE_PRIVATE);
+            int category = preferences.getInt("category", -1);
+            if(category == 1)
+            {
+                getMenuInflater().inflate(R.menu.notice_menu, menu);
+            }
+        }
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId())
+        {
+            case R.id.add_notice:
+                Intent intent = new Intent(TestList.this, MakeQuizActivity.class);
+                intent.putExtra("class_name", class_name);
+                intent.putExtra("subject_name", subject);
+                intent.putExtra("type", testType);
+                startActivity(intent);
+        }
+        return super.onOptionsItemSelected(item);
+
+    }
+
     private void setAdapter() {
 
         TestListAdapter.TestListRecyclerListener listener = new TestListAdapter.TestListRecyclerListener() {
@@ -136,7 +166,7 @@ public class TestList extends AppCompatActivity {
                 intent.putExtra("test_title", testModels.get(position).getTestTitle());
                 intent.putExtra("subject_name", subject);
                 intent.putExtra("class_name", class_name);
-                intent.putExtra("chapter_no", chapter_no);
+                intent.putExtra("testType", testType);
                 startActivity(intent);
             }
 
@@ -154,7 +184,7 @@ public class TestList extends AppCompatActivity {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             FirebaseFirestore db = FirebaseFirestore.getInstance();
-                            db.collection("test").document(subject + class_name + chapter_no + testModels.get(position).getTestTitle())
+                            db.collection("test").document(subject + class_name + testModels.get(position).getTestTitle() + testType)
                                     .delete().addOnCompleteListener(new OnCompleteListener<Void>() {
                                 @Override
                                 public void onComplete(@NonNull Task<Void> task) {
@@ -182,13 +212,4 @@ public class TestList extends AppCompatActivity {
         recyclerView.setAdapter(new TestListAdapter(testModels, listener));
     }
 
-    public void ShowTestScores(View view) {
-
-        Intent intent = new Intent(TestList.this, TestScores.class);
-        intent.putExtra("subject_name", subject);
-        intent.putExtra("class_name", class_name);
-        intent.putExtra("chapter_no", chapter_no);
-        startActivity(intent);
-
-    }
 }

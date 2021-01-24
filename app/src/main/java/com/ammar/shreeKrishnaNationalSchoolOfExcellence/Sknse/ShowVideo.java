@@ -1,5 +1,7 @@
 package com.ammar.shreeKrishnaNationalSchoolOfExcellence.Sknse;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
 import android.app.Application;
@@ -27,24 +29,22 @@ import com.google.android.exoplayer2.ui.PlayerView;
 import com.google.android.exoplayer2.upstream.BandwidthMeter;
 import com.google.android.exoplayer2.upstream.DefaultBandwidthMeter;
 import com.google.android.exoplayer2.upstream.DefaultHttpDataSourceFactory;
-import com.google.android.youtube.player.YouTubeBaseActivity;
-import com.google.android.youtube.player.YouTubeInitializationResult;
-import com.google.android.youtube.player.YouTubePlayer;
-import com.google.android.youtube.player.YouTubePlayerView;
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer;
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener;
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.YouTubePlayerFullScreenListener;
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 
-public class ShowVideo extends YouTubeBaseActivity {
+public class ShowVideo extends AppCompatActivity {
 
     private Application application;
     private String name, type, url;
     SimpleExoPlayer exoPlayer;
-    YouTubePlayer youTubePlayer;
     PlayerView playerView;
     YouTubePlayerView youTubePlayerView;
-    boolean fullScreen;
     TextView titleTv;
     private ImageView fullscreenButton;
 
@@ -75,42 +75,49 @@ public class ShowVideo extends YouTubeBaseActivity {
 
     @Override
     public void onBackPressed() {
-        if (fullScreen){
-            youTubePlayer.setFullscreen(false);
-        } else{
+        if (youTubePlayerView.isFullScreen())
+            youTubePlayerView.exitFullScreen();
+        else
             super.onBackPressed();
-        }
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        youTubePlayerView.release();
     }
 
     private void setYoutubePlayer() {
         youTubePlayerView.setVisibility(View.VISIBLE);
-        YouTubePlayer.OnInitializedListener mListener = new YouTubePlayer.OnInitializedListener() {
+        getLifecycle().addObserver(youTubePlayerView);
+        final String videoId = extractYTId(url);
+        youTubePlayerView.addYouTubePlayerListener(new AbstractYouTubePlayerListener() {
             @Override
-            public void onInitializationSuccess(YouTubePlayer.Provider provider, YouTubePlayer player, boolean wasRestored) {
-                if(!wasRestored)
-                {
-                    Log.d("YoutubePlayer", "Successfully initialized");
-                    youTubePlayer = player;
-                    youTubePlayer.setOnFullscreenListener(new YouTubePlayer.OnFullscreenListener() {
+            public void onReady(@NonNull YouTubePlayer youTubePlayer) {
+                youTubePlayer.loadVideo(videoId, 0);
+            }
+        });
 
-                        @Override
-                        public void onFullscreen(boolean _isFullScreen) {
-                            fullScreen = _isFullScreen;
-                        }
-                    });
-                    String videoId = extractYTId(url);
-                    youTubePlayer.loadVideo(videoId);
-                }
-
+        youTubePlayerView.addFullScreenListener(new YouTubePlayerFullScreenListener() {
+            @Override
+            public void onYouTubePlayerEnterFullScreen() {
+                titleTv.setVisibility(View.GONE);
+                youTubePlayerView.enterFullScreen();
+                getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_FULLSCREEN
+                        |View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
+                        |View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
+                setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
             }
 
             @Override
-            public void onInitializationFailure(YouTubePlayer.Provider provider, YouTubeInitializationResult youTubeInitializationResult) {
-                Log.d("YoutubePlayer", "Can't be initialized" + youTubeInitializationResult.toString());
+            public void onYouTubePlayerExitFullScreen() {
+                youTubePlayerView.exitFullScreen();
+                titleTv.setVisibility(View.VISIBLE);
+                getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_VISIBLE);
+                setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
             }
-        };
+        });
 
-        youTubePlayerView.initialize(YoutubeApiKey.getKey(), mListener);
     }
 
     private void setExoplayer() {

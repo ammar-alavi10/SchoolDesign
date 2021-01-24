@@ -10,6 +10,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.ammar.shreeKrishnaNationalSchoolOfExcellence.KidsCorner.activity.KidsLandingPage;
 import com.ammar.shreeKrishnaNationalSchoolOfExcellence.R;
 import com.google.firebase.auth.FirebaseAuth;
 
@@ -62,7 +63,44 @@ public class MainScreen extends AppCompatActivity {
         startActivity(new Intent(MainScreen.this, AboutStudent.class));
     }
 
-    public void PhotosClicked(View view) {
-        startActivity(new Intent(MainScreen.this, PhotoActivity.class));
+    public void TopperClicked(View view) {
+    }
+
+    public void ClassDiaryClicked(View view) {
+        startActivity(new Intent(MainScreen.this, DiaryActivity.class));
+    }
+
+    public void ReportCardClicked(View view) {
+        Intent intent = new Intent(MainScreen.this, SelectSubjectActivity.class);
+        intent.putExtra("isTestScore", true);
+        startActivity(intent);
+    }
+
+    public void TestSeriesClicked(View view) {
+        Intent intent = new Intent(MainScreen.this, SelectSubjectActivity.class);
+        intent.putExtra("isTest", true);
+        startActivity(intent);
+    }
+
+    public void HeadlinesClicked(View view) {
+        startActivity(new Intent(MainScreen.this, HeadlinesActivity.class));
+    }
+
+    public void LibraryClicked(View view) {
+        startActivity(new Intent(MainScreen.this, LibraryActivity.class));
+    }
+
+    public void TrackingClicked(View view) {
+    }
+
+    public void KidsCornerClicked(View view) {
+        startActivity(new Intent(MainScreen.this, KidsLandingPage.class));
+    }
+
+    public void AlertClicked(View view) {
+    }
+
+    public void LiveClassClicked(View view) {
+        startActivity(new Intent(MainScreen.this, LiveVideoList.class));
     }
 }

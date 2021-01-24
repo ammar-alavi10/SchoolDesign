@@ -30,7 +30,7 @@ public class TestScores extends AppCompatActivity {
 
     RecyclerView recyclerView;
     private List<TestResultModel> testModels ;
-    String subject, class_name, chapter_no, uid;
+    String subject, class_name, uid;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,7 +41,6 @@ public class TestScores extends AppCompatActivity {
 
         subject = getIntent().getStringExtra("subject_name");
         class_name = getIntent().getStringExtra("class_name");
-        chapter_no = getIntent().getStringExtra("chapter_no");
         uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
         recyclerView = findViewById(R.id.score_recycler);
@@ -52,9 +51,9 @@ public class TestScores extends AppCompatActivity {
 
     private void InstantiateRecyclerView() {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-        Log.d("TestScore", subject + class_name + chapter_no + uid);
+        Log.d("TestScore", subject + class_name + uid);
         db.collection("testscores")
-                .whereEqualTo("subject_name", subject + class_name + chapter_no + uid)
+                .whereEqualTo("subject_name", subject + class_name + uid)
                 .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {

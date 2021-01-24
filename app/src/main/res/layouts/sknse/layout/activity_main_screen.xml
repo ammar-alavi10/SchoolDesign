@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:background="@drawable/main_screen_bg"
+    android:background="#F5F2f1"
     android:layout_height="match_parent"
     tools:context=".Sknse.MainScreen">
 
@@ -12,7 +12,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="80dp"
+        android:layout_marginTop="30dp"
+        android:gravity="center"
         android:orientation="vertical">
 
         <LinearLayout
@@ -29,30 +30,30 @@
                 android:onClick="ElearningClicked"
                 app:cardUseCompatPadding="true"
                 app:cardCornerRadius="7dp"
-                android:layout_marginEnd="20dp"
+                android:layout_marginEnd="10dp"
                 android:layout_height="wrap_content"
                 android:focusable="true">
 
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:padding="20dp"
+                    android:padding="15dp"
                     android:background="#B4ECEA"
                     android:orientation="vertical">
 
                     <ImageView
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
                         android:layout_gravity="center"
                         android:src="@drawable/ebook"/>
 
                     <TextView
-                        android:layout_width="80dp"
+                        android:layout_width="70dp"
                         android:layout_height="wrap_content"
                         android:text="E-Learning"
                         android:layout_marginTop="5dp"
                         android:textColor="@color/black"
-                        android:textSize="15sp"/>
+                        android:textSize="13sp"/>
 
                 </LinearLayout>
 
@@ -70,35 +71,74 @@
                 android:focusable="true"
                 android:onClick="AboutClicked"
                 app:cardCornerRadius="10dp"
-                android:layout_marginStart="20dp">
+                android:layout_marginEnd="10dp">
 
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:padding="20dp"
+                    android:padding="15dp"
                     android:background="#FAFAD2"
                     android:orientation="vertical">
 
                     <ImageView
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
                         android:layout_gravity="center"
                         android:src="@drawable/about"/>
 
                     <TextView
-                        android:layout_width="80dp"
+                        android:layout_width="70dp"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:textAlignment="center"
                         android:layout_marginTop="5dp"
                         android:text="About"
                         android:textColor="@color/black"
-                        android:textSize="15sp"/>
+                        android:textSize="13sp"/>
 
                 </LinearLayout>
 
 
             </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="wrap_content"
+                android:elevation="8dp"
+                app:cardElevation="8dp"
+                android:clickable="true"
+                android:onClick="TopperClicked"
+                app:cardUseCompatPadding="true"
+                app:cardCornerRadius="7dp"
+                android:layout_height="wrap_content"
+                android:focusable="true">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="15dp"
+                    android:background="#D4ECEA"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_gravity="center"
+                        android:src="@drawable/topper_icon"/>
+
+                    <TextView
+                        android:layout_width="70dp"
+                        android:layout_height="wrap_content"
+                        android:text="Topper"
+                        android:gravity="center"
+                        android:layout_marginTop="5dp"
+                        android:textColor="@color/black"
+                        android:textSize="13sp"/>
+
+                </LinearLayout>
+
+
+            </androidx.cardview.widget.CardView>
+
 
         </LinearLayout>
 
@@ -106,7 +146,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:layout_marginTop="40dp"
+            android:layout_marginTop="20dp"
             android:layout_gravity="center_horizontal">
 
             <androidx.cardview.widget.CardView
@@ -115,33 +155,33 @@
                 android:elevation="8dp"
                 android:clickable="true"
                 android:focusable="true"
-                android:onClick="PhotosClicked"
+                android:onClick="ClassDiaryClicked"
                 app:cardElevation="8dp"
                 app:cardUseCompatPadding="true"
                 app:cardCornerRadius="10dp"
-                android:layout_marginEnd="20dp">
+                android:layout_marginEnd="8dp">
 
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:padding="20dp"
-                    android:background="#FFcc99"
+                    android:padding="15dp"
+                    android:background="#8899"
                     android:orientation="vertical">
 
                     <ImageView
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
                         android:layout_gravity="center"
-                        android:src="@drawable/picture"/>
+                        android:src="@drawable/diary_icon"/>
 
                     <TextView
-                        android:layout_width="80dp"
+                        android:layout_width="70dp"
                         android:layout_height="wrap_content"
-                        android:text="Photos"
+                        android:text="Class Diary"
                         android:textAlignment="center"
                         android:layout_marginTop="5dp"
                         android:textColor="@color/black"
-                        android:textSize="15sp"/>
+                        android:textSize="13sp"/>
 
                 </LinearLayout>
 
@@ -154,33 +194,72 @@
                 android:elevation="8dp"
                 android:clickable="true"
                 android:focusable="true"
-                android:onClick="PhotosClicked"
+                android:onClick="ReportCardClicked"
                 app:cardUseCompatPadding="true"
                 app:cardElevation="8dp"
                 app:cardCornerRadius="10dp"
-                android:layout_marginStart="20dp">
+                android:layout_marginStart="0dp">
 
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:padding="20dp"
+                    android:padding="15dp"
                     android:background="#C8DADA"
                     android:orientation="vertical">
 
                     <ImageView
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
                         android:layout_gravity="center"
                         android:src="@drawable/attendance"/>
 
                     <TextView
-                        android:layout_width="80dp"
+                        android:layout_width="70dp"
                         android:layout_height="wrap_content"
-                        android:text="Attendance"
+                        android:text="Report card"
                         android:textAlignment="center"
                         android:layout_marginTop="5dp"
                         android:textColor="@color/black"
-                        android:textSize="15sp"/>
+                        android:textSize="13sp"/>
+
+                </LinearLayout>
+
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:elevation="8dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:onClick="TestSeriesClicked"
+                app:cardElevation="8dp"
+                app:cardUseCompatPadding="true"
+                app:cardCornerRadius="10dp"
+                android:layout_marginStart="8dp">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="15dp"
+                    android:background="#FFcc99"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_gravity="center"
+                        android:src="@drawable/testseries_icon"/>
+
+                    <TextView
+                        android:layout_width="70dp"
+                        android:layout_height="wrap_content"
+                        android:text="Test Series"
+                        android:textAlignment="center"
+                        android:layout_marginTop="5dp"
+                        android:textColor="@color/black"
+                        android:textSize="13sp"/>
 
                 </LinearLayout>
 
@@ -194,48 +273,47 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:layout_marginTop="40dp"
+            android:layout_marginTop="20dp"
             android:layout_gravity="center_horizontal">
 
-<!--
             <androidx.cardview.widget.CardView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:elevation="8dp"
+                android:elevation="7dp"
                 android:clickable="true"
                 android:focusable="true"
-                android:onClick="PhotosClicked"
-                app:cardElevation="8dp"
+                android:onClick="LibraryClicked"
+                app:cardUseCompatPadding="true"
+                app:cardElevation="7dp"
                 app:cardCornerRadius="10dp"
-                android:layout_marginEnd="20dp">
+                android:layout_marginEnd="8dp">
 
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:padding="20dp"
-                    android:background="#FFcc99"
+                    android:padding="15dp"
+                    android:background="#DFcc88"
                     android:orientation="vertical">
 
                     <ImageView
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
                         android:layout_gravity="center"
-                        android:src="@drawable/picture"/>
+                        android:src="@drawable/books"/>
 
                     <TextView
-                        android:layout_width="80dp"
+                        android:layout_width="70dp"
                         android:layout_height="wrap_content"
-                        android:text="Photos"
+                        android:text="Library"
                         android:textAlignment="center"
                         android:layout_marginTop="5dp"
                         android:textColor="@color/black"
-                        android:textSize="15sp"/>
+                        android:textSize="13sp"/>
 
                 </LinearLayout>
 
 
             </androidx.cardview.widget.CardView>
--->
 
             <androidx.cardview.widget.CardView
                 android:layout_width="wrap_content"
@@ -245,31 +323,200 @@
                 app:cardElevation="7dp"
                 android:clickable="true"
                 android:focusable="true"
-                android:onClick="PhotosClicked"
+                android:onClick="HeadlinesClicked"
                 app:cardCornerRadius="10dp"
-                android:layout_marginStart="20dp">
+                android:layout_marginEnd="8dp">
 
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:padding="20dp"
+                    android:padding="15dp"
                     android:background="#9FEFDF"
                     android:orientation="vertical">
 
                     <ImageView
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
                         android:layout_gravity="center"
-                        android:src="@drawable/tax"/>
+                        android:src="@drawable/headlines"/>
 
                     <TextView
-                        android:layout_width="120dp"
+                        android:layout_width="70dp"
                         android:layout_height="wrap_content"
-                        android:text="Fee Management"
+                        android:text="Head Lines"
                         android:textAlignment="center"
                         android:layout_marginTop="5dp"
                         android:textColor="@color/black"
-                        android:textSize="15sp"/>
+                        android:textSize="13sp"/>
+
+                </LinearLayout>
+
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:elevation="7dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:onClick="TrackingClicked"
+                app:cardUseCompatPadding="true"
+                app:cardElevation="7dp"
+                app:cardCornerRadius="10dp"
+                android:layout_marginEnd="0dp">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="15dp"
+                    android:background="#FFFAD9"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_gravity="center"
+                        android:src="@drawable/tracking"/>
+
+                    <TextView
+                        android:layout_width="70dp"
+                        android:layout_height="wrap_content"
+                        android:text="Tracking"
+                        android:textAlignment="center"
+                        android:layout_marginTop="5dp"
+                        android:textColor="@color/black"
+                        android:textSize="13sp"/>
+
+                </LinearLayout>
+
+
+            </androidx.cardview.widget.CardView>
+
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="20dp"
+            android:layout_gravity="center_horizontal">
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="wrap_content"
+                android:elevation="8dp"
+                app:cardElevation="8dp"
+                android:clickable="true"
+                android:onClick="LiveClassClicked"
+                app:cardUseCompatPadding="true"
+                app:cardCornerRadius="7dp"
+                android:layout_marginEnd="10dp"
+                android:layout_height="wrap_content"
+                android:focusable="true">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="15dp"
+                    android:background="#B4ECEA"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_gravity="center"
+                        android:src="@drawable/classroom"/>
+
+                    <TextView
+                        android:layout_width="70dp"
+                        android:layout_height="wrap_content"
+                        android:text="Live Class"
+                        android:layout_marginTop="5dp"
+                        android:layout_gravity="center_horizontal"
+                        android:textAlignment="center"
+                        android:textColor="@color/black"
+                        android:textSize="13sp"/>
+
+                </LinearLayout>
+
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:elevation="8dp"
+                app:cardUseCompatPadding="true"
+
+                app:cardElevation="8dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:onClick="AlertClicked"
+                app:cardCornerRadius="10dp"
+                android:layout_marginEnd="10dp">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="15dp"
+                    android:background="#FAFAD2"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_gravity="center"
+                        android:src="@drawable/announcement_icon"/>
+
+                    <TextView
+                        android:layout_width="70dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:textAlignment="center"
+                        android:layout_marginTop="5dp"
+                        android:text="Alert"
+                        android:textColor="@color/black"
+                        android:textSize="13sp"/>
+
+                </LinearLayout>
+
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="wrap_content"
+                android:elevation="8dp"
+                app:cardElevation="8dp"
+                android:clickable="true"
+                android:onClick="KidsCornerClicked"
+                app:cardUseCompatPadding="true"
+                app:cardCornerRadius="7dp"
+                android:layout_height="wrap_content"
+                android:focusable="true">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="15dp"
+                    android:background="#D4ECEA"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_gravity="center"
+                        android:src="@drawable/kidscorner"/>
+
+                    <TextView
+                        android:layout_width="70dp"
+                        android:layout_height="wrap_content"
+                        android:text="Kids Corner"
+                        android:gravity="center"
+                        android:layout_marginTop="5dp"
+                        android:textColor="@color/black"
+                        android:textSize="13sp"/>
 
                 </LinearLayout>
 

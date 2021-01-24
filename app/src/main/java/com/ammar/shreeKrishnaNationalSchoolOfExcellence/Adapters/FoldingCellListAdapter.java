@@ -2,29 +2,43 @@ package com.ammar.shreeKrishnaNationalSchoolOfExcellence.Adapters;
 
 import android.app.DownloadManager;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.ammar.shreeKrishnaNationalSchoolOfExcellence.Models.NoticeModel;
 import com.ammar.shreeKrishnaNationalSchoolOfExcellence.R;
+import com.ammar.shreeKrishnaNationalSchoolOfExcellence.Sknse.ShowNotesList;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import java.util.List;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
 
 public class FoldingCellListAdapter extends RecyclerView.Adapter<FoldingCellListAdapter.PhotoViewHolder> {
 
     private List<NoticeModel> models;
     private Context mContext;
+    private String fun;
 
-    public FoldingCellListAdapter(List<NoticeModel> models, Context mContext) {
+    public FoldingCellListAdapter(List<NoticeModel> models, Context mContext, String fun) {
         this.models = models;
         this.mContext = mContext;
+        this.fun = fun;
     }
 
     @NonNull
@@ -62,6 +76,89 @@ public class FoldingCellListAdapter extends RecyclerView.Adapter<FoldingCellList
                 notifyItemChanged(position);
             }
         });
+
+        holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                SharedPreferences preferences = mContext.getSharedPreferences("com.ammar.shreeKrishnaNationalSchoolOfExcellence", Context.MODE_PRIVATE);
+                int category = preferences.getInt("category", -1);
+                if(category == 0)
+                {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+                    builder.setTitle("Confirm Delete !");
+                    builder.setMessage("You are about to delete this Note. Do you really want to proceed ?");
+                    builder.setCancelable(false);
+                    builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            final FirebaseFirestore db = FirebaseFirestore.getInstance();
+                            db.collection(fun).whereEqualTo("title", models.get(position).getTitle()).
+                                    get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                @Override
+                                public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                    if(task.isSuccessful())
+                                    {
+                                        if (task.getResult() != null) {
+                                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                                String id = document.getId();
+                                                final String url = document.getString("fileUrl");
+                                                db.collection(fun).document(id).delete().addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                    @Override
+                                                    public void onComplete(@NonNull Task<Void> task) {
+                                                        if (task.isSuccessful()) {
+                                                            if(url != null)
+                                                            {
+                                                                StorageReference storageReference = FirebaseStorage.getInstance().getReferenceFromUrl(url);
+                                                                storageReference.delete().addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                                    @Override
+                                                                    public void onComplete(@NonNull Task<Void> task) {
+                                                                        if(task.isSuccessful())
+                                                                        {
+                                                                            Toast.makeText(mContext, "Note Deleted", Toast.LENGTH_SHORT).show();
+                                                                            remove(holder.getAdapterPosition());
+                                                                        }
+                                                                        else {
+                                                                            Toast.makeText(mContext, "Error in deleting notice", Toast.LENGTH_SHORT).show();
+                                                                            Log.d("Notice", task.getException().toString());
+                                                                        }
+                                                                    }
+                                                                });
+                                                            }
+                                                            else{
+                                                                Toast.makeText(mContext, "Note Deleted", Toast.LENGTH_SHORT).show();
+                                                                remove(holder.getAdapterPosition());
+                                                            }
+                                                        }
+
+                                                    }
+                                                });
+                                            }
+                                        }
+                                    }
+                                }
+                            });
+                        }
+                    });
+
+                    builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+
+                        }
+                    });
+
+                    builder.show();
+                }
+                return true;
+            }
+        });
+    }
+
+    private void remove(int adapterPosition) {
+        models.remove(adapterPosition);
+        notifyItemRemoved(adapterPosition);
+        notifyItemRangeChanged(adapterPosition, models.size());
+
     }
 
     public long downloadFile(Context context, String fileName, String fileExtension, String destinationDirectory, String url) {
@@ -83,8 +180,9 @@ public class FoldingCellListAdapter extends RecyclerView.Adapter<FoldingCellList
         return models.size();
     }
 
+
     // View lookup cache
-    protected static class PhotoViewHolder extends RecyclerView.ViewHolder {
+    protected class PhotoViewHolder extends RecyclerView.ViewHolder {
 
         TextView title;
         TextView date;
@@ -118,5 +216,6 @@ public class FoldingCellListAdapter extends RecyclerView.Adapter<FoldingCellList
                 download.setVisibility(View.GONE);
             }
         }
+
     }
 }

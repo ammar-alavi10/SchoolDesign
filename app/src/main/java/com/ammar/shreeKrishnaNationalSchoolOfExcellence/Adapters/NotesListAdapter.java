@@ -28,7 +28,7 @@ public class NotesListAdapter extends RecyclerView.Adapter {
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-        View row = inflater.inflate(R.layout.list_subject_item_, parent, false);
+        View row = inflater.inflate(R.layout.notes_list_item, parent, false);
         return new NotesViewHolder(row);
     }
 

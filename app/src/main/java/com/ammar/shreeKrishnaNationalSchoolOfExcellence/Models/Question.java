@@ -9,8 +9,17 @@ public class Question {
     private boolean isImage;
     private String imageurl;
     private int correct;
+    private String correctAns;
 
     public Question() {
+    }
+
+    public String getCorrectAns() {
+        return correctAns;
+    }
+
+    public void setCorrectAns(String correctAns) {
+        this.correctAns = correctAns;
     }
 
     public String getQuestion() {

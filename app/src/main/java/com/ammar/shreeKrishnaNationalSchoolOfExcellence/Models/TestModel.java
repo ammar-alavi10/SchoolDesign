@@ -3,19 +3,28 @@ package com.ammar.shreeKrishnaNationalSchoolOfExcellence.Models;
 import java.util.List;
 
 public class TestModel {
-    private String testTitle, subject_name, testTime;
+    private String testTitle, subject_name, testTime, testType;
     private List<Question> questions;
     private int no_of_ques;
 
-    public TestModel(String testTitle, String subject_name, String testTime, List<Question> questions, int no_of_ques) {
+    public TestModel(String testType, String testTitle, String subject_name, String testTime, List<Question> questions, int no_of_ques) {
         this.testTitle = testTitle;
         this.subject_name = subject_name;
         this.testTime = testTime;
         this.questions = questions;
         this.no_of_ques = no_of_ques;
+        this.testType = testType;
     }
 
     public TestModel() {
+    }
+
+    public String getTestType() {
+        return testType;
+    }
+
+    public void setTestType(String testType) {
+        this.testType = testType;
     }
 
     public String getTestTime() {

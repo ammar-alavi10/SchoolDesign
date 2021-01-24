@@ -11,7 +11,9 @@
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:listitem="@layout/list_subject_item_"
+        tools:listitem="@layout/notes_list_item"
+        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+        app:spanCount="2"
         android:id="@+id/recyclerview_ShowNotesList"/>
 
 </LinearLayout>
