@@ -1,0 +1,180 @@
+package com.ammar.shreeKrishnaNationalSchoolOfExcellence.Sknse;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+
+import android.content.ContentResolver;
+import android.content.Intent;
+import android.net.Uri;
+import android.os.Bundle;
+import android.text.TextUtils;
+import android.view.View;
+import android.webkit.MimeTypeMap;
+import android.widget.EditText;
+import android.widget.ProgressBar;
+import android.widget.Toast;
+
+import com.ammar.shreeKrishnaNationalSchoolOfExcellence.Models.Question;
+import com.ammar.shreeKrishnaNationalSchoolOfExcellence.Models.TestModel;
+import com.ammar.shreeKrishnaNationalSchoolOfExcellence.R;
+import com.google.android.gms.tasks.Continuation;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+
+public class AddBlanksQuestion extends AppCompatActivity {
+
+    private ProgressBar progressBar;
+    private EditText question, correctOption;
+    private TestModel testModel;
+    private List<Question> questions;
+    private boolean isImage = false;
+    private String imageurl;
+    private int PICK_IMAGE_REQUEST = 1;
+    private Uri filePath = null;
+    private StorageReference storageReference;
+    private FirebaseFirestore db;
+    private String subject_name, class_name, testTitle, testTime, testType;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_add_blanks_question);
+
+        testType = getIntent().getStringExtra("testType");
+        subject_name = getIntent().getStringExtra("subject_name");
+        class_name = getIntent().getStringExtra("class_name");
+        testTitle = getIntent().getStringExtra("test_title");
+        testTime = getIntent().getStringExtra("test_time");
+
+        progressBar = findViewById(R.id.progressBar_cyclic);
+        questions = new ArrayList<>();
+        question = findViewById(R.id.question_et);
+        correctOption = findViewById(R.id.correct_et);
+        testModel = new TestModel();
+
+        storageReference = FirebaseStorage.getInstance().getReference("TestImages");
+        db = FirebaseFirestore.getInstance();
+    }
+
+    public void AddImage(View view) {
+        Intent intent = new Intent();
+        intent.setType("image/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE_REQUEST);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK
+                && data != null && data.getData() != null )
+        {
+            filePath = data.getData();
+        }
+    }
+
+    private String getExt(Uri uri){
+        ContentResolver contentResolver = getContentResolver();
+        MimeTypeMap mimeTypeMap = MimeTypeMap.getSingleton();
+        return  mimeTypeMap.getExtensionFromMimeType(contentResolver.getType(uri));
+    }
+
+    public void Add(View view) {
+        progressBar.setVisibility(View.VISIBLE);
+        String ques = question.getText().toString();
+        if(TextUtils.isEmpty(ques)) {
+            question.requestFocus();
+            question.setError("Enter a question");
+            return;
+        }
+
+        String correct = correctOption.getText().toString().toLowerCase().trim();
+        if(TextUtils.isEmpty(correct)) {
+            correctOption.requestFocus();
+            correctOption.setError("Enter a correct answer");
+            return;
+        }
+
+        final Question question1 = new Question();
+        question1.setQuestion(ques);
+        question1.setCorrectAns(correct);
+        if(filePath != null)
+        {
+            isImage = true;
+            final StorageReference ref = storageReference.child(System.currentTimeMillis() + "." + getExt(filePath));
+            UploadTask uploadTask = ref.putFile(filePath);
+            uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
+                @Override
+                public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
+                    if (!task.isSuccessful()){
+                        throw Objects.requireNonNull(task.getException());
+                    }
+                    return ref.getDownloadUrl();
+                }
+            }).addOnCompleteListener(new OnCompleteListener<Uri>() {
+                @Override
+                public void onComplete(@NonNull Task<Uri> task) {
+                    if(task.isSuccessful() && task.getResult() != null)
+                    {
+                        imageurl = task.getResult().toString();
+                        question1.setImage(isImage);
+                        question1.setImageurl(imageurl);
+                        questions.add(question1);
+                        Toast.makeText(AddBlanksQuestion.this, "Question Added", Toast.LENGTH_LONG).show();
+                    }
+                    else
+                    {
+                        Toast.makeText(AddBlanksQuestion.this, "Image Upload Failed... Try again", Toast.LENGTH_LONG).show();
+                    }
+                    progressBar.setVisibility(View.INVISIBLE);
+                }
+            });
+        }
+        else{
+            question1.setImage(isImage);
+            question1.setImageurl(null);
+            questions.add(question1);
+            Toast.makeText(AddBlanksQuestion.this, "Question Added", Toast.LENGTH_LONG).show();
+        }
+        progressBar.setVisibility(View.GONE);
+    }
+
+    public void UploadTest(View view) {
+        progressBar.setVisibility(View.VISIBLE);
+        testModel = new TestModel();
+        testModel.setSubject_name(subject_name + class_name);
+        testModel.setTestTitle(testTitle);
+        testModel.setQuestions(questions);
+        testModel.setNo_of_ques(questions.size());
+        testModel.setTestTime(testTime);
+        db.collection("test").document(subject_name + class_name + testTitle + testType).
+                set(testModel).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if(task.isSuccessful())
+                {
+                    Toast.makeText(AddBlanksQuestion.this, "Test Uploaded", Toast.LENGTH_LONG).show();
+                }
+                else{
+                    Toast.makeText(AddBlanksQuestion.this, "Problem in Uploading.. Please Try Again", Toast.LENGTH_LONG).show();
+                }
+            }
+        });
+        progressBar.setVisibility(View.GONE);
+    }
+
+    public void AddNewQues(View view) {
+        question.setText("");
+        correctOption.setText("");
+        isImage = false;
+        imageurl = null;
+    }
+}

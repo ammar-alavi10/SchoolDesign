@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".Sknse.AddClassDiary">
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Title"
+        android:layout_marginTop="50dp"
+        android:inputType="text"
+        android:id="@+id/notice_title"
+        android:layout_marginHorizontal="40dp"
+        android:textColorHint="@color/color_username_rectangle"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Text"
+        android:id="@+id/notice_text"
+        android:layout_marginTop="30dp"
+        android:layout_marginHorizontal="40dp"
+        android:inputType="textMultiLine"
+        android:textColorHint="@color/color_username_rectangle"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Class"
+        android:layout_marginTop="30dp"
+        android:layout_marginHorizontal="40dp"
+        android:id="@+id/class_et"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:text="Choose File Pdf"
+        android:layout_gravity="center"
+        android:onClick="FileChoose"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="Upload"
+        android:layout_gravity="center"
+        android:onClick="UploadNotice"/>
+
+
+</LinearLayout>

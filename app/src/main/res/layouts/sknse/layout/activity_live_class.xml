@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".Sknse.LiveClass">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:textSize="20sp"
+        android:text="Video name"
+        android:layout_marginBottom="15dp"
+        android:id="@+id/video_name_tv"
+        android:layout_alignParentTop="true"
+        android:layout_gravity="center_horizontal"
+        android:layout_centerHorizontal="true"/>
+
+    <com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView
+        android:layout_width="match_parent"
+        android:layout_height="230dp"
+        android:layout_below="@+id/video_name_tv"
+        android:id="@+id/youtube_player"
+        app:useWebUi="false"
+        app:handleNetworkEvents="true"
+        app:showYouTubeButton="false"
+        app:showFullScreenButton="true"
+        app:enableLiveVideoUi="true"
+        app:showSeekBar="true"
+        app:showVideoCurrentTime="true"
+        app:showVideoDuration="true"
+        app:enableAutomaticInitialization="true"
+        android:visibility="invisible" />
+
+</LinearLayout>

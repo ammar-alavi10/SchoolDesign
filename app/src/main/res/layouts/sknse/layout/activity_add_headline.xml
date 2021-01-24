@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:layout_gravity="center"
+    tools:context=".Sknse.AddHeadline">
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="300dp"
+        android:layout_marginHorizontal="50dp"
+        android:hint="Enter Class :"
+        android:textAlignment="center"
+        android:id="@+id/announcement_class"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginHorizontal="50dp"
+        android:hint="Enter Title :"
+        android:textAlignment="center"
+        android:id="@+id/announcement_title"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginTop="20dp"
+        android:hint="Enter Announcement :"
+        android:textAlignment="center"
+        android:id="@+id/announcement_text"/>
+
+    <android.widget.Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/firebase_upload_bg"
+        android:layout_marginTop="30dp"
+        android:text="Upload"
+        android:textColor="@color/white"
+        android:layout_marginHorizontal="60dp"
+        android:onClick="UploadAnnouncement"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Show announcements"
+        android:layout_gravity="center"
+        android:layout_marginTop="30dp"
+        android:textSize="23sp"
+        android:onClick="ShowAnnouncements"/>
+
+
+</LinearLayout>

@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    tools:context=".Sknse.UploadLiveClass">
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Enter class"
+        android:textSize="20sp"
+        android:id="@+id/et_class_name"
+        android:layout_margin="10dp"
+        android:backgroundTint="@color/colorPrimary"
+        android:textColor="@android:color/black"
+        android:autoText="true"
+        />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Video name"
+        android:textSize="20sp"
+        android:id="@+id/et_video_name"
+        android:layout_margin="10dp"
+        android:backgroundTint="@color/colorPrimary"
+        android:textColor="@android:color/black"
+        android:autoText="true"
+        />
+
+    <ProgressBar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+        android:indeterminate="true"
+        android:indeterminateTint="@android:color/holo_red_light"
+        android:visibility="invisible"
+        android:id="@+id/progressBar_main"
+        />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_margin="10dp"
+        android:hint="Youtube link"
+        android:id="@+id/youtube_link_et"
+        android:textSize="20sp"/>
+
+    <android.widget.Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/button_upload_videolink"
+        android:layout_margin="20dp"
+        android:background="@drawable/youtube_upload_bg"
+        android:text="Upload link"
+        android:onClick="OnLinkUploadPressed"
+        android:textColor="#fff"
+        android:foreground="?attr/selectableItemBackground"
+        android:clickable="true"
+        />
+
+</LinearLayout>
