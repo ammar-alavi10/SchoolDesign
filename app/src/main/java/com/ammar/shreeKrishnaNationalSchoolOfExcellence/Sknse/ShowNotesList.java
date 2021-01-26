@@ -140,4 +140,10 @@ public class ShowNotesList extends AppCompatActivity {
         };
         recyclerView.setAdapter(new NotesListAdapter(notesTitle, notesUrl, listener));
     }
+
+    public void HomeClicked(View view) {
+        Intent intent = new Intent(ShowNotesList.this, StartActivity.class);
+        startActivity(intent);
+        finish();
+    }
 }

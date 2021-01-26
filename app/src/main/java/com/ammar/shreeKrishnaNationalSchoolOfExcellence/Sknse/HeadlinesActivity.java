@@ -132,4 +132,10 @@ public class HeadlinesActivity extends AppCompatActivity {
 
     public void TimeTableClicked(View view) {
     }
+
+    public void HomeClicked(View view) {
+        Intent intent = new Intent(HeadlinesActivity.this, StartActivity.class);
+        startActivity(intent);
+        finish();
+    }
 }

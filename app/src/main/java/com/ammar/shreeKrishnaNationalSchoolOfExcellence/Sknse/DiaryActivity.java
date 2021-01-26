@@ -145,4 +145,10 @@ public class DiaryActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
 
     }
+
+    public void HomeClicked(View view) {
+        Intent intent = new Intent(DiaryActivity.this, StartActivity.class);
+        startActivity(intent);
+        finish();
+    }
 }

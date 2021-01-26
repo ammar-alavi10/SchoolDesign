@@ -41,6 +41,12 @@ public class FeeActivity extends AppCompatActivity {
         db = FirebaseFirestore.getInstance();
     }
 
+    public void HomeClicked(View view) {
+        Intent intent = new Intent(FeeActivity.this, StartActivity.class);
+        startActivity(intent);
+        finish();
+    }
+
     public class FeeModel{
         String uid;
         String name;

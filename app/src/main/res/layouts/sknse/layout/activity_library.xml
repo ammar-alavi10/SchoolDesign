@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:gravity="center_horizontal"
     android:orientation="vertical"
     tools:context=".Sknse.LibraryActivity">
 
@@ -21,6 +22,7 @@
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@id/library_toolbar"
         android:hint="Enter Class"
         android:id="@+id/class_et"
         android:inputType="text"
@@ -30,17 +32,47 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/class_et"
         android:text="Search"
+        android:gravity="center"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/btn"
         android:onClick="ShowBooks"
-        android:layout_marginBottom="20dp"
-        android:layout_gravity="center_horizontal"/>
+        android:layout_marginBottom="20dp" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_below="@+id/btn"
+        android:layout_marginBottom="?attr/actionBarSize"
         tools:listitem="@layout/notes_list_item"
         app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
         app:spanCount="2"
         android:id="@+id/recyclerview_ShowNotesList"/>
 
-</LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.google.android.material.bottomnavigation.BottomNavigationView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:titleTextColor="@color/white"
+            android:layout_gravity="bottom"
+            android:elevation="8dp"
+            android:minHeight="?attr/actionBarSize"
+            android:background="@color/black">
+
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/home_ic"
+                android:layout_gravity="center"
+                android:background="@color/black"
+                android:onClick="HomeClicked"/>
+
+        </com.google.android.material.bottomnavigation.BottomNavigationView>
+
+    </LinearLayout>
+
+</RelativeLayout>

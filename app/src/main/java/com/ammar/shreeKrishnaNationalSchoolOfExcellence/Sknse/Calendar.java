@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
@@ -62,6 +63,12 @@ public class Calendar extends AppCompatActivity {
     private void ShowNote(String url) {
         pdfView = findViewById(R.id.pdf_view);
         new RetrievePdfStream().execute(url);
+    }
+
+    public void HomeClicked(View view) {
+        Intent intent = new Intent(Calendar.this, StartActivity.class);
+        startActivity(intent);
+        finish();
     }
 
     class RetrievePdfStream extends AsyncTask<String, Void, InputStream> {

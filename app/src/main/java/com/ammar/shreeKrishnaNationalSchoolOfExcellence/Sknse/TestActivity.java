@@ -3,6 +3,7 @@ package com.ammar.shreeKrishnaNationalSchoolOfExcellence.Sknse;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -384,5 +385,11 @@ public class TestActivity extends AppCompatActivity {
         editor.putLong("end_time", -1);
         editor.apply();
 
+    }
+
+    public void HomeClicked(View view) {
+        Intent intent = new Intent(TestActivity.this, StartActivity.class);
+        startActivity(intent);
+        finish();
     }
 }

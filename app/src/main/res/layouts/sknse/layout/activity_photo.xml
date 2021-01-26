@@ -13,6 +13,7 @@
         android:layout_width="200dp"
         android:layout_height="100dp"
         android:text="Child Gallery"
+        android:layout_marginTop="150dp"
         android:id="@+id/child_button"
         android:backgroundTint="@color/circular_progress_default_progress"
         android:layout_marginBottom="40dp"
@@ -32,7 +33,7 @@
         android:layout_height="wrap_content"
         tools:listitem="@layout/gallery_item"
         android:layout_marginTop="20dp"
-        android:layout_marginBottom="20dp"
+        android:layout_marginBottom="?attr/actionBarSize"
         android:layout_marginHorizontal="10dp"
         app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
         app:spanCount="2"
@@ -40,6 +41,30 @@
         android:gravity="center_horizontal"
         android:id="@+id/recyclerview_PhotosList"/>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.google.android.material.bottomnavigation.BottomNavigationView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:titleTextColor="@color/white"
+            android:layout_gravity="bottom"
+            android:elevation="8dp"
+            android:minHeight="?attr/actionBarSize"
+            android:background="@color/black">
+
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/home_ic"
+                android:layout_gravity="center"
+                android:background="@color/black"
+                android:onClick="HomeClicked"/>
+
+        </com.google.android.material.bottomnavigation.BottomNavigationView>
+
+    </LinearLayout>
 
 
 </LinearLayout>

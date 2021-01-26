@@ -131,4 +131,10 @@ public class NoticeActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
 
     }
+
+    public void HomeClicked(View view) {
+        Intent intent = new Intent(NoticeActivity.this, StartActivity.class);
+        startActivity(intent);
+        finish();
+    }
 }

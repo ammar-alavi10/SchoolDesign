@@ -3,6 +3,7 @@ package com.ammar.shreeKrishnaNationalSchoolOfExcellence.Sknse;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -27,6 +28,12 @@ public class LeaveApplication extends AppCompatActivity {
 
         date_tv = findViewById(R.id.date_tv);
         appl_et = findViewById(R.id.leaveappl_et);
+    }
+
+    public void HomeClicked(View view) {
+        Intent intent = new Intent(LeaveApplication.this, StartActivity.class);
+        startActivity(intent);
+        finish();
     }
 
     public class LeaveModel{

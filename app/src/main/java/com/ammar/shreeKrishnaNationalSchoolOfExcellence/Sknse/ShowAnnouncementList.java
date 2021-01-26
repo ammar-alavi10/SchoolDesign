@@ -5,8 +5,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.Toast;
 
 import com.ammar.shreeKrishnaNationalSchoolOfExcellence.Adapters.AnnouncementListAdapter;
@@ -76,5 +78,11 @@ public class ShowAnnouncementList extends AppCompatActivity {
 
     private void setAdapter() {
         recyclerView.setAdapter(new AnnouncementListAdapter(announcementModels));
+    }
+
+    public void HomeClicked(View view) {
+        Intent intent = new Intent(ShowAnnouncementList.this, StartActivity.class);
+        startActivity(intent);
+        finish();
     }
 }

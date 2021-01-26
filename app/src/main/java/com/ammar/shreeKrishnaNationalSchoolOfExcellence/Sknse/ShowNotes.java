@@ -2,8 +2,11 @@ package com.ammar.shreeKrishnaNationalSchoolOfExcellence.Sknse;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.view.View;
+import android.view.WindowManager;
 
 import com.ammar.shreeKrishnaNationalSchoolOfExcellence.R;
 import com.github.barteksc.pdfviewer.PDFView;
@@ -22,12 +25,19 @@ public class ShowNotes extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_SECURE, WindowManager.LayoutParams.FLAG_SECURE);
         setContentView(R.layout.activity_show_notes);
 
         String url = getIntent().getStringExtra("notesurl");
 
         pdfView = findViewById(R.id.pdf_view);
         new RetrievePdfStream().execute(url);
+    }
+
+    public void HomeClicked(View view) {
+        Intent intent = new Intent(ShowNotes.this, StartActivity.class);
+        startActivity(intent);
+        finish();
     }
 
     class RetrievePdfStream extends AsyncTask<String, Void, InputStream>{

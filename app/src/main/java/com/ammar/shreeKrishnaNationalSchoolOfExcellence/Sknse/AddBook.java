@@ -116,4 +116,10 @@ public class AddBook extends AppCompatActivity {
             Toast.makeText(AddBook.this, "All Fields are required", Toast.LENGTH_SHORT).show();
         }
     }
+
+    public void HomeClicked(View view) {
+        Intent intent = new Intent(AddBook.this, StartActivity.class);
+        startActivity(intent);
+        finish();
+    }
 }

@@ -78,13 +78,20 @@ public class ShowVideo extends AppCompatActivity {
         if (youTubePlayerView.isFullScreen())
             youTubePlayerView.exitFullScreen();
         else
+        {
+            if(exoPlayer != null)
+            {
+                exoPlayer.release();
+            }
             super.onBackPressed();
+        }
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
         youTubePlayerView.release();
+        exoPlayer.release();
     }
 
     private void setYoutubePlayer() {

@@ -104,7 +104,9 @@ public class AboutStudent extends AppCompatActivity {
     }
 
     public void BirthdayCard(View view) {
-        startActivity(new Intent(AboutStudent.this, Birthday.class));
+        Intent intent = new Intent(AboutStudent.this, Birthday.class);
+        intent.putExtra("dob", dob);
+        startActivity(intent);
     }
 
     public void AttendanceManagement(View view) {
@@ -113,5 +115,11 @@ public class AboutStudent extends AppCompatActivity {
 
     public void LeaveAppl(View view) {
         startActivity(new Intent(AboutStudent.this, LeaveApplication.class));
+    }
+
+    public void HomeClicked(View view) {
+        Intent intent = new Intent(AboutStudent.this, StartActivity.class);
+        startActivity(intent);
+        finish();
     }
 }

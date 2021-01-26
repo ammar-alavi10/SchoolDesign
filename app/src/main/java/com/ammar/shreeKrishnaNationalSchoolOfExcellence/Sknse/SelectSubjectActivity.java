@@ -156,4 +156,9 @@ public class SelectSubjectActivity extends AppCompatActivity {
     }
 
 
+    public void HomeClicked(View view) {
+        Intent intent = new Intent(SelectSubjectActivity.this, StartActivity.class);
+        startActivity(intent);
+        finish();
+    }
 }

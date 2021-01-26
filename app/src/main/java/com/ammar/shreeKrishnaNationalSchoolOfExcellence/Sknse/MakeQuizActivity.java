@@ -58,4 +58,10 @@ public class MakeQuizActivity extends AppCompatActivity {
         startActivity(intent);
         finish();
     }
+
+    public void HomeClicked(View view) {
+        Intent intent = new Intent(MakeQuizActivity.this, StartActivity.class);
+        startActivity(intent);
+        finish();
+    }
 }

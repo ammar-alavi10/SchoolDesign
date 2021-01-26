@@ -91,6 +91,7 @@ public class MainScreen extends AppCompatActivity {
     }
 
     public void TrackingClicked(View view) {
+        startActivity(new Intent(MainScreen.this, Tracking.class));
     }
 
     public void KidsCornerClicked(View view) {
@@ -102,5 +103,11 @@ public class MainScreen extends AppCompatActivity {
 
     public void LiveClassClicked(View view) {
         startActivity(new Intent(MainScreen.this, LiveVideoList.class));
+    }
+
+    public void HomeClicked(View view) {
+        Intent intent = new Intent(MainScreen.this, StartActivity.class);
+        startActivity(intent);
+        finish();
     }
 }

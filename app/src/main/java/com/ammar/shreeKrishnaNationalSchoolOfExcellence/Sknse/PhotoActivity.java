@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
@@ -150,5 +151,11 @@ public class PhotoActivity extends AppCompatActivity {
             }
         };
         recyclerView.setAdapter(new GalleryAdapter(imageurls, listener));
+    }
+
+    public void HomeClicked(View view) {
+        Intent intent = new Intent(PhotoActivity.this, StartActivity.class);
+        startActivity(intent);
+        finish();
     }
 }

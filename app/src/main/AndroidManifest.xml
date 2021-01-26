@@ -16,6 +16,15 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".Sknse.NormalAlert" />
+        <activity android:name=".Sknse.ParentFeedback" />
+        <activity android:name=".Sknse.ParentAlert" />
+        <activity android:name=".Sknse.AttendanceUpload" />
+        <activity android:name=".Sknse.Tracking" />
+        <activity android:name=".Sknse.AddToppers" />
+        <activity android:name=".Sknse.StudyTips" />
+        <activity android:name=".Sknse.MotivationalVideo" />
+        <activity android:name=".Sknse.ClassToppers" />
         <activity android:name=".Sknse.TimeTable" />
         <activity android:name=".Sknse.Calendar" />
         <activity android:name=".Sknse.Toppers" />

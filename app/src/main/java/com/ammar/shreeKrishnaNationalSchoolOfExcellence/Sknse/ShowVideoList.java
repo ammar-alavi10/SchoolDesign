@@ -142,4 +142,9 @@ public class ShowVideoList extends AppCompatActivity {
         recyclerView.setAdapter(new VideoListAdapter(videoTitle, videoType, videoUrl, listener));
     }
 
+    public void HomeClicked(View view) {
+        Intent intent = new Intent(ShowVideoList.this, StartActivity.class);
+        startActivity(intent);
+        finish();
+    }
 }

@@ -5,6 +5,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -81,5 +82,11 @@ public class ForgotPassword extends AppCompatActivity {
 
         // Showing Alert Message
         alertDialog1.show();
+    }
+
+    public void HomeClicked(View view) {
+        Intent intent = new Intent(ForgotPassword.this, StartActivity.class);
+        startActivity(intent);
+        finish();
     }
 }

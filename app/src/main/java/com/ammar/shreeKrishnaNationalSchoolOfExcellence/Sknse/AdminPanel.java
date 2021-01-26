@@ -32,7 +32,7 @@ import java.util.Objects;
 
 public class AdminPanel extends AppCompatActivity {
 
-    Uri pdfFile;
+    Uri pdfFile, TrackingImageFile;
     StorageReference storage;
 
     @Override
@@ -98,6 +98,77 @@ public class AdminPanel extends AppCompatActivity {
             pdfFile = data.getData();
             UploadNote();
         }
+        if(requestCode == 2 && resultCode == RESULT_OK && data != null && data.getData() != null)
+        {
+            TrackingImageFile = data.getData();
+            UploadTrackingImage();
+        }
+    }
+
+    private void UploadTrackingImage() {
+        if(TrackingImageFile == null)
+        {
+            Toast.makeText(AdminPanel.this, "Please select image", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        final LovelyProgressDialog progressDialog = new LovelyProgressDialog(this);
+        progressDialog.setTitle("Adding Image");
+        progressDialog.show();
+        StorageReference storage = FirebaseStorage.getInstance().getReference("TrackingImage");
+        if(TrackingImageFile != null)
+        {
+            final StorageReference reference = storage.child(System.currentTimeMillis() + "." + getExt(TrackingImageFile));
+            UploadTask uploadTask = reference.putFile(TrackingImageFile);
+            uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
+                @Override
+                public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
+                    if (!task.isSuccessful()){
+                        throw Objects.requireNonNull(task.getException());
+                    }
+                    return reference.getDownloadUrl();
+                }
+            }).addOnCompleteListener(new OnCompleteListener<Uri>() {
+                @Override
+                public void onComplete(@NonNull Task<Uri> task) {
+                    if(task.isSuccessful())
+                    {
+                        Uri downloadUrl = task.getResult();
+                        String url;
+                        if(downloadUrl != null)
+                        {
+                            url = downloadUrl.toString();
+                        }
+                        else{
+                            progressDialog.dismiss();
+                            return;
+                        }
+                        FirebaseFirestore.getInstance().collection("tracking")
+                                .document("photoUrl").set(url).addOnCompleteListener(new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+                                if(task.isSuccessful())
+                                {
+                                    progressDialog.dismiss();
+                                    Toast.makeText(AdminPanel.this, "Data saved", Toast.LENGTH_SHORT).show();
+                                }
+                                else{
+                                    progressDialog.dismiss();
+                                    Toast.makeText(AdminPanel.this, "Failed", Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                        });
+                    }
+                    else {
+                        progressDialog.dismiss();
+                        Toast.makeText(AdminPanel.this, "Failed", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            });
+        }
+        else {
+            progressDialog.dismiss();
+            Toast.makeText(AdminPanel.this, "All Fields are required", Toast.LENGTH_SHORT).show();
+        }
     }
 
     private String getExt(Uri uri){
@@ -155,5 +226,22 @@ public class AdminPanel extends AppCompatActivity {
             progressDialog.dismiss();
             Toast.makeText(AdminPanel.this, "All Fields are required", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    public void AddToppers(View view) {
+        startActivity(new Intent(AdminPanel.this, AddToppers.class));
+    }
+
+    public void AddTrackingPhoto(View view) {
+        Intent intent = new Intent();
+        intent.setType("image/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(Intent.createChooser(intent, "Select Image"), 2);
+    }
+
+    public void HomeClicked(View view) {
+        Intent intent = new Intent(AdminPanel.this, StartActivity.class);
+        startActivity(intent);
+        finish();
     }
 }

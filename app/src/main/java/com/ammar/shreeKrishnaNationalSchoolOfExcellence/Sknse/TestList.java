@@ -212,4 +212,9 @@ public class TestList extends AppCompatActivity {
         recyclerView.setAdapter(new TestListAdapter(testModels, listener));
     }
 
+    public void HomeClicked(View view) {
+        Intent intent = new Intent(TestList.this, StartActivity.class);
+        startActivity(intent);
+        finish();
+    }
 }

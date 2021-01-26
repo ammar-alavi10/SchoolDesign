@@ -54,4 +54,10 @@ public class TestSeries extends AppCompatActivity {
         intent.putExtra("type", "truefalse");
         startActivity(intent);
     }
+
+    public void HomeClicked(View view) {
+        Intent intent = new Intent(TestSeries.this, StartActivity.class);
+        startActivity(intent);
+        finish();
+    }
 }

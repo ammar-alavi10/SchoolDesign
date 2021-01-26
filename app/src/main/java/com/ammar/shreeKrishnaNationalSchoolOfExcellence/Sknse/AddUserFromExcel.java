@@ -31,6 +31,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.HashMap;
 import java.util.Iterator;
 
 public class AddUserFromExcel extends AppCompatActivity {
@@ -135,20 +136,20 @@ public class AddUserFromExcel extends AppCompatActivity {
             Toast.makeText(AddUserFromExcel.this, "All Fields are required", Toast.LENGTH_LONG).show();
         }
         else {
-            final NewUserModel userModel = new NewUserModel();
-            userModel.setClass_name(class_name);
-            userModel.setDob(dob);
-            userModel.setEmail(username);
-            userModel.setYoa(yoa);
-            userModel.setName(name);
-            userModel.setRollno(rollno);
+            final HashMap<String, String> userModel = new HashMap<>();
+            userModel.put("class", class_name);
+            userModel.put("dob", dob);
+            userModel.put("email", username);
+            userModel.put("yearofadmission", yoa);
+            userModel.put("rollno", rollno);
+            userModel.put("name", name);
             mAuth.createUserWithEmailAndPassword(username, name + rollno).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
                     if(task.isSuccessful() && task.getResult() != null && task.getResult().getUser() != null)
                     {
                         String uid = task.getResult().getUser().getUid();
-                        userModel.setUid(uid);
+                        userModel.put("uid", uid);
                         FirebaseFirestore.getInstance().collection("users").document(uid)
                                 .set(userModel).addOnCompleteListener(new OnCompleteListener<Void>() {
                             @Override

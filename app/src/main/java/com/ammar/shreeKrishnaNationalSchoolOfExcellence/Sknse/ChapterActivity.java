@@ -200,4 +200,10 @@ public class ChapterActivity extends AppCompatActivity {
         classesView.setAdapter(new ChapterAdapter(chapters, listener));
 
     }
+
+    public void HomeClicked(View view) {
+        Intent intent = new Intent(ChapterActivity.this, StartActivity.class);
+        startActivity(intent);
+        finish();
+    }
 }

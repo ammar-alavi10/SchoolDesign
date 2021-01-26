@@ -136,4 +136,10 @@ public class SubjectActivity extends AppCompatActivity {
         intent.putExtra("class_name", class_name);
         startActivity(intent);
     }
+
+    public void HomeClicked(View view) {
+        Intent intent = new Intent(SubjectActivity.this, StartActivity.class);
+        startActivity(intent);
+        finish();
+    }
 }

@@ -12,6 +12,8 @@ import android.view.View;
 import com.ammar.shreeKrishnaNationalSchoolOfExcellence.KidsCorner.balloonpoper.BalloonMain;
 import com.ammar.shreeKrishnaNationalSchoolOfExcellence.R;
 import com.ammar.shreeKrishnaNationalSchoolOfExcellence.KidsCorner.fragment.SlideFragment;
+import com.ammar.shreeKrishnaNationalSchoolOfExcellence.Sknse.StartActivity;
+import com.ammar.shreeKrishnaNationalSchoolOfExcellence.Sknse.Toppers;
 
 public class KidsLandingPage extends AppCompatActivity {
 
@@ -56,5 +58,11 @@ public class KidsLandingPage extends AppCompatActivity {
 
     public void onTracePressed(View view) {
         startActivity(new Intent(KidsLandingPage.this, TraceActivity.class));
+    }
+
+    public void HomeClicked(View view) {
+        Intent intent = new Intent(KidsLandingPage.this, StartActivity.class);
+        startActivity(intent);
+        finish();
     }
 }

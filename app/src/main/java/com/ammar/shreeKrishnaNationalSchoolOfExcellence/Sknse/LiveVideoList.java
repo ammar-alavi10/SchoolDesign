@@ -200,4 +200,10 @@ public class LiveVideoList extends AppCompatActivity {
             InstantiateRecyclerView();
         }
     }
+
+    public void HomeClicked(View view) {
+        Intent intent = new Intent(LiveVideoList.this, StartActivity.class);
+        startActivity(intent);
+        finish();
+    }
 }
