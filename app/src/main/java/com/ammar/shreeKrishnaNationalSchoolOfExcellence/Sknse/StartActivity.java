@@ -90,4 +90,11 @@ public class StartActivity extends AppCompatActivity {
     public void ReachPressed(View view) {
         startActivity(new Intent(StartActivity.this, HowToReach.class));
     }
+
+    public void GalleryClicked(View view) {
+        startActivity(new Intent(StartActivity.this, PhotoActivity.class));
+    }
+
+    public void AdmissionClicked(View view) {
+    }
 }

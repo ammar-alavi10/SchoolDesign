@@ -16,7 +16,8 @@ import com.google.firebase.auth.FirebaseAuth;
 
 public class TestSeries extends AppCompatActivity {
 
-    String class_name, subject;
+    String class_name, subject, chapter_no;
+    Boolean isTestAdd;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,6 +26,8 @@ public class TestSeries extends AppCompatActivity {
 
         class_name = getIntent().getStringExtra("class_name");
         subject = getIntent().getStringExtra("subject_name");
+        chapter_no = getIntent().getStringExtra("chapter_no");
+        isTestAdd = getIntent().getBooleanExtra("isTestAdd", false);
 
         Toolbar toolbar = findViewById(R.id.notice_toolbar);
         toolbar.setTitle("Online Test Series");
@@ -32,26 +35,27 @@ public class TestSeries extends AppCompatActivity {
     }
 
     public void MCQClicked(View view) {
-        Intent intent = new Intent(TestSeries.this, TestList.class);
-        intent.putExtra("class_name", class_name);
-        intent.putExtra("subject_name", subject);
-        intent.putExtra("type", "mcq");
-        startActivity(intent);
+        OpenTestActivity("mcq");
     }
 
-    public void FillinTheBlanks(View view) {
-        Intent intent = new Intent(TestSeries.this, TestList.class);
-        intent.putExtra("class_name", class_name);
-        intent.putExtra("subject_name", subject);
-        intent.putExtra("type", "blanks");
-        startActivity(intent);
+    public void FillInTheBlanks(View view) {
+        OpenTestActivity("blanks");
     }
 
     public void TrueOrFalse(View view) {
-        Intent intent = new Intent(TestSeries.this, TestList.class);
+        OpenTestActivity("truefalse");
+    }
+
+    private void OpenTestActivity(String testType) {
+        Intent intent;
+        if(isTestAdd)
+            intent = new Intent(TestSeries.this, MakeQuizActivity.class);
+        else
+            intent = new Intent(TestSeries.this, TestList.class);
         intent.putExtra("class_name", class_name);
         intent.putExtra("subject_name", subject);
-        intent.putExtra("type", "truefalse");
+        intent.putExtra("chapter_no", chapter_no);
+        intent.putExtra("type", testType);
         startActivity(intent);
     }
 

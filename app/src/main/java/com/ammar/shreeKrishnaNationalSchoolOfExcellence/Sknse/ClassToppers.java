@@ -43,8 +43,10 @@ public class ClassToppers extends AppCompatActivity {
         SharedPreferences preferences = getSharedPreferences(sharedPrefFile, MODE_PRIVATE);
         class_name = preferences.getString("class_name", null);
 
-        init();
-
+        if(class_name != null)
+        {
+            init();
+        }
     }
 
     private void init() {

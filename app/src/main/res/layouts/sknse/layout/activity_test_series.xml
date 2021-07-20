@@ -43,7 +43,7 @@
         android:layout_marginBottom="30dp"
         android:backgroundTint="@color/circular_progress_default_background"
         android:textSize="20sp"
-        android:onClick="FillinTheBlanks"/>
+        android:onClick="FillInTheBlanks"/>
 
     <android.widget.Button
         android:layout_width="250dp"

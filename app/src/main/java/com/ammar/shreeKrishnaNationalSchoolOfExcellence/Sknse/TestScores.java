@@ -55,7 +55,7 @@ public class TestScores extends AppCompatActivity {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         Log.d("TestScore", subject + class_name + uid);
         db.collection("testscores")
-                .whereEqualTo("subject_name", subject + class_name + uid)
+                .whereEqualTo("search_name", subject + class_name + uid)
                 .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {

@@ -64,6 +64,7 @@ public class MainScreen extends AppCompatActivity {
     }
 
     public void TopperClicked(View view) {
+        startActivity(new Intent(MainScreen.this, Toppers.class));
     }
 
     public void ClassDiaryClicked(View view) {
@@ -99,6 +100,7 @@ public class MainScreen extends AppCompatActivity {
     }
 
     public void AlertClicked(View view) {
+        startActivity(new Intent(MainScreen.this, ParentAlert.class));
     }
 
     public void LiveClassClicked(View view) {

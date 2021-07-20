@@ -18,6 +18,8 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.util.HashMap;
+
 public class AddUser extends AppCompatActivity {
 
     EditText class_et, rollno_et, yoa_et, dob_et, name_et, username_et;
@@ -53,20 +55,21 @@ public class AddUser extends AppCompatActivity {
             Toast.makeText(AddUser.this, "All Fields are required", Toast.LENGTH_LONG).show();
         }
         else {
-            final NewUserModel userModel = new NewUserModel();
-            userModel.setClass_name(class_name);
-            userModel.setDob(dob);
-            userModel.setEmail(username);
-            userModel.setYoa(yoa);
-            userModel.setName(name);
-            userModel.setRollno(rollno);
+            final HashMap<String, Object> userModel = new HashMap<>();
+            userModel.put("class", class_name);
+            userModel.put("dob", dob);
+            userModel.put("email", username);
+            userModel.put("yearofadmission", yoa);
+            userModel.put("category", 2);
+            userModel.put("rollno", rollno);
+            userModel.put("name", name);
             mAuth.createUserWithEmailAndPassword(username, name + rollno).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
                     if(task.isSuccessful() && task.getResult() != null && task.getResult().getUser() != null)
                     {
                         String uid = task.getResult().getUser().getUid();
-                        userModel.setUid(uid);
+                        userModel.put("uid", uid);
                         FirebaseFirestore.getInstance().collection("users").document(uid)
                                 .set(userModel).addOnCompleteListener(new OnCompleteListener<Void>() {
                             @Override

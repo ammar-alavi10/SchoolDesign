@@ -88,23 +88,23 @@ public class SubjectActivity extends AppCompatActivity {
                 startActivity(intent);
                 break;
             case R.id.add_test:
-                intent = new Intent(SubjectActivity.this, MakeQuizActivity.class);
+                intent = new Intent(SubjectActivity.this, TestSeries.class);
                 intent.putExtra("subject_name", subject_name);
                 intent.putExtra("class_name", class_name);
                 intent.putExtra("chapter_no", chapter_no);
+                intent.putExtra("isTestAdd", true);
                 startActivity(intent);
                 break;
         }
         return super.onOptionsItemSelected(item);
     }
 
-    public void ChaptersClicked(View view) {
-        Intent intent = new Intent(SubjectActivity.this, TestList.class);
+    public void ChaptersTestClicked(View view) {
+        Intent intent = new Intent(SubjectActivity.this, TestSeries.class);
         intent.putExtra("subject_name", subject_name);
         intent.putExtra("class_name", class_name);
         intent.putExtra("chapter_no", chapter_no);
         startActivity(intent);
-
     }
 
     public void VideosClicked(View view) {

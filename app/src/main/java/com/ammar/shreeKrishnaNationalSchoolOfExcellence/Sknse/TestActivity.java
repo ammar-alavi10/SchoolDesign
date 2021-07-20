@@ -49,7 +49,7 @@ public class TestActivity extends AppCompatActivity {
     private int score, wrong;
     private LinearLayout test, result;
     private ProgressBar progressBar;
-    private String class_name, subject_name, test_title, testType;
+    private String class_name, subject_name, chapter_no, test_title, testType;
     private Button show, next;
     private String imageUrl;
     private int selectedOption, correctOption;
@@ -99,13 +99,14 @@ public class TestActivity extends AppCompatActivity {
         testType = getIntent().getStringExtra("testType");
         subject_name = getIntent().getStringExtra("subject_name");
         class_name = getIntent().getStringExtra("class_name");
+        chapter_no = getIntent().getStringExtra("chapter_no");
         test_title = getIntent().getStringExtra("test_title");
 
         instantiateTest();
     }
 
     private void instantiateTest() {
-        db.collection("test").document(subject_name + class_name + test_title + testType)
+        db.collection("test").document(chapter_no + subject_name + class_name + test_title + testType)
                 .get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
@@ -289,13 +290,16 @@ public class TestActivity extends AppCompatActivity {
         }
         else {
             int radioButtonID = radioGroup.getCheckedRadioButtonId();
-            View radioButton = radioGroup.findViewById(radioButtonID);
-            selectedOption = radioGroup.indexOfChild(radioButton);
+            if(radioButtonID != -1)
+            {
+                View radioButton = radioGroup.findViewById(radioButtonID);
+                selectedOption = radioGroup.indexOfChild(radioButton);
 
-            if (selectedOption == correctOption - 1) {
-                score++;
-            } else {
-                wrong++;
+                if (selectedOption == correctOption - 1) {
+                    score++;
+                } else {
+                    wrong++;
+                }
             }
         }
 
@@ -352,14 +356,15 @@ public class TestActivity extends AppCompatActivity {
         }
 
         TestResultModel testResultModel = new TestResultModel();
-        testResultModel.setSubject_name(subject_name + class_name + uid);
+        testResultModel.setSubject_name(chapter_no + subject_name + class_name + uid);
+        testResultModel.setSearchName(subject_name + class_name + uid);
         testResultModel.setCorrect(score);
         testResultModel.setWrong(wrong);
         testResultModel.setUnanswered(testModel.getNo_of_ques() - (score + wrong));
         testResultModel.setTitle(test_title);
         testResultModel.setTotal(testModel.getNo_of_ques());
         testResultModel.setUid(uid);
-        db.collection("testscores").document(class_name + subject_name + test_title + uid)
+        db.collection("testscores").document(chapter_no + subject_name + class_name + test_title + uid)
                 .set(testResultModel).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
@@ -391,5 +396,9 @@ public class TestActivity extends AppCompatActivity {
         Intent intent = new Intent(TestActivity.this, StartActivity.class);
         startActivity(intent);
         finish();
+    }
+
+    public void ClearSelection(View view) {
+        radioGroup.clearCheck();
     }
 }

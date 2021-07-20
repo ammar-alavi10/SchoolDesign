@@ -42,7 +42,7 @@ public class ParentFeedback extends AppCompatActivity {
             }
         });
 
-        mWebview .loadUrl("https://docs.google.com/forms/ ... link");
+        mWebview .loadUrl("https://docs.google.com/forms/d/e/1FAIpQLSd0Oet_aZIZ6jNVFSBK1FdUCKXhDZKZi3Af6rp5Lhr5WNZHJQ/viewform?usp=sf_link");
         setContentView(mWebview );
     }
 

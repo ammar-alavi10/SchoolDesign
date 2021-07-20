@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item android:id="@+id/add_notice"
-        android:title="Add Notice"
+        android:title="Add Item"
         app:showAsAction="always"
         android:icon="@drawable/plus_24"
         android:iconTint="@color/white"/>

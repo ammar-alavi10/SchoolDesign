@@ -137,10 +137,12 @@ public class SelectSubjectActivity extends AppCompatActivity {
                 if(isTestScore)
                 {
                     intent = new Intent(getApplicationContext(), TestScores.class);
+                    intent.putExtra("chapter_no", "-1");
                 }
                 else if(isTest)
                 {
                     intent = new Intent(getApplicationContext(), TestSeries.class);
+                    intent.putExtra("chapter_no", "-1");
                 }
                 else{
                     intent = new Intent(getApplicationContext(), ChapterActivity.class);

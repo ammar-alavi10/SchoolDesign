@@ -26,6 +26,7 @@ public class TestResultModel {
     private int unanswered;
     private String uid;
     private String title;
+    private String search_name;
 
     public TestResultModel() {
     }
@@ -68,5 +69,13 @@ public class TestResultModel {
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public String getSearchName() {
+        return search_name;
+    }
+
+    public void setSearchName(String searchName) {
+        this.search_name = searchName;
     }
 }

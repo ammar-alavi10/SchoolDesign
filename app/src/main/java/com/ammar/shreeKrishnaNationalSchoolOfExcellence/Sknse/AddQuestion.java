@@ -42,7 +42,7 @@ public class AddQuestion extends AppCompatActivity {
     private Uri filePath = null;
     private StorageReference storageReference;
     private FirebaseFirestore db;
-    private String subject_name, class_name, testTitle, testTime, testType;
+    private String subject_name, class_name, chapter_no, testTitle, testTime, testType;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +52,7 @@ public class AddQuestion extends AppCompatActivity {
         testType = getIntent().getStringExtra("testType");
         subject_name = getIntent().getStringExtra("subject_name");
         class_name = getIntent().getStringExtra("class_name");
+        chapter_no = getIntent().getStringExtra("chapter_no");
         testTitle = getIntent().getStringExtra("test_title");
         testTime = getIntent().getStringExtra("test_time");
 
@@ -175,12 +176,12 @@ public class AddQuestion extends AppCompatActivity {
     public void UploadTest(View view) {
         progressBar.setVisibility(View.VISIBLE);
         testModel = new TestModel();
-        testModel.setSubject_name(subject_name + class_name);
+        testModel.setSubject_name(chapter_no + subject_name + class_name);
         testModel.setTestTitle(testTitle);
         testModel.setQuestions(questions);
         testModel.setNo_of_ques(questions.size());
         testModel.setTestTime(testTime);
-        db.collection("test").document(subject_name + class_name + testTitle + testType).
+        db.collection("test").document(chapter_no + subject_name + class_name + testTitle + testType).
             set(testModel).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {

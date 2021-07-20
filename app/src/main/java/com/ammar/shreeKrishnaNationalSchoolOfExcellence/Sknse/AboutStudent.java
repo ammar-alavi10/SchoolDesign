@@ -42,7 +42,6 @@ public class AboutStudent extends AppCompatActivity {
         yoa_tv = findViewById(R.id.yoa);
         class_tv = findViewById(R.id.student_class);
 
-
         FirebaseFirestore.getInstance().collection("users").document(FirebaseAuth.getInstance().getCurrentUser().getUid())
                 .get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override

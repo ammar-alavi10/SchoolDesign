@@ -167,6 +167,16 @@
             <android.widget.Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:text="CLEAR"
+                android:padding="3dp"
+                android:id="@+id/clear_ans"
+                android:background="@drawable/bt_3"
+                android:onClick="ClearSelection"/>
+
+            <android.widget.Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
                 android:text="NEXT"
                 android:padding="3dp"

@@ -136,13 +136,14 @@ public class AddUserFromExcel extends AppCompatActivity {
             Toast.makeText(AddUserFromExcel.this, "All Fields are required", Toast.LENGTH_LONG).show();
         }
         else {
-            final HashMap<String, String> userModel = new HashMap<>();
+            final HashMap<String, Object> userModel = new HashMap<>();
             userModel.put("class", class_name);
             userModel.put("dob", dob);
             userModel.put("email", username);
             userModel.put("yearofadmission", yoa);
             userModel.put("rollno", rollno);
             userModel.put("name", name);
+            userModel.put("category", 2);
             mAuth.createUserWithEmailAndPassword(username, name + rollno).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
